@@ -1,7 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!-- Botón para abrir el menú -->
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <div>
@@ -19,7 +18,7 @@
   </ion-header>
 </ion-content>
 
-<!-- Menú lateral -->
+
 <ion-menu side="start" content-id="main-content">
   <ion-header>
     <ion-toolbar>
@@ -29,12 +28,13 @@
 
   <ion-content>
     <ion-list>
-      <ion-item button routerLink="/donas">Donas</ion-item>
-      <ion-item button routerLink="/inicio">Inicio</ion-item>
+      <ion-item button (click)="goToInicio()">Donas</ion-item>
+      <ion-item button (click)="goToNosotros()">Sobre Nosotros</ion-item>
+      <ion-item button (click)="goToProximos()">Proximas Donas</ion-item>
     </ion-list>
 
-    <!-- Este es el item de Perfil que posicionaremos con CSS -->
-    <ion-item button routerLink="/perfil" class="perfil-item">
+
+    <ion-item button (click)="goToPerfil()" class="perfil-item">
       <ion-avatar aria-hidden="true" slot="start">
         <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
@@ -43,7 +43,7 @@
   </ion-content>
 </ion-menu>
 
-<!-- Contenido principal -->
+
 <ion-content id="main-content">
   <ion-header collapse="condense">
     <ion-toolbar>

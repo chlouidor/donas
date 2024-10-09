@@ -1,0 +1,36 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  h2 {
+    margin-top: 10px;
+    font-size: 1.5em;
+  }
+  
+  p {
+    color: gray;
+    margin-top: 5px;
+  }
+  
+  ion-list {
+    margin-top: 30px;
+  }
+  
+  ion-item {
+    --background: transparent;
+  }
+  
+  ion-icon {
+    color: #333;
+  }
+  
