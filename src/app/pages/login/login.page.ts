@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -8,20 +7,15 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  loginForm: FormGroup;
+  email: string = '';
+  password: string = '';
 
-  constructor(private fb: FormBuilder, private navCtrl: NavController) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  constructor(private navCtrl: NavController) {}
 
   login() {
-    if (this.loginForm.valid) {
-      // Procesar el inicio de sesión
+    if (this.email && this.password) {
       console.log('Sesión iniciada');
-      this.navCtrl.navigateRoot('/home'); // Redirigir a la página principal
+      this.navCtrl.navigateRoot('/home');  // Redirige a la página principal
     }
   }
 }
