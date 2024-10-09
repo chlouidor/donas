@@ -1,0 +1,37 @@
+ion-toolbar .logo {
+    width: 30px;
+    height: auto; 
+    vertical-align: middle;
+    margin-right: 10px; 
+  }
+  
+  ion-toolbar div {
+    display: flex;
+    align-items: center; 
+  }
+  
+  ion-toolbar p {
+    margin: 0;
+    font-size: 18px; 
+  }
+  .perfil-item {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%; 
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--ion-background-color); 
+    border-top: 1px solid var(--ion-border-color); 
+  }
+  
+  .perfil-item ion-avatar {
+    margin-right: 10px; 
+  }
+  
+  .perfil-item ion-label {
+    flex: 1;
+    font-size: 16px;
+  }
+  
