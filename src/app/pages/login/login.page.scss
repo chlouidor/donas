@@ -1,0 +1,22 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  ion-item {
+    --background: transparent;
+  }
+  
+  ion-button {
+    --background: #333;
+    --color: white;
+  }
+  
+  ion-title {
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: bold;
+  }
+  
