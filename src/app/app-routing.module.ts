@@ -40,9 +40,19 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
   {
-    path: 'not-found',
-    loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
+    path: 'nosotros',
+    loadChildren: () => import('./pages/nosotros/nosotros.module').then( m => m.NosotrosPageModule)
   },
+  {
+    path: 'poximos',
+    loadChildren: () => import('./pages/poximos/poximos.module').then( m => m.PoximosPageModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found', 
+    pathMatch: 'full'
+  }
+
 ];
 
 @NgModule({
