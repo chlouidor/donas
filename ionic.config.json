@@ -1,0 +1,7 @@
+{
+  "name": "donas",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
