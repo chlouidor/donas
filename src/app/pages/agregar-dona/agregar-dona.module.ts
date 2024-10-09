@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { AgregarDonaPageRoutingModule } from './agregar-dona-routing.module';
 
 import { AgregarDonaPage } from './agregar-dona.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
