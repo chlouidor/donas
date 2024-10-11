@@ -57,10 +57,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/confirmpago/confirmpago.module').then( m => m.ConfirmpagoPageModule)
   },
   {
+    path: 'registro',
+    loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'not-found', 
     pathMatch: 'full'
-  }
+  },
 
 
 ];
