@@ -1,0 +1,64 @@
+ion-content {
+    --background: rgb(219, 161, 240); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    padding-top: 14%; 
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.card {
+    width: 300px; 
+    background-color: rgb(167, 109, 255); 
+    border-radius: 15px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden; 
+}
+
+.card-image {
+    width: 100%; 
+    height: auto; 
+}
+
+.card-content {
+    padding: 16px; 
+}
+
+.card-title,
+.card-subtitle {
+    color: white; 
+    margin-bottom: 10px; 
+}
+
+.quantity-item {
+    color: white; 
+}
+
+.quantity-select {
+    color: rgb(238, 234, 234); 
+}
+
+.button {
+    color: black;
+    background-color: white;
+    border-radius: 5px; 
+    margin: 16px auto 0; 
+    width: 70%; 
+    font-weight: bold; 
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: rgb(240, 240, 240); 
+}
+
+.button:focus {
+    outline: none; 
+}

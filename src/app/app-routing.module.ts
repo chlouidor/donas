@@ -47,11 +47,21 @@ const routes: Routes = [
     path: 'poximos',
     loadChildren: () => import('./pages/poximos/poximos.module').then( m => m.PoximosPageModule)
   },
+
+  {
+    path: 'comprar',
+    loadChildren: () => import('./pages/comprar/comprar.module').then( m => m.ComprarPageModule)
+  },
+  {
+    path: 'confirmpago',
+    loadChildren: () => import('./pages/confirmpago/confirmpago.module').then( m => m.ConfirmpagoPageModule)
+  },
   {
     path: '**',
     redirectTo: 'not-found', 
     pathMatch: 'full'
   }
+
 
 ];
 
