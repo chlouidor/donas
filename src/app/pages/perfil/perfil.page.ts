@@ -22,4 +22,8 @@ export class PerfilPage {
     console.log('Sesión cerrada');
     this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
   }
+
+  goToLogin() {
+    this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
+  }
 }

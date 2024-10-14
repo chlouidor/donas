@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router'; // Importar Router
 import { RegistrologinService } from 'src/app/services/registrologin.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class LoginPage {
   password: string = '';
   loginError: boolean = false; // Inicializar el mensaje de error
 
-  constructor(private registrologinService: RegistrologinService) {}
+  constructor(private registrologinService: RegistrologinService, private router: Router) {} // Inyectar Router
 
   async login() {
     const isValid = await this.registrologinService.loginUsuario(this.email, this.password);
@@ -25,5 +26,10 @@ export class LoginPage {
       // Aquí podrías usar el Router para redirigir al usuario
       // this.router.navigate(['/pagina-principal']);
     }
+  }
+
+  // Función para redirigir a la página de registro
+  irARegistro() {
+    this.router.navigate(['/registro']); // Asegúrate de que la ruta '/registro' sea la correcta
   }
 }
