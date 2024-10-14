@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RegistrologinService } from 'src/app/services/registrologin.service';
 import { Router } from '@angular/router';
+import { RegistrologinService } from 'src/app/services/registrologin.service';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +12,20 @@ export class LoginPage {
   password: string = '';
   loginError: boolean = false;
 
-  constructor(private registrologinService: RegistrologinService, public router: Router) {}
+  constructor(private router: Router, private registrologinService: RegistrologinService) {}
 
   async login() {
     const isValid = await this.registrologinService.loginUsuario(this.email, this.password);
     
     if (!isValid) {
-      this.loginError = true; // Mostrar mensaje de error si las credenciales son incorrectas
+      this.loginError = true;
     } else {
-      this.loginError = false; // Ocultar mensaje de error si las credenciales son correctas
-      // Redirigir o realizar otra acción al iniciar sesión correctamente
-      this.router.navigate(['/perfil']); // Redirige a la página de perfil
+      this.loginError = false;
+      this.router.navigate(['/perfil']); 
     }
+  }
+
+  goToRegister() {
+    this.router.navigate(['/registro']); 
   }
 }

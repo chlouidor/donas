@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { RegistrologinService } from 'src/app/services/registrologin.service';
 
 @Component({
   selector: 'app-perfil',
@@ -7,22 +8,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage {
-  username: string = 'Usuario Ejemplo'; // Datos de ejemplo
-  email: string = 'usuario@ejemplo.com';
+  username: string | undefined; 
+  email: string | undefined; 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private registrologinService: RegistrologinService) {
+    const user = this.registrologinService.getCurrentUser();
+    if (user) {
+      this.username = user.username; 
+      this.email = user.email; 
+    }
+  }
 
   goToSettings() {
-    this.router.navigate(['/configuracion']); // Navega a la página de configuración
+    this.router.navigate(['/configuracion']); 
   }
 
   logOut() {
-    // Lógica para cerrar sesión
+
     console.log('Sesión cerrada');
-    this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
+    this.router.navigate(['/login']); 
   }
 
   goToLogin() {
-    this.router.navigate(['/login']); // Redirigir al login
+    this.router.navigate(['/login']); 
+  }
+
+  goTolistaDonas(){
+    this.router.navigate(['/lista-donas']); 
   }
 }

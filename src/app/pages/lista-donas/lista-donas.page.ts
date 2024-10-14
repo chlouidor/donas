@@ -9,25 +9,48 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
 })
 export class ListaDonasPage implements OnInit {
 
+  listaDonas: any[] = [
+    {
+      id: '1',
+      imagen: 'ruta-imagen-1.jpg',
+      nombre: 'Dona de Chocolate',
+      precio: '10.00',
+      descripcion: 'Dona deliciosa de chocolate.'
+    },
+    {
+      id: '2',
+      imagen: 'ruta-imagen-2.jpg',
+      nombre: 'Dona Glaseada',
+      precio: '8.00',
+      descripcion: 'Dona con glaseado de azúcar.'
+    }
+  ];
+
   constructor(private bd: ServicebdService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  modificar(x:any){
+  modificar(dona: any) {
     let navigationsExtras: NavigationExtras = {
       state: {
-        noticia: x
+        dona: dona
       }
-    }
+    };
     this.router.navigate(['/editar-dona'], navigationsExtras);
-
-  }
-  eliminar(x:any){
-    this.bd.eliminarDona(x.idnoticia);
   }
 
-  agregar(){
+  eliminar(dona: any) {
+    this.bd.eliminarDona(dona.id)
+      .then(() => {
+        this.listaDonas = this.listaDonas.filter(item => item.id !== dona.id);
+      })
+      .catch(error => {
+        console.error('Error al eliminar la dona:', error);
+      });
+  }
+
+  agregar() {
     this.router.navigate(['/agregar-dona']);
   }
 }
