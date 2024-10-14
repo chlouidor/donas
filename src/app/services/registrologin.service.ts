@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistrologinService {
-  private basededatos?: SQLiteObject; // Hacerla opcional
+  private basededatos?: SQLiteObject;
   private listadoUsuarios: BehaviorSubject<{ username: string; email: string; password: string; }[]> = new BehaviorSubject<{ username: string; email: string; password: string; }[]>([]);
 
   constructor(private sqlite: SQLite) {
@@ -27,8 +27,7 @@ export class RegistrologinService {
           username TEXT,
           email TEXT,
           password TEXT
-        )
-      `, []);
+        )`, []);
 
       console.log('Base de datos iniciada y tabla usuarios creada.');
     } catch (error) {
@@ -40,7 +39,6 @@ export class RegistrologinService {
     try {
       await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`, [username, email, password]);
       console.log('Usuario registrado con éxito');
-      // Actualiza el listado de usuarios
       this.listadoUsuarios.next(await this.obtenerUsuarios());
     } catch (error) {
       console.error('Error al registrar usuario:', error);
@@ -51,13 +49,11 @@ export class RegistrologinService {
   async loginUsuario(email: string, password: string): Promise<boolean> {
     try {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
-
       const usuarios = [];
       for (let i = 0; i < result?.rows.length; i++) {
         usuarios.push(result.rows.item(i));
       }
-
-      return usuarios.length > 0; // Devuelve true si se encuentra algún usuario que coincida
+      return usuarios.length > 0;
     } catch (error) {
       console.error('Error al verificar credenciales:', error);
       return false;

@@ -5,9 +5,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">editarDona</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-input label="imagen dona" labelPlacement="floating" placeholder="Ingrese imagen" [(ngModel)]="dona.imagen"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input label="Nombre dona" labelPlacement="floating" placeholder="Ingrese nombre" [(ngModel)]="dona.nombre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input label="precio dona" labelPlacement="floating" placeholder="Ingrese precio"  [(ngModel)]="dona.precio"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input label="descripcion dona" labelPlacement="floating" placeholder="Ingrese descripcion"  [(ngModel)]="dona.descripcion"></ion-input>
+  </ion-item>
+
+  <ion-button color="success" (click)="modificar()">Modificar Noticia</ion-button>
+
 </ion-content>

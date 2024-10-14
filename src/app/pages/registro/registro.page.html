@@ -12,7 +12,6 @@
     <label for="confirmPassword">Confirmar contraseña:</label>
     <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
 
-    <!-- Mostrar el mensaje de error si las contraseñas no coinciden -->
     <div *ngIf="confirmPasswordError" class="error-message">
       Las contraseñas no coinciden.
     </div>
