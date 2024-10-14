@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { RegistrologinService } from 'src/app/services/registrologin.service';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +9,21 @@ import { NavController } from '@ionic/angular';
 export class LoginPage {
   email: string = '';
   password: string = '';
+  loginError: boolean = false; // Inicializar el mensaje de error
 
-  constructor(private navCtrl: NavController) {}
+  constructor(private registrologinService: RegistrologinService) {}
 
-  login() {
-    if (this.email && this.password) {
-      console.log('Sesión iniciada');
-      this.navCtrl.navigateRoot('/home');  // Redirige a la página principal
+  async login() {
+    const isValid = await this.registrologinService.loginUsuario(this.email, this.password);
+    
+    if (!isValid) {
+      this.loginError = true; // Mostrar mensaje de error si las credenciales son incorrectas
+    } else {
+      this.loginError = false; // Ocultar mensaje de error si las credenciales son correctas
+      // Redirigir o realizar otra acción al iniciar sesión correctamente
+      console.log('Inicio de sesión exitoso');
+      // Aquí podrías usar el Router para redirigir al usuario
+      // this.router.navigate(['/pagina-principal']);
     }
   }
 }

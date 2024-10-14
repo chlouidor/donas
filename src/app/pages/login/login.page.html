@@ -1,23 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar Sesión</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="form-container">
+  <form (ngSubmit)="login()">
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" [(ngModel)]="email" name="email" required>
 
-<ion-content class="ion-padding">
-  <div class="login-container">
-    <form (ngSubmit)="login()">
-      <ion-item>
-        <ion-label position="floating">Correo Electrónico</ion-label>
-        <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
-      </ion-item>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" [(ngModel)]="password" name="password" required>
 
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
-      </ion-item>
+    <!-- Mostrar mensaje de error si las credenciales son incorrectas -->
+    <div *ngIf="loginError" class="error-message">
+      Correo o contraseña incorrectos.
+    </div>
 
-      <ion-button expand="full" type="submit" [disabled]="!email || !password">Iniciar Sesión</ion-button>
-    </form>
-  </div>
-</ion-content>
+    <button type="submit">Iniciar sesión</button>
+  </form>
+</div>

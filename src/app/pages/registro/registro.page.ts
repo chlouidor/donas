@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { RegistrologinService } from 'src/app/services/registrologin.service';
 
 @Component({
   selector: 'app-registro',
@@ -7,21 +7,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage {
-
   username: string = '';
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  confirmPasswordError: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private registrologinService: RegistrologinService) {}
 
-  register() {
-    if (this.password === this.confirmPassword) {
-      console.log('Usuario registrado:', this.username);
-      // Lógica para registrar al usuario
-      this.router.navigate(['/login']); // Redirige a la página de inicio de sesión después del registro
-    } else {
-      console.error('Las contraseñas no coinciden');
+  registrar() {
+    this.confirmPasswordError = this.password !== this.confirmPassword;
+
+    if (!this.confirmPasswordError) {
+      this.registrologinService.registrarUsuario(this.username, this.email, this.password);
+      // Lógica para redirigir al usuario después del registro exitoso
+      console.log('Registro exitoso');
+      // Ejemplo de redirección:
+      // this.router.navigate(['/login']);
     }
   }
 }
