@@ -7,7 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class RegistrologinService {
   private basededatos?: SQLiteObject;
-  private listadoUsuarios: BehaviorSubject<{ username: string; email: string; password: string; }[]> = new BehaviorSubject<{ username: string; email: string; password: string; }[]>([]);
+  private currentUser: { username: string; email: string } | null = null; // Almacena el usuario actual
+
+  private listadoUsuarios: BehaviorSubject<{ username: string; email: string; password: string; }[]> = 
+    new BehaviorSubject<{ username: string; email: string; password: string; }[]>([]);
 
   constructor(private sqlite: SQLite) {
     this.iniciarBaseDeDatos();
@@ -49,15 +52,21 @@ export class RegistrologinService {
   async loginUsuario(email: string, password: string): Promise<boolean> {
     try {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
-      const usuarios = [];
-      for (let i = 0; i < result?.rows.length; i++) {
-        usuarios.push(result.rows.item(i));
+      
+      if (result?.rows.length > 0) {
+        this.currentUser = result.rows.item(0); // Almacena el usuario actual
+        return true; // Usuario encontrado
+      } else {
+        return false; // Usuario no encontrado
       }
-      return usuarios.length > 0;
     } catch (error) {
       console.error('Error al verificar credenciales:', error);
       return false;
     }
+  }
+
+  getCurrentUser() {
+    return this.currentUser; // Método para obtener el usuario actual
   }
 
   async obtenerUsuarios(): Promise<{ username: string; email: string; password: string; }[]> {
