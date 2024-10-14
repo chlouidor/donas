@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage {
-
   username: string = 'Usuario Ejemplo'; // Datos de ejemplo
   email: string = 'usuario@ejemplo.com';
 
@@ -24,6 +23,6 @@ export class PerfilPage {
   }
 
   goToLogin() {
-    this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
+    this.router.navigate(['/login']); // Redirigir al login
   }
 }

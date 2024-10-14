@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
 
 @Component({
@@ -13,17 +14,20 @@ export class RegistroPage {
   confirmPassword: string = '';
   confirmPasswordError: boolean = false;
 
-  constructor(private registrologinService: RegistrologinService) {}
+  constructor(private registrologinService: RegistrologinService, private router: Router) {}
 
-  registrar() {
+  async registrar() {
     this.confirmPasswordError = this.password !== this.confirmPassword;
 
     if (!this.confirmPasswordError) {
-      this.registrologinService.registrarUsuario(this.username, this.email, this.password);
-      // Lógica para redirigir al usuario después del registro exitoso
-      console.log('Registro exitoso');
-      // Ejemplo de redirección:
-      // this.router.navigate(['/login']);
+      try {
+        await this.registrologinService.registrarUsuario(this.username, this.email, this.password);
+        console.log('Registro exitoso');
+        this.router.navigate(['/login']); // Redirigir a la página de inicio de sesión después del registro
+      } catch (error) {
+        console.error('Error al registrar el usuario:', error);
+        // Aquí podrías mostrar un mensaje de error al usuario
+      }
     }
   }
 }
