@@ -65,6 +65,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/lista-donas/lista-donas.module').then( m => m.ListaDonasPageModule)
   },
   {
+    path: 'not-found',
+    loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'not-found', 
     pathMatch: 'full'
