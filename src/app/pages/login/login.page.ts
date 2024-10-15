@@ -21,11 +21,11 @@ export class LoginPage {
       this.loginError = true;
     } else {
       this.loginError = false;
-      this.router.navigate(['/perfil']); // Redirigir a la página de perfil al iniciar sesión correctamente
+      this.router.navigate(['/perfil']); 
     }
   }
 
   goToRegister() {
-    this.router.navigate(['/registro']); // Método para navegar a la página de registro
+    this.router.navigate(['/registro']); 
   }
 }

@@ -97,7 +97,7 @@ private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
    })
   }
   
-  eliminarDona(id:string){
+  eliminarDona(id:number){
     return this.basededatos.executeSql('DELETE FROM donas WHERE iddona = ?',[id]).then(res=>{
       this.presentAlert("Eliminar","Dona Eliminada");
       this.seleccionarDonas();
@@ -118,7 +118,7 @@ private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   }
 
   insertarDona(imagen: string, nombre: string, precio: number,descripcion: string){
-    return this.basededatos.executeSql('INSERT INTO donas(imagen, nombre, precio, descripcion) VALUES (?,?)',[imagen, nombre, precio, descripcion]).then(res=>{
+    return this.basededatos.executeSql('INSERT INTO donas(imagen, nombre, precio, descripcion) VALUES (?,?,?,?)',[imagen, nombre, precio, descripcion]).then(res=>{
       this.presentAlert("Insertar","Dona Registrada");
       this.seleccionarDonas();
     }).catch(e=>{

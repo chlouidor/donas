@@ -18,11 +18,7 @@ export class MenuComponent  implements OnInit {
   goToNosotros() {
     this.router.navigate(['/nosotros']);
   }
-
-  goToProximos() {
-    this.router.navigate(['/poximos']);
-  }
-
+  
   goToPerfil() {
     this.router.navigate(['/perfil']);
   }
