@@ -69,6 +69,10 @@ export class RegistrologinService {
     return this.currentUser; // Método para obtener el usuario actual
   }
 
+  logOut() {
+    this.currentUser = null; // Desconectar usuario
+  }
+
   async obtenerUsuarios(): Promise<{ username: string; email: string; password: string; }[]> {
     try {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios`, []);
