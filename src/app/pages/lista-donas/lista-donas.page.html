@@ -3,22 +3,27 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/perfil"></ion-back-button>
     </ion-buttons>
-    <ion-title>Lista Donas</ion-title>
+    <ion-title>Lista de Donas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-list>
     <ion-item-sliding *ngFor="let dona of listaDonas; let i = index">
       <ion-item>
-        <h2>{{ dona.nombre }}</h2>
-        <ion-label style="word-wrap: break-word;white-space: normal;">
-          {{ dona.descripcion }}
+        <ion-thumbnail slot="start">
+          <img [src]="dona.imagen" alt="Imagen de {{ dona.nombre }}" />
+        </ion-thumbnail>
+        <ion-label>
+          <p>id: {{ dona.iddona }}</p>
+          <h2>{{ dona.nombre }}</h2>
+          <p>Precio: ${{ dona.precio | number:'1.3-3' }} CLP </p>
+          <p>Descripcion: {{ dona.descripcion }}</p>
         </ion-label>
       </ion-item>
 
       <ion-item-options side="end">
-        <ion-item-option (click)="modificar(dona)">
+        <ion-item-option color="primary" (click)="modificar(dona)">
           <ion-icon slot="icon-only" name="pencil"></ion-icon>
         </ion-item-option>
         <ion-item-option color="danger" (click)="eliminar(dona)">

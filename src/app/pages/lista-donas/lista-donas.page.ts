@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ServicebdService } from 'src/app/services/servicebd.service';
+import { Donas } from 'src/app/services/donas'; 
 
 @Component({
   selector: 'app-lista-donas',
@@ -9,41 +10,33 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
 })
 export class ListaDonasPage implements OnInit {
 
-  listaDonas: any[] = [
-    {
-      id: '1',
-      imagen: 'ruta-imagen-1.jpg',
-      nombre: 'Dona de Chocolate',
-      precio: '10.00',
-      descripcion: 'Dona deliciosa de chocolate.'
-    },
-    {
-      id: '2',
-      imagen: 'ruta-imagen-2.jpg',
-      nombre: 'Dona Glaseada',
-      precio: '8.00',
-      descripcion: 'Dona con glaseado de azúcar.'
-    }
-  ];
+  listaDonas: Donas[] = [];
 
   constructor(private bd: ServicebdService, private router: Router) { }
 
   ngOnInit() {
+    this.bd.dbState().subscribe((isReady) => {
+      if (isReady) {
+        this.bd.fetchDonas().subscribe(donas => {
+          this.listaDonas = donas;
+        });
+      }
+    });
   }
 
-  modificar(dona: any) {
-    let navigationsExtras: NavigationExtras = {
+  modificar(dona: Donas) {
+    let navigationExtras: NavigationExtras = {
       state: {
         dona: dona
       }
     };
-    this.router.navigate(['/editar-dona'], navigationsExtras);
+    this.router.navigate(['/editar-dona'], navigationExtras);
   }
 
-  eliminar(dona: any) {
-    this.bd.eliminarDona(dona.id)
+  eliminar(dona: Donas) {
+    this.bd.eliminarDona(dona.iddona)
       .then(() => {
-        this.listaDonas = this.listaDonas.filter(item => item.id !== dona.id);
+        this.listaDonas = this.listaDonas.filter(item => item.iddona !== dona.iddona);
       })
       .catch(error => {
         console.error('Error al eliminar la dona:', error);

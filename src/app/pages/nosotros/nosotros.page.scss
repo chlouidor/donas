@@ -4,6 +4,7 @@ ion-toolbar .logo {
     vertical-align: middle;
     margin-right: 10px; 
   }
+
   
   ion-toolbar div {
     display: flex;
@@ -13,4 +14,38 @@ ion-toolbar .logo {
   ion-toolbar p {
     margin: 0;
     font-size: 18px; 
+  }
+
+  .background {
+    background: rgb(219, 161, 240); 
+  }
+  
+  .content {
+    padding: 16px;
+    text-align: center;
+  
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 24px;
+    }
+  
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 8px 0;
+    }
+  
+
+    .dona-image {
+      width: 80%; 
+      max-width: 600px; 
+      height: auto; 
+      margin: 0 auto; 
+      display: block; 
+    }
   }
