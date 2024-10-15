@@ -1,13 +1,19 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>notFound</ion-title>
+    <ion-title>Página No Encontrada</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">notFound</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="content">
+    <h1>404</h1>
+    <h2>¡Oops! Página No Encontrada</h2>
+    <p>
+      Lo sentimos, la página que estás buscando no existe o ha sido movida.
+    </p>
+    <p>
+      Puedes regresar a la <a routerLink="/">página de inicio</a> o utilizar el menú para navegar a otra sección.
+    </p>
+    <img src="assets/icon/not-found.png" alt="Página No Encontrada" class="not-found-image" />
+  </div>
 </ion-content>

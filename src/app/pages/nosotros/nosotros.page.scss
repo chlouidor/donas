@@ -16,10 +16,10 @@ ion-toolbar .logo {
     font-size: 18px; 
   }
 
-  .background {
-    background: rgb(219, 161, 240); 
+  ion-content {
+    --background: rgb(219, 161, 240); 
   }
-  
+
   .content {
     padding: 16px;
     text-align: center;

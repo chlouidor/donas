@@ -1,0 +1,29 @@
+.content {
+    padding: 16px;
+    text-align: center;
+  
+    h1 {
+      font-size: 4rem; 
+      color: #ff4d4d; 
+    }
+  
+    h2 {
+      font-size: 2rem;
+      margin-top: 16px;
+    }
+  
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 8px 0;
+    }
+
+    .not-found-image {
+      width: 80%; 
+      max-width: 400px; 
+      height: auto; 
+      margin: 16px auto; 
+      display: block; 
+    }
+  }
+  
