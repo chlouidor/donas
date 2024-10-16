@@ -73,6 +73,10 @@ const routes: Routes = [
     redirectTo: 'not-found', 
     pathMatch: 'full'
   },
+  {
+    path: 'configuracion',
+    loadChildren: () => import('./pages/configuracion/configuracion.module').then( m => m.ConfiguracionPageModule)
+  },
 
 
 ];

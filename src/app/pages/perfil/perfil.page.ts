@@ -29,14 +29,12 @@ export class PerfilPage {
     // Lógica para cerrar sesión
     this.registrologinService.logOut(); // Desconecta al usuario en el servicio
     console.log('Sesión cerrada');
-    this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
+    this.router.navigate(['/perfil']); // Redirige a la página de inicio de sesión
   }
 
   goToLogin() {
     this.router.navigate(['/login']); // Redirigir al login
   }
 
-  goToDonas(){
-    this.router.navigate(['/lista-donas']); 
-  }
+
 }

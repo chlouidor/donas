@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button> <!-- Botón de retroceso -->
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-item button (click)="goToDonas()">
+    <ion-icon slot="start" name="settings-outline"></ion-icon>
+    <ion-label>Lista Donas</ion-label>
+  </ion-item>
+</ion-content>
