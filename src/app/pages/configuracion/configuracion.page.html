@@ -1,13 +1,30 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button> <!-- Botón de retroceso -->
+      <ion-back-button defaultHref="/perfil"></ion-back-button> <!-- Botón de retroceso -->
     </ion-buttons>
-    <ion-title>Perfil</ion-title>
+    <ion-title>Configuración</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <form (ngSubmit)="actualizarDatos()">
+    <ion-item>
+      <ion-label position="floating">Nombre de usuario</ion-label>
+      <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Correo electrónico</ion-label>
+      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+    </ion-item>
+
+    <div *ngIf="updateError" class="error-message">
+      Error al actualizar la cuenta. Por favor, inténtalo nuevamente.
+    </div>
+
+    <ion-button expand="full" color="success" type="submit">Actualizar Cuenta</ion-button>
+  </form>
 
   <ion-item button (click)="goToDonas()">
     <ion-icon slot="start" name="settings-outline"></ion-icon>
