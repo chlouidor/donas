@@ -10,6 +10,7 @@ import { RegistrologinService } from 'src/app/services/registrologin.service';
 export class PerfilPage {
   username: string | undefined;
   email: string | undefined;
+  imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
   isLoggedIn: boolean = false; // Verifica si el usuario está logueado
 
   constructor(private router: Router, private registrologinService: RegistrologinService) {
@@ -17,6 +18,7 @@ export class PerfilPage {
     if (user) {
       this.username = user.username; // Asigna el nombre de usuario
       this.email = user.email; // Asigna el correo electrónico
+      this.imagenAvatar = user.imagen || ''; // Asigna la imagen del avatar si existe
       this.isLoggedIn = true; // Indica que el usuario está logueado
     }
   }

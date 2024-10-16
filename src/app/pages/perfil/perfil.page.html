@@ -10,7 +10,7 @@
 <ion-content class="ion-padding">
   <div class="profile-container" *ngIf="isLoggedIn; else noSession">
     <ion-avatar class="profile-avatar">
-      <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Avatar del usuario">
+      <img [src]="imagenAvatar || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar del usuario">
     </ion-avatar>
     <h2>{{ username }}</h2> <!-- Muestra el nombre del usuario -->
     <p>{{ email }}</p> <!-- Muestra el correo electrónico -->

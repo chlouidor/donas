@@ -27,9 +27,13 @@ export class ConfiguracionPage implements OnInit {
 
   async actualizarDatos() {
     try {
-      await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio
-      console.log('Datos actualizados con éxito');
-      this.router.navigate(['/perfil']); // Redirigir a la página de perfil después de actualizar
+      const user = this.registrologinService.getCurrentUser();
+      if (user) {
+        // Solo actualiza si hay un usuario logueado
+        await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio
+        console.log('Datos actualizados con éxito');
+        this.router.navigate(['/perfil']); // Redirigir a la página de perfil después de actualizar
+      }
     } catch (error) {
       console.error('Error al actualizar los datos:', error);
       this.updateError = true; // Muestra un mensaje de error si falla la actualización
@@ -46,6 +50,11 @@ export class ConfiguracionPage implements OnInit {
     });
 
     this.imagenAvatar = image.webPath; // Asigna la imagen seleccionada a la variable
+
+    const user = this.registrologinService.getCurrentUser();
+    if (user) {
+      user.imagen = this.imagenAvatar; // Actualiza la propiedad imagen del usuario actual
+    }
   };
 
   goToDonas(){
