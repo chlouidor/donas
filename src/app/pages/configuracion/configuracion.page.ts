@@ -32,7 +32,7 @@ export class ConfiguracionPage implements OnInit {
         // Solo actualiza si hay un usuario logueado
         await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio
         console.log('Datos actualizados con éxito');
-        this.router.navigate(['/perfil']); // Redirigir a la página de perfil después de actualizar
+        this.router.navigate(['/inicio']); // Redirigir a la página de inicio después de actualizar
       }
     } catch (error) {
       console.error('Error al actualizar los datos:', error);
@@ -54,7 +54,10 @@ export class ConfiguracionPage implements OnInit {
     const user = this.registrologinService.getCurrentUser();
     if (user) {
       user.imagen = this.imagenAvatar; // Actualiza la propiedad imagen del usuario actual
+      await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio con la nueva imagen
     }
+
+    this.router.navigate(['/inicio']); // Redirigir a la página de inicio después de seleccionar la imagen
   };
 
   goToDonas(){

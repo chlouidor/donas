@@ -18,7 +18,6 @@
   </ion-header>
 </ion-content>
 
-
 <ion-menu side="start" content-id="main-content">
   <ion-header>
     <ion-toolbar>
@@ -32,16 +31,15 @@
       <ion-item button (click)="goToNosotros()">Sobre Nosotros</ion-item>
     </ion-list>
 
-
     <ion-item button (click)="goToPerfil()" class="perfil-item">
       <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        <!-- Mostrar el avatar actualizado -->
+        <img alt="" [src]="registrologinService.getCurrentUser()?.imagen || 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
       </ion-avatar>
       <ion-label>Perfil</ion-label>
     </ion-item>
   </ion-content>
 </ion-menu>
-
 
 <ion-content id="main-content">
   <ion-header collapse="condense">
