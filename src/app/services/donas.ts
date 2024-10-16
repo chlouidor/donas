@@ -1,6 +1,6 @@
 export class Donas {
     iddona!: number;
-    imagen!: string;
+    imagen!: any;
     nombre!: string;
     precio!: number;
     descripcion!: string;

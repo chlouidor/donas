@@ -35,4 +35,9 @@ export class PerfilPage {
   goToLogin() {
     this.router.navigate(['/login']); // Redirigir al login
   }
+
+  goToDonas(){
+    this.router.navigate(['/lista-donas']); 
+  }
+
 }

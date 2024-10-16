@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Donas } from 'src/app/services/donas';  // Importar la interfaz de Donas
 
@@ -16,7 +17,7 @@ export class EditarDonaPage implements OnInit {
     nombre: '',
     precio: 0,
     descripcion: ''
-  }; 
+  };
 
   constructor(
     private router: Router, 
@@ -25,12 +26,23 @@ export class EditarDonaPage implements OnInit {
   ) {
     this.activedrouter.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation()?.extras.state) {
-        this.dona = this.router.getCurrentNavigation()?.extras?.state?.['dona'];  // Asignar los datos recibidos
+        this.dona = this.router.getCurrentNavigation()?.extras?.state?.['dona'];  
       }
     });
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+
+  async selectImage() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos 
+    });
+
+    this.dona.imagen = image.webPath;  
   }
 
   modificar() {

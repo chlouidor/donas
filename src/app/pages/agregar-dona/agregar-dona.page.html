@@ -14,8 +14,8 @@
 
 <ion-content>
     <ion-item>
-      <ion-label position="floating">Imagen URL</ion-label>
-      <ion-input [(ngModel)]="imagen" name="imagen"></ion-input>
+      <ion-button expand="full" (click)="selectImage()">Seleccionar Imagen</ion-button>
+      <img *ngIf="imagen" [src]="imagen" alt="Imagen de la dona" style="height: 150px; width: 150px;" />
     </ion-item>
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
