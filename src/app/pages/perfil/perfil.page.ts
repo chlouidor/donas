@@ -39,5 +39,4 @@ export class PerfilPage {
   goToDonas(){
     this.router.navigate(['/lista-donas']); 
   }
-
 }

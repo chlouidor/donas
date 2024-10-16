@@ -13,65 +13,65 @@ export class RegistrologinService {
     this.iniciarBaseDeDatos();
   }
 
-  // Inicializa la base de datos y crea la tabla si no existe
-  async iniciarBaseDeDatos() {
-    try {
-      const db = await this.sqlite.create({
-        name: 'usuarios.db',
-        location: 'default'
-      });
+  
+async iniciarBaseDeDatos() {
+try {
+const db = await this.sqlite.create({
+name: 'usuarios.db',
+location: 'default'
+});
 
-      this.basededatos = db;
+this.basededatos = db;
 
-      await this.basededatos.executeSql(`CREATE TABLE IF NOT EXISTS usuarios (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          username TEXT,
-          email TEXT UNIQUE,
-          password TEXT
-        )`, []);
+await this.basededatos.executeSql(`CREATE TABLE IF NOT EXISTS usuarios (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+username TEXT,
+email TEXT UNIQUE,
+password TEXT
+)`, []);
 
-      console.log('Base de datos iniciada y tabla usuarios creada.');
-    } catch (error) {
-      console.error('Error al inicializar la base de datos:', error);
-    }
-  }
+console.log('Base de datos iniciada y tabla usuarios creada.');
+} catch (error) {
+console.error('Error al inicializar la base de datos:', error);
+}
+}
 
-  // Registra un nuevo usuario en la base de datos
-  async registrarUsuario(username: string, email: string, password: string): Promise<void> {
-    try {
-      await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`, [username, email, password]);
-      console.log('Usuario registrado con éxito');
-    } catch (error) {
-      console.error('Error al registrar usuario:', error);
-      throw error; // Lanza el error para manejarlo en el componente
-    }
-  }
+// Registra un nuevo usuario en la base de datos
+async registrarUsuario(username: string, email: string, password: string): Promise<void> {
+try {
+await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`, [username, email, password]);
+console.log('Usuario registrado con éxito');
+} catch (error) {
+console.error('Error al registrar usuario:', error);
+throw error; // Lanza el error para manejarlo en el componente
+}
+}
 
-  // Inicia sesión verificando las credenciales del usuario
-  async loginUsuario(email: string, password: string): Promise<boolean> {
-    try {
-      const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
-      
-      if (result?.rows.length > 0) {
-        this.currentUser = result.rows.item(0); // Almacena el usuario actual
-        return true; // Usuario encontrado
-      } else {
-        return false; // Usuario no encontrado
-      }
-    } catch (error) {
-      console.error('Error al verificar credenciales:', error);
-      return false;
-    }
-  }
+// Inicia sesión verificando las credenciales del usuario
+async loginUsuario(email: string, password: string): Promise<boolean> {
+try {
+const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
 
-  // Obtiene el usuario actual
-  getCurrentUser() {
-    return this.currentUser; // Método para obtener el usuario actual
-  }
+if (result?.rows.length > 0) {
+this.currentUser = result.rows.item(0); // Almacena el usuario actual
+return true; // Usuario encontrado
+} else {
+return false; // Usuario no encontrado
+}
+} catch (error) {
+console.error('Error al verificar credenciales:', error);
+return false;
+}
+}
 
-  // Desconecta al usuario actual
-  logOut() {
-    this.currentUser = null; // Desconectar usuario
-  }
+// Obtiene el usuario actual
+getCurrentUser() {
+return this.currentUser; // Método para obtener el usuario actual
+}
+
+// Desconecta al usuario actual
+logOut() {
+this.currentUser = null; // Desconectar usuario
+}
 
 }

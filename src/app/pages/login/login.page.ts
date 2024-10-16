@@ -23,6 +23,7 @@ export class LoginPage {
       console.log('Credenciales incorrectas'); // Mensaje para depuración
     } else {
       this.loginError = false; // Resetea el error si las credenciales son correctas
+      console.log('Inicio de sesión exitoso'); // Mensaje para depuración
       this.router.navigate(['/perfil']); // Redirige a la página de perfil después del inicio de sesión
     }
   }
