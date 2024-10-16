@@ -9,13 +9,13 @@
           <ion-card-title>Detalles del Pago</ion-card-title>
         </ion-card-header>
         <ion-card-content>
+          <p><strong>Nombre del Cliente:</strong> {{ nombreCliente }}</p>
+          <p><strong>Fecha de Emisión:</strong> {{ fechaEmision }}</p>
           <p><strong>Producto:</strong> {{ Nombre }}</p>
-          <p><strong>Precio:</strong> ${{ Precio | number:'1.3-3'}}</p>
+          <p><strong>Precio:</strong> ${{ Precio | number:'1.3-3' }}</p>
         </ion-card-content>
       </ion-card>
     </div>
-    <ion-button color="dark" [routerLink]="['/inicio']" >Volver a Comprar</ion-button> 
-
-  
+    <ion-button color="dark" [routerLink]="['/inicio']">Volver a Comprar</ion-button>
   </div>
 </ion-content>

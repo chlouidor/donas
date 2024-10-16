@@ -1,0 +1,42 @@
+.configuracion-content {
+    --background:  rgb(219, 161, 240); 
+    padding: 16px; 
+  }
+  
+  .config-form {
+    margin-top: 20px; 
+  }
+  
+  .avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0; 
+  }
+  
+  .avatar-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px; 
+  }
+  
+  .avatar-image {
+    height: 250px;
+    width: 250px;
+    border-radius: 125px; 
+    border: 2px solid #ccc; 
+    margin-bottom: 10px; 
+  }
+  
+  .error-message {
+    color: red; 
+    text-align: center; 
+    margin-top: 10px; 
+  }
+  
+  .donas-link {
+    margin-top: 20px; 
+    --background: #e0e0e0; 
+    --color: #333; 
+  }
+  

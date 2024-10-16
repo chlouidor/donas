@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { RegistrologinService } from './services/registrologin.service'; // Importa el servicio
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private router: Router, private menuCtrl: MenuController) { }
+  constructor(private router: Router, private menuCtrl: MenuController, public registrologinService: RegistrologinService ){}
 
   goToInicio() {
     this.router.navigate(['/inicio']);

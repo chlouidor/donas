@@ -26,6 +26,9 @@ export class PerfilPage {
   goToSettings() {
     this.router.navigate(['/configuracion']); // Navega a la página de configuración
   }
+  goToCompras(){
+    this.router.navigate(['/mis-compras']); // Navega a la página de configuración
+  }
 
   logOut() {
     // Lógica para cerrar sesión
@@ -33,6 +36,7 @@ export class PerfilPage {
     console.log('Sesión cerrada');
     this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
   }
+
 
   goToLogin() {
     this.router.navigate(['/login']); // Redirigir al login

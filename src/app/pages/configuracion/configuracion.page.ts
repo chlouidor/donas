@@ -46,17 +46,18 @@ export class ConfiguracionPage implements OnInit {
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Photos // Selecciona la imagen desde la galería del dispositivo
+      source: CameraSource.Photos
     });
-
+  
     this.imagenAvatar = image.webPath; // Asigna la imagen seleccionada a la variable
-
+  
     const user = this.registrologinService.getCurrentUser();
     if (user) {
       user.imagen = this.imagenAvatar; // Actualiza la propiedad imagen del usuario actual
       await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio con la nueva imagen
     }
 
+  
     this.router.navigate(['/inicio']); // Redirigir a la página de inicio después de seleccionar la imagen
   };
 
@@ -64,3 +65,4 @@ export class ConfiguracionPage implements OnInit {
     this.router.navigate(['/lista-donas']); 
   }
 }
+

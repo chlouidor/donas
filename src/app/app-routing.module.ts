@@ -73,6 +73,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/configuracion/configuracion.module').then( m => m.ConfiguracionPageModule)
   },
   {
+    path: 'mis-compras',
+    loadChildren: () => import('./pages/mis-compras/mis-compras.module').then( m => m.MisComprasPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'not-found', 
     pathMatch: 'full'
