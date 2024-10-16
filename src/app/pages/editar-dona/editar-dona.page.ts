@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServicebdService } from 'src/app/services/servicebd.service';
-import { Donas } from 'src/app/services/donas';  // Importar la interfaz de Donas
+import { Donas } from 'src/app/services/donas';  
 
 @Component({
   selector: 'app-editar-dona',

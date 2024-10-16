@@ -6,7 +6,7 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 })
 export class RegistrologinService {
   private basededatos?: SQLiteObject;
-  private currentUser: { id: number; username: string; email: string } | null = null; // Almacena el usuario actual
+  private currentUser: { id: number; username: string; email: string; imagen?: string } | null = null; // Almacena el usuario actual
 
   constructor(private sqlite: SQLite) {
     this.iniciarBaseDeDatos();
@@ -26,7 +26,8 @@ export class RegistrologinService {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           username TEXT,
           email TEXT UNIQUE,
-          password TEXT
+          password TEXT,
+          imagen TEXT
         )`, []);
 
       console.log('Base de datos iniciada y tabla usuarios creada.');
