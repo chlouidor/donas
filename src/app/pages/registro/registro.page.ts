@@ -30,4 +30,8 @@ export class RegistroPage {
       }
     }
   }
+
+  goToLogin() {
+    this.router.navigate(['/login']); // Redirigir a la página de inicio de sesión
+  }
 }

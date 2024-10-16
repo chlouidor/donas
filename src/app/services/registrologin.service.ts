@@ -9,13 +9,11 @@ export class RegistrologinService {
   private basededatos?: SQLiteObject;
   private currentUser: { username: string; email: string } | null = null; // Almacena el usuario actual
 
-  private listadoUsuarios: BehaviorSubject<{ username: string; email: string; password: string; }[]> = 
-    new BehaviorSubject<{ username: string; email: string; password: string; }[]>([]);
-
   constructor(private sqlite: SQLite) {
     this.iniciarBaseDeDatos();
   }
 
+  // Inicializa la base de datos y crea la tabla si no existe
   async iniciarBaseDeDatos() {
     try {
       const db = await this.sqlite.create({
@@ -28,7 +26,7 @@ export class RegistrologinService {
       await this.basededatos.executeSql(`CREATE TABLE IF NOT EXISTS usuarios (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           username TEXT,
-          email TEXT,
+          email TEXT UNIQUE,
           password TEXT
         )`, []);
 
@@ -38,17 +36,18 @@ export class RegistrologinService {
     }
   }
 
+  // Registra un nuevo usuario en la base de datos
   async registrarUsuario(username: string, email: string, password: string): Promise<void> {
     try {
       await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`, [username, email, password]);
       console.log('Usuario registrado con éxito');
-      this.listadoUsuarios.next(await this.obtenerUsuarios());
     } catch (error) {
       console.error('Error al registrar usuario:', error);
-      throw error;
+      throw error; // Lanza el error para manejarlo en el componente
     }
   }
 
+  // Inicia sesión verificando las credenciales del usuario
   async loginUsuario(email: string, password: string): Promise<boolean> {
     try {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
@@ -65,25 +64,14 @@ export class RegistrologinService {
     }
   }
 
+  // Obtiene el usuario actual
   getCurrentUser() {
     return this.currentUser; // Método para obtener el usuario actual
   }
 
+  // Desconecta al usuario actual
   logOut() {
     this.currentUser = null; // Desconectar usuario
   }
 
-  async obtenerUsuarios(): Promise<{ username: string; email: string; password: string; }[]> {
-    try {
-      const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios`, []);
-      const usuarios = [];
-      for (let i = 0; i < result?.rows.length; i++) {
-        usuarios.push(result.rows.item(i));
-      }
-      return usuarios;
-    } catch (error) {
-      console.error('Error al obtener usuarios:', error);
-      return [];
-    }
-  }
 }

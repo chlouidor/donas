@@ -15,17 +15,19 @@ export class LoginPage {
   constructor(private router: Router, private registrologinService: RegistrologinService) {}
 
   async login() {
+    console.log('Intentando iniciar sesión con:', this.email, this.password); // Mensaje para depuración
     const isValid = await this.registrologinService.loginUsuario(this.email, this.password);
     
     if (!isValid) {
-      this.loginError = true;
+      this.loginError = true; // Muestra un mensaje si las credenciales son incorrectas
+      console.log('Credenciales incorrectas'); // Mensaje para depuración
     } else {
-      this.loginError = false;
-      this.router.navigate(['/perfil']); 
+      this.loginError = false; // Resetea el error si las credenciales son correctas
+      this.router.navigate(['/perfil']); // Redirige a la página de perfil después del inicio de sesión
     }
   }
 
   goToRegister() {
-    this.router.navigate(['/registro']); 
+    this.router.navigate(['/registro']); // Redirige a la página de registro
   }
 }
