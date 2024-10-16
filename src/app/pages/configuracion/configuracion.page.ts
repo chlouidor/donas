@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; // Importar Camera
 
 @Component({
   selector: 'app-configuracion',
@@ -10,6 +11,7 @@ import { RegistrologinService } from 'src/app/services/registrologin.service';
 export class ConfiguracionPage implements OnInit {
   username: string | undefined;
   email: string | undefined;
+  imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
   updateError: boolean = false;
 
   constructor(private router: Router, private registrologinService: RegistrologinService) {}
@@ -19,6 +21,7 @@ export class ConfiguracionPage implements OnInit {
     if (user) {
       this.username = user.username; // Asigna el nombre de usuario
       this.email = user.email; // Asigna el correo electrónico
+      this.imagenAvatar = user.imagen || ''; // Asigna la imagen del avatar si existe
     }
   }
 
@@ -32,6 +35,18 @@ export class ConfiguracionPage implements OnInit {
       this.updateError = true; // Muestra un mensaje de error si falla la actualización
     }
   }
+
+  // Función para seleccionar imagen desde el dispositivo
+  selectImage = async () => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos // Selecciona la imagen desde la galería del dispositivo
+    });
+
+    this.imagenAvatar = image.webPath; // Asigna la imagen seleccionada a la variable
+  };
 
   goToDonas(){
     this.router.navigate(['/lista-donas']); 

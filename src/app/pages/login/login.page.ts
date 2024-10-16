@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
+import { ToastController } from '@ionic/angular'; // Importar ToastController
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginPage {
   password: string = '';
   loginError: boolean = false;
 
-  constructor(private router: Router, private registrologinService: RegistrologinService) {}
+  constructor(private router: Router, private registrologinService: RegistrologinService, private toastController: ToastController) {}
 
   async login() {
     console.log('Intentando iniciar sesión con:', this.email, this.password); // Mensaje para depuración
@@ -24,7 +25,17 @@ export class LoginPage {
     } else {
       this.loginError = false; // Resetea el error si las credenciales son correctas
       console.log('Inicio de sesión exitoso'); // Mensaje para depuración
-      this.router.navigate(['/perfil']); // Redirige a la página de perfil después del inicio de sesión
+      
+      // Mostrar mensaje de éxito
+      const toast = await this.toastController.create({
+        message: 'Has iniciado sesión correctamente.',
+        duration: 2000,
+        position: 'top',
+        color: 'success'
+      });
+      toast.present();
+
+      this.router.navigate(['/inicio']); // Redirige a la página de inicio después del inicio de sesión
     }
   }
 

@@ -19,6 +19,13 @@
       <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
     </ion-item>
 
+    <!-- Sección para cambiar el avatar -->
+    <div class="avatar-section">
+      <h2>Cambiar Avatar</h2>
+      <img *ngIf="imagenAvatar" [src]="imagenAvatar" alt="Avatar del usuario" style="height: 250px; width: 250px;"/>
+      <ion-button (click)="selectImage()">Seleccionar Imagen</ion-button>
+    </div>
+
     <div *ngIf="updateError" class="error-message">
       Error al actualizar la cuenta. Por favor, inténtalo nuevamente.
     </div>
