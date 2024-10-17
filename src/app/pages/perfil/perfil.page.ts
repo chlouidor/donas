@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
+import { ToastController } from '@ionic/angular'; // Importar ToastController
 
 @Component({
   selector: 'app-perfil',
@@ -13,7 +14,7 @@ export class PerfilPage {
   imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
   isLoggedIn: boolean = false; // Verifica si el usuario está logueado
 
-  constructor(private router: Router, private registrologinService: RegistrologinService) {
+  constructor(private router: Router, private registrologinService: RegistrologinService, private toastController: ToastController) {
     const user = this.registrologinService.getCurrentUser(); // Obtiene el usuario actual
     if (user) {
       this.username = user.username; // Asigna el nombre de usuario
@@ -26,19 +27,33 @@ export class PerfilPage {
   goToSettings() {
     this.router.navigate(['/configuracion']); // Navega a la página de configuración
   }
-  goToCompras(){
-    this.router.navigate(['/mis-compras']); // Navega a la página de configuración
-  }
 
-  logOut() {
+  async logOut() {
     // Lógica para cerrar sesión
     this.registrologinService.logOut(); // Desconecta al usuario en el servicio
     console.log('Sesión cerrada');
-    this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
-  }
 
+    // Mostrar mensaje de éxito
+    const toast = await this.toastController.create({
+      message: 'Has cerrado sesión correctamente.',
+      duration: 2000,
+      position: 'top',
+      color: 'success'
+    });
+    toast.present();
+
+    this.router.navigate(['/inicio']); // Redirige a la página de inicio después de cerrar sesión
+  }
 
   goToLogin() {
     this.router.navigate(['/login']); // Redirigir al login
+  }
+
+  goToDonas() {
+    this.router.navigate(['/lista-donas']); 
+  }
+
+  goToCompras() {
+    this.router.navigate(['/compras']); // Redirigir a la página de compras (ajusta la ruta según tu aplicación)
   }
 }

@@ -1,14 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/perfil"></ion-back-button> 
+      <ion-back-button defaultHref="/perfil"></ion-back-button> <!-- Botón de retroceso -->
     </ion-buttons>
     <ion-title>Configuración</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="configuracion-content">
-  <form (ngSubmit)="actualizarDatos()" class="config-form">
+<ion-content [fullscreen]="true">
+  <form (ngSubmit)="actualizarDatos()">
     <ion-item>
       <ion-label position="floating">Nombre de usuario</ion-label>
       <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
@@ -19,10 +19,11 @@
       <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
     </ion-item>
 
+    <!-- Sección para cambiar el avatar -->
     <div class="avatar-section">
-      <p class="avatar-title">Cambiar Avatar</p>
-      <img *ngIf="imagenAvatar" [src]="imagenAvatar" alt="Avatar del usuario" class="avatar-image"/>
-      <ion-button expand="full" (click)="selectImage()">Seleccionar Imagen</ion-button>
+      <h2>Cambiar Avatar</h2>
+      <img *ngIf="imagenAvatar" [src]="imagenAvatar" alt="Avatar del usuario" style="height: 250px; width: 250px;"/>
+      <ion-button (click)="selectImage()">Seleccionar Imagen</ion-button>
     </div>
 
     <div *ngIf="updateError" class="error-message">
@@ -32,7 +33,7 @@
     <ion-button expand="full" color="success" type="submit">Actualizar Cuenta</ion-button>
   </form>
 
-  <ion-item button class="donas-link" (click)="goToDonas()">
+  <ion-item button (click)="goToDonas()">
     <ion-icon slot="start" name="settings-outline"></ion-icon>
     <ion-label>Lista Donas</ion-label>
   </ion-item>

@@ -6,13 +6,12 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 })
 export class RegistrologinService {
   private basededatos?: SQLiteObject;
-  private currentUser: { id: number; username: string; email: string; imagen?: string } | null = null; // Almacena el usuario actual
+  private currentUser: { id: number; username: string; email: string; imagen?: string; rol: number } | null = null;
 
   constructor(private sqlite: SQLite) {
     this.iniciarBaseDeDatos();
   }
 
-  // Inicializa la base de datos y crea la tabla si no existe
   async iniciarBaseDeDatos() {
     try {
       const db = await this.sqlite.create({
@@ -22,24 +21,39 @@ export class RegistrologinService {
 
       this.basededatos = db;
 
+      // Crear tabla de roles
+      await this.basededatos.executeSql(`CREATE TABLE IF NOT EXISTS roles (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nombre TEXT UNIQUE NOT NULL
+        )`, []);
+      
+      // Insertar roles (usuario y admin) solo si no existen
+      await this.basededatos.executeSql(`INSERT INTO roles (nombre) VALUES ('usuario'), ('admin') ON CONFLICT(nombre) DO NOTHING`, []);
+
+      // Crear tabla de usuarios
       await this.basededatos.executeSql(`CREATE TABLE IF NOT EXISTS usuarios (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           username TEXT,
           email TEXT UNIQUE,
           password TEXT,
-          imagen TEXT
+          imagen TEXT,
+          rol INTEGER DEFAULT 1 REFERENCES roles(id)
         )`, []);
 
-      console.log('Base de datos iniciada y tabla usuarios creada.');
+      console.log('Base de datos iniciada y tablas creadas.');
+
+      // Registrar administrador si no existe
+      await this.registrarAdmin();
+
     } catch (error) {
       console.error('Error al inicializar la base de datos:', error);
     }
   }
 
-  // Registra un nuevo usuario en la base de datos
-  async registrarUsuario(username: string, email: string, password: string): Promise<void> {
+  // Método para registrar un nuevo usuario
+  async registrarUsuario(username: string, email: string, password: string, rol: number): Promise<void> {
     try {
-      await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`, [username, email, password]);
+      await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)`, [username, email, password, rol]);
       console.log('Usuario registrado con éxito');
     } catch (error) {
       console.error('Error al registrar usuario:', error);
@@ -47,7 +61,33 @@ export class RegistrologinService {
     }
   }
 
-  // Inicia sesión verificando las credenciales del usuario
+  // Método para registrar un administrador
+  async registrarAdmin() {
+    const adminEmail = 'admin@gmail.com';
+    const adminPassword = 'asdqwe123';
+    const adminUsername = 'Admin'; // Nombre de usuario para el admin
+    const adminRoleId = 2; // Suponiendo que '2' es el rol para admin
+
+    try {
+      const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ?`, [adminEmail]);
+      
+      if (result?.rows.length === 0) { // Solo registrar si no existe
+        await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)`, [adminUsername, adminEmail, adminPassword, adminRoleId]);
+        console.log('Administrador registrado con éxito');
+      } else {
+        console.log('El administrador ya existe en la base de datos.');
+      }
+    } catch (error) {
+      console.error('Error al registrar el administrador:', error);
+    }
+  }
+
+  // Método para obtener el usuario actual
+  getCurrentUser() {
+    return this.currentUser; // Retorna el usuario actual
+  }
+
+  // Método para iniciar sesión
   async loginUsuario(email: string, password: string): Promise<boolean> {
     try {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
@@ -64,17 +104,12 @@ export class RegistrologinService {
     }
   }
 
-  // Obtiene el usuario actual
-  getCurrentUser() {
-    return this.currentUser; // Método para obtener el usuario actual
-  }
-
-  // Desconecta al usuario actual
+  // Método para cerrar sesión
   logOut() {
     this.currentUser = null; // Desconectar usuario
   }
 
-  // Actualiza los datos del usuario en la base de datos
+  // Método para actualizar los datos del usuario
   async actualizarUsuario(username: string, email: string): Promise<void> {
     if (!this.currentUser) throw new Error('No hay usuario logueado');
 

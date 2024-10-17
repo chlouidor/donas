@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Donas } from 'src/app/services/donas';  
+import { RegistrologinService } from 'src/app/services/registrologin.service'; // Importar el servicio
 
 @Component({
   selector: 'app-editar-dona',
@@ -20,10 +21,19 @@ export class EditarDonaPage implements OnInit {
   };
 
   constructor(
-    private router: Router, 
-    private activedrouter: ActivatedRoute, 
-    private bd: ServicebdService
+    private router: Router,
+    private activedrouter: ActivatedRoute,
+    private bd: ServicebdService,
+    private registrologinService: RegistrologinService // Inyectar el servicio
   ) {
+    const user = this.registrologinService.getCurrentUser();
+    
+    // Verificar si el usuario es admin
+    if (!user || user.rol !== 2) { // Suponiendo que '2' es el rol para admin
+      this.router.navigate(['/inicio']); // Redirigir si no es admin
+      return; // Salir del constructor
+    }
+
     this.activedrouter.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation()?.extras.state) {
         this.dona = this.router.getCurrentNavigation()?.extras?.state?.['dona'];  
@@ -32,7 +42,6 @@ export class EditarDonaPage implements OnInit {
   }
 
   ngOnInit() {}
-
 
   async selectImage() {
     const image = await Camera.getPhoto({

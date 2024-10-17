@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RegistrologinService } from 'src/app/services/registrologin.service'; // Asegúrate de importar el servicio
+import { RegistrologinService } from 'src/app/services/registrologin.service'; 
 
 @Component({
   selector: 'app-comprar',
@@ -22,7 +22,6 @@ export class ComprarPage implements OnInit {
         this.Precio = +this.router.getCurrentNavigation()?.extras.state?.['pre']; 
         this.Imagen = this.router.getCurrentNavigation()?.extras.state?.['imag'];
 
-        
         const user = this.registrologinService.getCurrentUser(); 
         this.nombreCliente = user ? user.username : 'Cliente Desconocido'; 
       }
@@ -42,6 +41,5 @@ export class ComprarPage implements OnInit {
     this.router.navigate(['/confirmpago'], navigationExtras);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

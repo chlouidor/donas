@@ -13,6 +13,7 @@ export class RegistroPage {
   password: string = '';
   confirmPassword: string = '';
   confirmPasswordError: boolean = false;
+  rol: number = 1; // Por defecto, rol de usuario
 
   constructor(private registrologinService: RegistrologinService, private router: Router) {}
 
@@ -21,7 +22,7 @@ export class RegistroPage {
 
     if (!this.confirmPasswordError) {
       try {
-        await this.registrologinService.registrarUsuario(this.username, this.email, this.password);
+        await this.registrologinService.registrarUsuario(this.username, this.email, this.password, this.rol);
         console.log('Registro exitoso');
         this.router.navigate(['/login']); // Redirigir a la página de inicio de sesión después del registro
       } catch (error) {

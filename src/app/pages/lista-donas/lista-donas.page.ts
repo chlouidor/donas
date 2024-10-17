@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Donas } from 'src/app/services/donas'; 
+import { RegistrologinService } from 'src/app/services/registrologin.service'; // Importar el servicio
 
 @Component({
   selector: 'app-lista-donas',
@@ -11,10 +12,15 @@ import { Donas } from 'src/app/services/donas';
 export class ListaDonasPage implements OnInit {
 
   listaDonas: Donas[] = [];
+  isAdmin: boolean = false; // Variable para verificar si el usuario es admin
 
-  constructor(private bd: ServicebdService, private router: Router) { }
+  constructor(private bd: ServicebdService, private router: Router, private registrologinService: RegistrologinService) { }
 
   ngOnInit() {
+    // Verificar si el usuario es admin
+    const user = this.registrologinService.getCurrentUser();
+    this.isAdmin = user !== null && user.rol === 2; // Asegúrate de que user no sea null
+
     this.bd.dbState().subscribe((isReady) => {
       if (isReady) {
         this.bd.fetchDonas().subscribe(donas => {

@@ -23,10 +23,11 @@
       </ion-item>
 
       <ion-item-options side="end">
-        <ion-item-option color="primary" (click)="modificar(dona)">
+        <!-- Mostrar opciones Editar y Eliminar solo si el usuario es admin -->
+        <ion-item-option color="primary" *ngIf="isAdmin" (click)="modificar(dona)">
           <ion-icon slot="icon-only" name="pencil"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="danger" (click)="eliminar(dona)">
+        <ion-item-option color="danger" *ngIf="isAdmin" (click)="eliminar(dona)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>
