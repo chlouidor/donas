@@ -16,10 +16,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
   },
   {
-    path: 'compras',
-    loadChildren: () => import('./pages/compras/compras.module').then( m => m.ComprasPageModule)
-  },
-  {
     path: 'agregar-dona',
     loadChildren: () => import('./pages/agregar-dona/agregar-dona.module').then( m => m.AgregarDonaPageModule)
   },

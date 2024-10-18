@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button> <!-- Botón de retroceso -->
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Perfil</ion-title>
   </ion-toolbar>
@@ -13,26 +13,28 @@
       <img [src]="imagenAvatar || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar del usuario">
     </ion-avatar>
     <h2>{{ username }}</h2>
-    <p>{{ email }}</p> 
-    
+    <p>{{ email }}</p>
+
+    <!-- Botón de Editar Donas, solo visible para administradores -->
+    <ion-button *ngIf="isAdmin" (click)="goToDonas()" expand="full"> Editar Donas </ion-button>
+
     <ion-list>
       <ion-item button (click)="goToSettings()">
         <ion-icon slot="start" name="settings-outline"></ion-icon>
         <ion-label>Configuración</ion-label>
       </ion-item>
-      <ion-item button (click)="goToCompras()">
-        <ion-icon slot="start" name="cart-outline"></ion-icon>
-        <ion-label>Mis Compras</ion-label> 
-      </ion-item>
       <ion-item button (click)="logOut()">
         <ion-icon slot="start" name="log-out-outline"></ion-icon>
         <ion-label>Cerrar Sesión</ion-label>
       </ion-item>
-
+      <ion-item button (click)="goToCompras()">
+        <ion-icon slot="start" name="cart-outline"></ion-icon>
+        <ion-label>Mis Compras</ion-label>
+      </ion-item>
     </ion-list>
   </div>
 
-  
+  <!-- Mensaje y botón de iniciar sesión si no hay sesión activa -->
   <ng-template #noSession>
     <div class="no-session-message">
       <p>No has iniciado sesión.</p>
