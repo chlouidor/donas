@@ -50,7 +50,6 @@ export class RegistrologinService {
     }
   }
 
-  // Método para registrar un nuevo usuario
   async registrarUsuario(username: string, email: string, password: string, rol: number): Promise<void> {
     try {
       console.log('Verificando si el correo electrónico ya está en uso...');
@@ -70,7 +69,6 @@ export class RegistrologinService {
     }
   }
 
-  // Método para registrar un administrador
   async registrarAdmin() {
     const adminEmail = 'admin@gmail.com';
     const adminPassword = 'asdqwe123';
@@ -91,12 +89,10 @@ export class RegistrologinService {
     }
   }
 
-  // Método para obtener el usuario actual
   getCurrentUser() {
     return this.currentUser; // Retorna el usuario actual
   }
 
-  // Método para iniciar sesión
   async loginUsuario(email: string, password: string): Promise<boolean> {
     try {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
@@ -113,12 +109,10 @@ export class RegistrologinService {
     }
   }
 
-  // Método para cerrar sesión
   logOut() {
     this.currentUser = null; // Desconectar usuario
   }
 
-  // Método para actualizar los datos del usuario
   async actualizarUsuario(username: string, email: string): Promise<void> {
     if (!this.currentUser) throw new Error('No hay usuario logueado');
 
