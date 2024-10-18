@@ -17,6 +17,7 @@ export class RegistroPage {
   constructor(private registrologinService: RegistrologinService, private router: Router) {}
 
   async registrar() {
+    // Verifica si las contraseñas coinciden
     this.confirmPasswordError = this.password !== this.confirmPassword;
 
     if (!this.confirmPasswordError) {
