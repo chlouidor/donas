@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button> <!-- Botón de retroceso -->
+      <ion-back-button defaultHref="/login"></ion-back-button>
     </ion-buttons>
     <ion-title>Registro</ion-title>
   </ion-toolbar>
@@ -34,8 +34,9 @@
     </div>
 
     <ion-button expand="full" color="success" type="submit">Registrarse</ion-button>
-  </form>
+    
+   <!-- Botón para registrarse -->
+   <ion-button expand="full" (click)="goToLogin()">¿Ya tienes una cuenta? Inicia sesión aquí</ion-button>
 
-  <!-- Botón para registrarse -->
-  <ion-button expand="full" (click)="goToLogin()">¿Ya tienes una cuenta? Inicia sesión aquí</ion-button>
+   </form>
 </ion-content>
