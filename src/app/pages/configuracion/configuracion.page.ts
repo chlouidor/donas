@@ -69,7 +69,5 @@ export class ConfiguracionPage implements OnInit {
     this.imagenAvatar = image.webPath; // Asigna la imagen seleccionada a la variable
   };
 
-  goToDonas(){
-    this.router.navigate(['/lista-donas']); 
-  }
+
 }
