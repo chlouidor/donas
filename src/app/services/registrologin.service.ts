@@ -6,7 +6,7 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 })
 export class RegistrologinService {
   private basededatos?: SQLiteObject;
-  private currentUser: { id: number; username: string; email: string; imagen?: string; rol: string } | null = null;
+  private currentUser: { id: number; username: string; email: string; imagen?: string; rol: string } | null = null; // Almacena el usuario actual
 
   constructor(private sqlite: SQLite) {
     this.iniciarBaseDeDatos();
@@ -28,7 +28,7 @@ export class RegistrologinService {
           email TEXT UNIQUE,
           password TEXT,
           imagen TEXT,
-          rol TEXT DEFAULT 'usuario'
+          rol TEXT DEFAULT 'usuario' // Campo para el rol del usuario
         )`, []);
 
       console.log('Base de datos iniciada y tabla usuarios creada.');
@@ -39,14 +39,14 @@ export class RegistrologinService {
 
   // Registra un nuevo usuario en la base de datos
   async registrarUsuario(username: string, email: string, password: string): Promise<void> {
-    const rol = username.toLowerCase() === 'admin' ? 'admin' : 'usuario';
+    const rol = username.toLowerCase() === 'admin' ? 'admin' : 'usuario'; // Asigna rol basado en el nombre de usuario
 
     try {
       await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)`, [username, email, password, rol]);
       console.log('Usuario registrado con éxito');
     } catch (error) {
       console.error('Error al registrar usuario:', error);
-      throw error;
+      throw error; // Lanza el error para manejarlo en el componente
     }
   }
 
@@ -56,10 +56,10 @@ export class RegistrologinService {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
       
       if (result?.rows.length > 0) {
-        this.currentUser = result.rows.item(0);
-        return true;
+        this.currentUser = result.rows.item(0); // Almacena el usuario actual
+        return true; // Usuario encontrado
       } else {
-        return false;
+        return false; // Usuario no encontrado
       }
     } catch (error) {
       console.error('Error al verificar credenciales:', error);
@@ -69,12 +69,12 @@ export class RegistrologinService {
 
   // Obtiene el usuario actual
   getCurrentUser() {
-    return this.currentUser;
+    return this.currentUser; // Método para obtener el usuario actual
   }
 
   // Desconecta al usuario actual
   logOut() {
-    this.currentUser = null;
+    this.currentUser = null; // Desconectar usuario
   }
 
   // Actualiza los datos del usuario en la base de datos
@@ -91,7 +91,7 @@ export class RegistrologinService {
       console.log('Usuario actualizado con éxito');
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
-      throw error;
+      throw error; // Lanza el error para manejarlo en el componente
     }
   }
 
