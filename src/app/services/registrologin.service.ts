@@ -53,13 +53,15 @@ export class RegistrologinService {
   // Método para registrar un nuevo usuario
   async registrarUsuario(username: string, email: string, password: string, rol: number): Promise<void> {
     try {
-      // Verificar si el correo electrónico ya está en uso
+      console.log('Verificando si el correo electrónico ya está en uso...');
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ?`, [email]);
       
       if (result?.rows.length > 0) {
+        console.error('El correo electrónico ya está en uso.');
         throw new Error('El correo electrónico ya está en uso.');
       }
 
+      console.log('Registrando nuevo usuario...');
       await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)`, [username, email, password, rol]);
       console.log('Usuario registrado con éxito');
     } catch (error) {
