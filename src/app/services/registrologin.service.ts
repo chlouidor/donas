@@ -6,12 +6,13 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 })
 export class RegistrologinService {
   private basededatos?: SQLiteObject;
-  private currentUser: { id: number; username: string; email: string; imagen?: string; rol: number } | null = null;
+  private currentUser: { id: number; username: string; email: string; imagen?: string; rol: number } | null = null; // Almacena el usuario actual
 
   constructor(private sqlite: SQLite) {
     this.iniciarBaseDeDatos();
   }
 
+  // Inicializa la base de datos y crea las tablas si no existen
   async iniciarBaseDeDatos() {
     try {
       const db = await this.sqlite.create({
@@ -41,26 +42,14 @@ export class RegistrologinService {
         )`, []);
 
       console.log('Base de datos iniciada y tablas creadas.');
-
-      // Registrar administrador si no existe
-      await this.registrarAdmin();
-
     } catch (error) {
       console.error('Error al inicializar la base de datos:', error);
     }
   }
 
-  async registrarUsuario(username: string, email: string, password: string, rol: number): Promise<void> {
+  // Registra un nuevo usuario en la base de datos
+  async registrarUsuario(username: string, email: string, password: string, rol: number = 1): Promise<void> {
     try {
-      console.log('Verificando si el correo electrónico ya está en uso...');
-      const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ?`, [email]);
-      
-      if (result?.rows.length > 0) {
-        console.error('El correo electrónico ya está en uso.');
-        throw new Error('El correo electrónico ya está en uso.');
-      }
-
-      console.log('Registrando nuevo usuario...');
       await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)`, [username, email, password, rol]);
       console.log('Usuario registrado con éxito');
     } catch (error) {
@@ -69,30 +58,7 @@ export class RegistrologinService {
     }
   }
 
-  async registrarAdmin() {
-    const adminEmail = 'admin@gmail.com';
-    const adminPassword = 'asdqwe123';
-    const adminUsername = 'Admin'; // Nombre de usuario para el admin
-    const adminRoleId = 2; // Suponiendo que '2' es el rol para admin
-
-    try {
-      const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ?`, [adminEmail]);
-      
-      if (result?.rows.length === 0) { // Solo registrar si no existe
-        await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)`, [adminUsername, adminEmail, adminPassword, adminRoleId]);
-        console.log('Administrador registrado con éxito');
-      } else {
-        console.log('El administrador ya existe en la base de datos.');
-      }
-    } catch (error) {
-      console.error('Error al registrar el administrador:', error);
-    }
-  }
-
-  getCurrentUser() {
-    return this.currentUser; // Retorna el usuario actual
-  }
-
+  // Inicia sesión verificando las credenciales del usuario
   async loginUsuario(email: string, password: string): Promise<boolean> {
     try {
       const result = await this.basededatos?.executeSql(`SELECT * FROM usuarios WHERE email = ? AND password = ?`, [email, password]);
@@ -109,10 +75,17 @@ export class RegistrologinService {
     }
   }
 
+  // Obtiene el usuario actual
+  getCurrentUser() {
+    return this.currentUser; // Método para obtener el usuario actual
+  }
+
+  // Desconecta al usuario actual
   logOut() {
     this.currentUser = null; // Desconectar usuario
   }
 
+  // Actualiza los datos del usuario en la base de datos
   async actualizarUsuario(username: string, email: string): Promise<void> {
     if (!this.currentUser) throw new Error('No hay usuario logueado');
 
