@@ -12,6 +12,7 @@ export class PerfilPage {
   username: string | undefined;
   email: string | undefined;
   imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
+  selectedImage: string | undefined; // Variable para almacenar la imagen seleccionada
   isLoggedIn: boolean = false; // Verifica si el usuario está logueado
 
   constructor(private router: Router, private registrologinService: RegistrologinService, private toastController: ToastController) {
@@ -30,16 +31,54 @@ export class PerfilPage {
     }
   }
 
-  async logOut() {
+  cambiarImagen(event: any) {
+    const file = event.target.files[0]; // Obtiene el archivo seleccionado
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.selectedImage = e.target?.result as string; // Actualiza la vista con la nueva imagen seleccionada
+      };
+      reader.readAsDataURL(file); // Lee el archivo como URL de datos
+    }
+  }
+
+  async actualizarPerfil() {
+    try {
+      await this.registrologinService.actualizarUsuario(this.username!, this.email!, this.selectedImage); // Actualiza en el servicio
+      console.log('Perfil actualizado con éxito');
+
+      // Mostrar mensaje de éxito al actualizar el perfil
+      const toast = await this.toastController.create({
+        message: 'Perfil cambiado correctamente.',
+        duration: 3000, // Duración del mensaje (en milisegundos)
+        position: 'middle', // Posición del mensaje en la pantalla
+        color: 'success' // Color del toast
+      });
+      toast.present();
+
+      this.router.navigate(['/inicio']); // Redirige a la página de inicio después de actualizar el perfil
+    } catch (error) {
+      console.error('Error al actualizar el perfil:', error);
+      const toast = await this.toastController.create({
+        message: 'Error al actualizar el perfil. Intenta nuevamente.',
+        duration: 3000,
+        position: 'middle',
+        color: 'danger'
+      });
+      toast.present();
+    }
+  }
+
+  async logOut() { // Marcar como async aquí
     this.registrologinService.logOut(); // Desconecta al usuario en el servicio
     console.log('Sesión cerrada');
 
     // Mostrar mensaje de éxito al cerrar sesión
     const toast = await this.toastController.create({
       message: 'Has cerrado sesión correctamente.',
-      duration: 3000, // Duración del mensaje (en milisegundos)
-      position: 'middle', // Posición del mensaje en la pantalla
-      color: 'success' // Color del toast (puedes cambiarlo a 'danger' si es un error)
+      duration: 3000,
+      position: 'middle',
+      color: 'success'
     });
     toast.present();
 
@@ -56,38 +95,5 @@ export class PerfilPage {
 
   goToLogin() {
     this.router.navigate(['/login']); // Redirigir al login
-  }
-
-  async cambiarImagen(event: any) {
-    const file = event.target.files[0]; // Obtiene el archivo seleccionado
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        this.imagenAvatar = e.target?.result as string; // Actualiza la vista con la nueva imagen
-
-        try {
-          await this.registrologinService.actualizarUsuario(this.username!, this.email!, this.imagenAvatar); // Actualiza en el servicio
-          console.log('Imagen actualizada con éxito');
-
-          const toast = await this.toastController.create({
-            message: 'Imagen actualizada correctamente.',
-            duration: 3000,
-            position: 'top',
-            color: 'success'
-          });
-          toast.present();
-        } catch (error) {
-          console.error('Error al actualizar la imagen:', error);
-          const toast = await this.toastController.create({
-            message: 'Error al actualizar la imagen. Intenta nuevamente.',
-            duration: 3000,
-            position: 'top',
-            color: 'danger'
-          });
-          toast.present();
-        }
-      };
-      reader.readAsDataURL(file); // Lee el archivo como URL de datos
-    }
   }
 }
