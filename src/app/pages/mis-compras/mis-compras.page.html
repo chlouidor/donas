@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary"> 
+  <ion-toolbar color="dark"> 
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button> 
     </ion-buttons>
@@ -8,11 +8,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding"> 
-  <ion-header collapse="condense">
-    <ion-toolbar color="primary"> 
-      <ion-title size="large">Mis Compras</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <ion-list *ngIf="compras.length > 0">
     <ion-item *ngFor="let compra of compras" lines="full"> 

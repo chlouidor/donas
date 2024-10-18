@@ -36,11 +36,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/nosotros/nosotros.module').then( m => m.NosotrosPageModule)
   },
   {
-    path: 'poximos',
-    loadChildren: () => import('./pages/poximos/poximos.module').then( m => m.PoximosPageModule)
-  },
-
-  {
     path: 'comprar',
     loadChildren: () => import('./pages/comprar/comprar.module').then( m => m.ComprarPageModule)
   },

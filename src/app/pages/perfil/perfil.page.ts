@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
-import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -11,52 +10,35 @@ import { ToastController } from '@ionic/angular';
 export class PerfilPage {
   username: string | undefined;
   email: string | undefined;
-  imagenAvatar: string | undefined;
-  isLoggedIn: boolean = false;
-  isAdmin: boolean = false; // Variable para verificar si el usuario es admin
+  imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
+  isLoggedIn: boolean = false; // Verifica si el usuario está logueado
 
-  constructor(private router: Router, private registrologinService: RegistrologinService, private toastController: ToastController) {
-    const user = this.registrologinService.getCurrentUser();
-    
+  constructor(private router: Router, private registrologinService: RegistrologinService) {
+    const user = this.registrologinService.getCurrentUser(); // Obtiene el usuario actual
     if (user) {
-      this.username = user.username;
-      this.email = user.email;
-      this.imagenAvatar = user.imagen || '';
-      this.isLoggedIn = true;
-
-      // Verificar si el usuario es admin
-      this.isAdmin = user.rol === 2; // Suponiendo que '2' es el rol para admin
+      this.username = user.username; // Asigna el nombre de usuario
+      this.email = user.email; // Asigna el correo electrónico
+      this.imagenAvatar = user.imagen || ''; // Asigna la imagen del avatar si existe
+      this.isLoggedIn = true; // Indica que el usuario está logueado
     }
   }
 
   goToSettings() {
-    this.router.navigate(['/configuracion']);
+    this.router.navigate(['/configuracion']); // Navega a la página de configuración
+  }
+  goToCompras(){
+    this.router.navigate(['/mis-compras']); // Navega a la página de configuración
   }
 
-  async logOut() {
-    this.registrologinService.logOut();
+  logOut() {
+    // Lógica para cerrar sesión
+    this.registrologinService.logOut(); // Desconecta al usuario en el servicio
     console.log('Sesión cerrada');
-
-    const toast = await this.toastController.create({
-      message: 'Has cerrado sesión correctamente.',
-      duration: 2000,
-      position: 'top',
-      color: 'success'
-    });
-    toast.present();
-
-    this.router.navigate(['/inicio']);
+    this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
   }
+
 
   goToLogin() {
-    this.router.navigate(['/login']);
-  }
-
-  goToDonas() {
-    this.router.navigate(['/lista-donas']); 
-  }
-
-  goToCompras() {
-    this.router.navigate(['/compras']);
+    this.router.navigate(['/login']); // Redirigir al login
   }
 }

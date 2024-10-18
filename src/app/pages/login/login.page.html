@@ -1,12 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark"> 
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button> <!-- Botón de retroceso -->
+      <ion-back-button defaultHref="/"></ion-back-button> 
     </ion-buttons>
     <ion-title>Iniciar Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content>
   <div class="form-container">
@@ -26,11 +25,9 @@
       </div>
 
       <ion-button expand="full" color="primary" type="submit">Iniciar sesión</ion-button>
-
-      <!-- Texto que redirige al registro -->
-      <div class="register-link" (click)="goToRegister()" style="text-align: center; margin-top: 10px; cursor: pointer; color: blue; text-decoration: underline;">
-        ¿No tienes una cuenta? Regístrate aquí
-      </div>
     </form>
+
+    <!-- Botón para registrarse -->
+    <ion-button expand="full" (click)="goToRegister()">¿No tienes una cuenta? Regístrate aquí</ion-button>
   </div>
 </ion-content>

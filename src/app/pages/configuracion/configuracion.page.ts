@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; // Importar Camera
-import { ToastController } from '@ionic/angular'; // Importar ToastController
 
 @Component({
   selector: 'app-configuracion',
@@ -15,11 +14,7 @@ export class ConfiguracionPage implements OnInit {
   imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
   updateError: boolean = false;
 
-  constructor(
-    private router: Router,
-    private registrologinService: RegistrologinService,
-    private toastController: ToastController // Inyectar ToastController
-  ) {}
+  constructor(private router: Router, private registrologinService: RegistrologinService) {}
 
   ngOnInit() {
     const user = this.registrologinService.getCurrentUser(); // Obtiene el usuario actual
@@ -34,22 +29,10 @@ export class ConfiguracionPage implements OnInit {
     try {
       const user = this.registrologinService.getCurrentUser();
       if (user) {
-        // Actualiza los datos en el servicio
-        user.imagen = this.imagenAvatar; // Actualiza la propiedad imagen del usuario actual
+        // Solo actualiza si hay un usuario logueado
         await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio
-
         console.log('Datos actualizados con éxito');
-        
-        // Mostrar mensaje de éxito
-        const toast = await this.toastController.create({
-          message: 'Perfil cambiado con éxito.',
-          duration: 2000,
-          position: 'top',
-          color: 'success'
-        });
-        toast.present();
-
-        this.router.navigate(['/perfil']); // Redirigir a la página de perfil después de actualizar
+        this.router.navigate(['/inicio']); // Redirigir a la página de inicio después de actualizar
       }
     } catch (error) {
       console.error('Error al actualizar los datos:', error);
@@ -63,11 +46,22 @@ export class ConfiguracionPage implements OnInit {
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Photos // Selecciona la imagen desde la galería del dispositivo
+      source: CameraSource.Photos
     });
-
+  
     this.imagenAvatar = image.webPath; // Asigna la imagen seleccionada a la variable
+  
+    const user = this.registrologinService.getCurrentUser();
+    if (user) {
+      user.imagen = this.imagenAvatar; // Actualiza la propiedad imagen del usuario actual
+      await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio con la nueva imagen
+    }
+
+  
+    this.router.navigate(['/inicio']); // Redirigir a la página de inicio después de seleccionar la imagen
   };
 
-
+  goToDonas(){
+    this.router.navigate(['/lista-donas']); 
+  }
 }
