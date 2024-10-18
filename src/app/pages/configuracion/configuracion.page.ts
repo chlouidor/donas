@@ -12,6 +12,7 @@ export class ConfiguracionPage implements OnInit {
   username: string | undefined;
   email: string | undefined;
   imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
+  selectedImage: string | undefined; // Variable para almacenar la imagen seleccionada
   updateError: boolean = false;
 
   constructor(private router: Router, private registrologinService: RegistrologinService) {}
@@ -30,9 +31,11 @@ export class ConfiguracionPage implements OnInit {
       const user = this.registrologinService.getCurrentUser();
       if (user) {
         // Solo actualiza si hay un usuario logueado
-        await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio
+        await this.registrologinService.actualizarUsuario(this.username!, this.email!, this.selectedImage); // Actualiza los datos en el servicio
         console.log('Datos actualizados con éxito');
-        this.router.navigate(['/inicio']); // Redirigir a la página de inicio después de actualizar
+        
+        // Redirigir a la página de inicio después de actualizar
+        this.router.navigate(['/inicio']); 
       }
     } catch (error) {
       console.error('Error al actualizar los datos:', error);
@@ -49,19 +52,15 @@ export class ConfiguracionPage implements OnInit {
       source: CameraSource.Photos
     });
   
-    this.imagenAvatar = image.webPath; // Asigna la imagen seleccionada a la variable
+    this.selectedImage = image.webPath; // Asigna la imagen seleccionada a la variable
   
     const user = this.registrologinService.getCurrentUser();
     if (user) {
-      user.imagen = this.imagenAvatar; // Actualiza la propiedad imagen del usuario actual
-      await this.registrologinService.actualizarUsuario(this.username!, this.email!); // Actualiza los datos en el servicio con la nueva imagen
+      user.imagen = this.selectedImage; // Actualiza la propiedad imagen del usuario actual en memoria
     }
-
-  
-    this.router.navigate(['/inicio']); // Redirigir a la página de inicio después de seleccionar la imagen
   };
 
-  goToDonas(){
+  goToDonas() {
     this.router.navigate(['/lista-donas']); 
   }
 }

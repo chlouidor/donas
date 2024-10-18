@@ -21,7 +21,7 @@
 
     <div class="avatar-section">
       <p class="avatar-title">Cambiar Avatar</p>
-      <img *ngIf="imagenAvatar" [src]="imagenAvatar" alt="Avatar del usuario" class="avatar-image"/>
+      <img *ngIf="selectedImage || imagenAvatar" [src]="selectedImage || imagenAvatar" alt="Avatar del usuario" class="avatar-image"/>
       <ion-button expand="full" (click)="selectImage()">Seleccionar Imagen</ion-button>
     </div>
 
