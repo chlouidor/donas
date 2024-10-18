@@ -22,9 +22,11 @@
       </div>
 
       <ion-button expand="full" color="primary" type="submit">Iniciar sesión</ion-button>
-    </form>
 
-    <!-- Botón para registrarse -->
-    <ion-button expand="full" (click)="goToRegister()">¿No tienes una cuenta? Regístrate aquí</ion-button>
+      <!-- Texto que redirige al registro -->
+      <div class="register-link" (click)="goToRegister()" style="text-align: center; margin-top: 10px; cursor: pointer; color: blue; text-decoration: underline;">
+        ¿No tienes una cuenta? Regístrate aquí
+      </div>
+    </form>
   </div>
 </ion-content>
