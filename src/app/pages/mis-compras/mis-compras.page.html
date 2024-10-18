@@ -21,7 +21,7 @@
       </ion-avatar>
       <ion-label>
         <h2><strong>{{ compra.producto }}</strong></h2> 
-        <p>Total Pagado: <strong>{{ compra.precio | currency:'USD' }}</strong></p> 
+        <p>Total Pagado: <strong>{{ compra.precio | number:'1.3-3'}} CLP</strong></p> 
         <p>Fecha de la Compra: {{ compra.fecha_emision | date }}</p>
       </ion-label>
     </ion-item>
