@@ -28,6 +28,10 @@ export class PerfilPage {
     this.router.navigate(['/configuracion']); // Navega a la página de configuración
   }
 
+  goToCompras() {
+    this.router.navigate(['/mis-compras']); // Redirigir a la página de compras (ajusta la ruta según tu aplicación)
+  }
+
   async logOut() {
     // Lógica para cerrar sesión
     this.registrologinService.logOut(); // Desconecta al usuario en el servicio
@@ -49,11 +53,5 @@ export class PerfilPage {
     this.router.navigate(['/login']); // Redirigir al login
   }
 
-  goToDonas() {
-    this.router.navigate(['/lista-donas']); 
-  }
 
-  goToCompras() {
-    this.router.navigate(['/compras']); // Redirigir a la página de compras (ajusta la ruta según tu aplicación)
-  }
 }

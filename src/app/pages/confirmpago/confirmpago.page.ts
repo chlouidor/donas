@@ -44,10 +44,11 @@ export class ConfirmpagoPage implements OnInit {
     const precioNumero = parseFloat(this.Precio); 
     this.servicebd.insertarVenta(this.nombreCliente, this.fechaEmision, this.Nombre, precioNumero)
       .then(() => {
-        console.log("Venta registrada con éxito");
+       
       })
       .catch(error => {
         console.error("Error al registrar la venta:", error);
       });
   }
+  
 }

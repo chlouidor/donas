@@ -12,26 +12,27 @@
     <ion-avatar class="profile-avatar">
       <img [src]="imagenAvatar || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar del usuario">
     </ion-avatar>
-    <h2>{{ username }}</h2> <!-- Muestra el nombre del usuario -->
-    <p>{{ email }}</p> <!-- Muestra el correo electrónico -->
+    <h2>{{ username }}</h2>
+    <p>{{ email }}</p> 
     
     <ion-list>
       <ion-item button (click)="goToSettings()">
         <ion-icon slot="start" name="settings-outline"></ion-icon>
         <ion-label>Configuración</ion-label>
       </ion-item>
+      <ion-item button (click)="goToCompras()">
+        <ion-icon slot="start" name="cart-outline"></ion-icon>
+        <ion-label>Mis Compras</ion-label> 
+      </ion-item>
       <ion-item button (click)="logOut()">
         <ion-icon slot="start" name="log-out-outline"></ion-icon>
         <ion-label>Cerrar Sesión</ion-label>
       </ion-item>
-      <ion-item button (click)="goToCompras()">
-        <ion-icon slot="start" name="cart-outline"></ion-icon>
-        <ion-label>Mis Compras</ion-label> <!-- Asegúrate de que este texto sea adecuado -->
-      </ion-item>
+
     </ion-list>
   </div>
 
-  <!-- Mostrar mensaje y botón de iniciar sesión si no hay sesión activa -->
+  
   <ng-template #noSession>
     <div class="no-session-message">
       <p>No has iniciado sesión.</p>
@@ -42,8 +43,4 @@
     </div>
   </ng-template>
 
-  <ion-item button (click)="goToDonas()">
-    <ion-icon slot="start" name="settings-outline"></ion-icon>
-    <ion-label>Lista Donas</ion-label>
-  </ion-item>
 </ion-content>
