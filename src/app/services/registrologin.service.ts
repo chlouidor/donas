@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 
@@ -6,7 +7,7 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 })
 export class RegistrologinService {
   private basededatos?: SQLiteObject;
-  private currentUser: { id: number; username: string; email: string; imagen?: string; rol: string } | null = null; // Almacena el usuario actual
+  private currentUser: { id: number; username: string; email: string; imagen?: string } | null = null; // Almacena el usuario actual
 
   constructor(private sqlite: SQLite) {
     this.iniciarBaseDeDatos();
@@ -27,8 +28,7 @@ export class RegistrologinService {
           username TEXT,
           email TEXT UNIQUE,
           password TEXT,
-          imagen TEXT,
-          rol TEXT DEFAULT 'usuario' // Campo para el rol del usuario
+          imagen TEXT
         )`, []);
 
       console.log('Base de datos iniciada y tabla usuarios creada.');
@@ -39,10 +39,8 @@ export class RegistrologinService {
 
   // Registra un nuevo usuario en la base de datos
   async registrarUsuario(username: string, email: string, password: string): Promise<void> {
-    const rol = username.toLowerCase() === 'admin' ? 'admin' : 'usuario'; // Asigna rol basado en el nombre de usuario
-
     try {
-      await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)`, [username, email, password, rol]);
+      await this.basededatos?.executeSql(`INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`, [username, email, password]);
       console.log('Usuario registrado con éxito');
     } catch (error) {
       console.error('Error al registrar usuario:', error);
@@ -93,15 +91,5 @@ export class RegistrologinService {
       console.error('Error al actualizar usuario:', error);
       throw error; // Lanza el error para manejarlo en el componente
     }
-  }
-
-  // Verifica si el usuario actual es administrador
-  isAdmin(): boolean {
-    return this.currentUser?.rol === 'admin';
-  }
-
-  // Verifica si el usuario actual es un usuario normal
-  isUser(): boolean {
-    return this.currentUser?.rol === 'usuario';
   }
 }
