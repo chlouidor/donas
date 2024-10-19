@@ -1,6 +1,13 @@
-<app-menu></app-menu>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content>
+<ion-content class="background">
   <div class="card-container">
     <ion-card class="card">
       <ion-img class="card-image" [src]="Imagen" [alt]="Nombre"></ion-img>
@@ -14,10 +21,8 @@
           </ion-select>
         </ion-item>
       </ion-card-content>
-      <ion-button class="button" expand="full" (click)="confirmarPago()">Confirmar Compra</ion-button>
+      <ion-button class="button" expand="full" color="dark" (click)="confirmarPago()">Confirmar Compra</ion-button>
     </ion-card>
   </div>
 </ion-content>
-
-
 

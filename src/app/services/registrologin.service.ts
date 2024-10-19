@@ -75,18 +75,15 @@ export class RegistrologinService {
   }
 
   // Actualiza los datos del usuario en la base de datos
-  async actualizarUsuario(username: string, email: string, imagen?: string): Promise<void> {
+  async actualizarUsuario(username: string, email: string): Promise<void> {
     if (!this.currentUser) throw new Error('No hay usuario logueado');
 
     try {
-      await this.basededatos?.executeSql(`UPDATE usuarios SET username = ?, email = ?, imagen = ? WHERE id = ?`, [username, email, imagen || null, this.currentUser.id]);
+      await this.basededatos?.executeSql(`UPDATE usuarios SET username = ?, email = ? WHERE id = ?`, [username, email, this.currentUser.id]);
       
       // Actualiza los datos del usuario actual en el servicio
       this.currentUser.username = username;
       this.currentUser.email = email;
-      if (imagen) {
-        this.currentUser.imagen = imagen; // Actualiza también la imagen en el servicio
-      }
 
       console.log('Usuario actualizado con éxito');
     } catch (error) {

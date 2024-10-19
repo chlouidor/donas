@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-configuracion',
@@ -11,18 +12,21 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 export class ConfiguracionPage implements OnInit {
   username: string | undefined;
   email: string | undefined;
-  imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
-  selectedImage: string | undefined; // Variable para almacenar la imagen seleccionada
+  imagenAvatar: string | undefined;
   updateError: boolean = false;
 
-  constructor(private router: Router, private registrologinService: RegistrologinService) {}
+  constructor(
+    private router: Router,
+    private registrologinService: RegistrologinService,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
-    const user = this.registrologinService.getCurrentUser(); // Obtiene el usuario actual
+    const user = this.registrologinService.getCurrentUser();
     if (user) {
-      this.username = user.username; // Asigna el nombre de usuario
-      this.email = user.email; // Asigna el correo electrónico
-      this.imagenAvatar = user.imagen || ''; // Asigna la imagen del avatar si existe
+      this.username = user.username;
+      this.email = user.email;
+      this.imagenAvatar = user.imagen || '';
     }
   }
 
@@ -30,35 +34,95 @@ export class ConfiguracionPage implements OnInit {
     try {
       const user = this.registrologinService.getCurrentUser();
       if (user) {
-        await this.registrologinService.actualizarUsuario(this.username!, this.email!, this.selectedImage); // Actualiza los datos en el servicio
-        console.log('Datos actualizados con éxito');
-        
-        // Redirigir a la página de inicio después de actualizar
-        this.router.navigate(['/inicio']); 
+        await this.registrologinService.actualizarUsuario(this.username!, this.email!);
+
+        // Aquí aseguramos que se actualiza el avatar también
+        if (this.imagenAvatar) {
+          user.imagen = this.imagenAvatar; 
+          await this.registrologinService.actualizarUsuario(this.username!, this.email!);
+        }
+
+        const alert = await this.alertController.create({
+          header: 'Éxito',
+          message: 'Tus datos han sido actualizados correctamente.',
+          buttons: ['OK']
+        });
+        await alert.present();
+
+        this.router.navigate(['/inicio']);
       }
     } catch (error) {
       console.error('Error al actualizar los datos:', error);
-      this.updateError = true; // Muestra un mensaje de error si falla la actualización
+      this.updateError = true;
     }
   }
 
-  async selectImage() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
+  async chooseImageSource() {
+    const alert = await this.alertController.create({
+      header: 'Seleccionar fuente de imagen',
+      buttons: [
+        {
+          text: 'Cámara',
+          handler: async () => {
+            await this.requestCameraPermissions();
+            this.selectImage(CameraSource.Camera);
+          }
+        },
+        {
+          text: 'Galería',
+          handler: async () => {
+            await this.requestCameraPermissions();
+            this.selectImage(CameraSource.Photos);
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        }
+      ]
     });
 
-    this.selectedImage = image.webPath; // Asigna la imagen seleccionada a la variable
+    await alert.present();
+  }
 
-    const user = this.registrologinService.getCurrentUser();
-    if (user) {
-      user.imagen = this.selectedImage; // Actualiza la propiedad imagen del usuario actual en memoria
+  async requestCameraPermissions() {
+    try {
+      const permissionStatus = await Camera.requestPermissions();
+
+      if (permissionStatus.camera !== 'granted' || permissionStatus.photos !== 'granted') {
+        const alert = await this.alertController.create({
+          header: 'Permisos denegados',
+          message: 'Los permisos para la cámara y/o la galería son necesarios para esta funcionalidad.',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
+    } catch (error) {
+      console.error('Error al solicitar permisos:', error);
+    }
+  }
+
+  async selectImage(source: CameraSource) {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: source
+      });
+
+      this.imagenAvatar = image.webPath; // Muestra la imagen
+
+      const user = this.registrologinService.getCurrentUser();
+      if (user) {
+        user.imagen = this.imagenAvatar; // Actualiza la imagen del usuario
+      }
+    } catch (error) {
+      console.error('Error al seleccionar la imagen:', error);
     }
   }
 
   goToDonas() {
-    this.router.navigate(['/lista-donas']); 
+    this.router.navigate(['/lista-donas']);
   }
 }

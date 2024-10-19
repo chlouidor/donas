@@ -1,64 +1,75 @@
 ion-content {
     --background: rgb(219, 161, 240); 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
-    padding-top: 14%; 
-}
+  }
 
-.card-container {
+.background {
+    background-color: rgb(219, 161, 240);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px;
-}
-
-.card {
-    width: 300px; 
+    height: 100%;
+  }
+  
+  .card-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .card {
+    margin-top: 12%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 340px; 
     background-color: rgb(167, 109, 255); 
-    border-radius: 15px; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    overflow: hidden; 
-}
-
-.card-image {
-    width: 100%; 
-    height: auto; 
-}
-
-.card-content {
-    padding: 16px; 
-}
-
-.card-title,
-.card-subtitle {
-    color: white; 
-    margin-bottom: 10px; 
-}
-
-.quantity-item {
-    color: white; 
-}
-
-.quantity-select {
-    color: rgb(238, 234, 234); 
-}
-
-.button {
-    color: black;
-    background-color: white;
-    border-radius: 5px; 
-    margin: 16px auto 0; 
-    width: 70%; 
-    font-weight: bold; 
-    transition: background-color 0.3s;
-}
-
-.button:hover {
-    background-color: rgb(240, 240, 240); 
-}
-
-.button:focus {
-    outline: none; 
-}
+    text-align: center;
+  }
+  
+  .card-image {
+    height: 350px;
+    object-fit: cover;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff; 
+  }
+  
+  .card-subtitle {
+    font-size: 1.2rem;
+    color: #ffffff; 
+  }
+  
+  .quantity-item {
+    margin-top: 10px;
+  }
+  
+  .quantity-select {
+    margin-left: 10px;
+  }
+  
+  .button {
+    background-color: #1f1f1f; 
+    color: #ffffff; 
+    font-weight: bold;
+    border-radius: 0.3rem; 
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content; 
+  }
+  
+  .button:hover {
+    background-color: rgb(0, 0, 0); 
+  }
+  
+  h6 {
+    color: #ffffff;  
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content; 
+  }
+  

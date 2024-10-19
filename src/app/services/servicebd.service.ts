@@ -159,7 +159,6 @@ export class ServicebdService {
 
   insertarVenta(nombre_cliente: string, fecha_emision: string, producto: string, precio: number) {
     return this.basededatos.executeSql('INSERT INTO registroventa(nombre_cliente, fecha_emision, producto, precio) VALUES (?,?,?,?)', [nombre_cliente, fecha_emision, producto, precio]).then(res => {
-      this.presentAlert("Insertar", "Registro de Venta Registrado");
       this.seleccionarVentas();
     }).catch(e => {
       this.presentAlert('Insertar', 'Error: ' + JSON.stringify(e));

@@ -35,8 +35,10 @@
 
     <ion-button expand="full" color="success" type="submit">Registrarse</ion-button>
 
-   <!-- Botón para registrarse -->
-   <ion-button expand="full" (click)="goToLogin()">¿Ya tienes una cuenta? Inicia sesión aquí</ion-button>
+   <p class="login-link">
+    ¿Ya tienes una cuenta?
+    <a (click)="goToLogin()" class="link">Inicia sesión aquí</a>
+  </p>
 
    </form>
 </ion-content>

@@ -18,24 +18,21 @@ export class AgregarDonaPage implements OnInit {
 
   ngOnInit() {}
 
-  
   async selectImage() {
     try {
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.Base64, 
-        source: CameraSource.Prompt, 
+        source: CameraSource.Photos, 
       });
 
-      
       this.imagen = `data:image/jpeg;base64,${image.base64String}`;
     } catch (error) {
       console.error('Error al seleccionar imagen:', error);
     }
   }
 
-  
   insertar() {
     if (this.nombre && this.precio && this.descripcion && this.imagen) {
       this.bd.insertarDona(this.imagen, this.nombre, this.precio, this.descripcion)
