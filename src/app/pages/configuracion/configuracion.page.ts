@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; // Importar Camera
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-configuracion',
@@ -30,7 +30,6 @@ export class ConfiguracionPage implements OnInit {
     try {
       const user = this.registrologinService.getCurrentUser();
       if (user) {
-        // Solo actualiza si hay un usuario logueado
         await this.registrologinService.actualizarUsuario(this.username!, this.email!, this.selectedImage); // Actualiza los datos en el servicio
         console.log('Datos actualizados con éxito');
         
@@ -43,22 +42,21 @@ export class ConfiguracionPage implements OnInit {
     }
   }
 
-  // Función para seleccionar imagen desde el dispositivo
-  selectImage = async () => {
+  async selectImage() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos
     });
-  
+
     this.selectedImage = image.webPath; // Asigna la imagen seleccionada a la variable
-  
+
     const user = this.registrologinService.getCurrentUser();
     if (user) {
       user.imagen = this.selectedImage; // Actualiza la propiedad imagen del usuario actual en memoria
     }
-  };
+  }
 
   goToDonas() {
     this.router.navigate(['/lista-donas']); 
