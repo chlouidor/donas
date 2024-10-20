@@ -1,5 +1,5 @@
 ion-content {
-  background-color: rgb(219, 161, 240); 
+  --background: rgb(219, 161, 240); /* Fondo rosado */
 }
 
 .form-container {
@@ -10,39 +10,51 @@ ion-content {
   height: 100vh; /* Altura completa de la ventana */
 }
 
-form {
-  width: 300px; /* Ancho del formulario */
-  margin: auto;
+ion-card {
+  background-color: rgb(0, 0, 0); /* Fondo del card morado */
+  border-radius: 15px;
+  width: 80%; /* Ajusta el ancho del card */
+  max-width: 400px; /* Ancho máximo */
+  margin-top: 20px; /* Espacio superior */
 }
 
-label {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-input {
-  width: 100%; /* Ancho completo del input */
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  margin-top: 15px;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff; /* Cambia el color de fondo aquí si lo deseas */
+ion-card-header {
+  text-align: center;
   color: white;
-  cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3; /* Cambia el color al pasar el ratón */
+ion-card-title {
+  color: white;
+  font-size: 1.5rem;
+}
+
+ion-item {
+  --background: transparent; /* Fondo transparente */
+  --color: white; /* Texto blanco */
+}
+
+ion-input {
+  --placeholder-color: rgba(255, 255, 255, 0.7); /* Color de placeholder */
+}
+
+ion-button {
+  --background: #4580ff; /* Botón morado oscuro */
+  --color: rgb(0, 0, 0); /* Texto del botón blanco */
+  margin-top: 20px;
 }
 
 .error-message {
-  color: red; /* Color del mensaje de error */
-  margin-top: 5px;
+  color: red;
+  text-align: center;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.link {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
 }

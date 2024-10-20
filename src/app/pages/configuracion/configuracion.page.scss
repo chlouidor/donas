@@ -1,5 +1,6 @@
 .configuracion-content {
   padding: 16px; 
+  background-color: rgb(219, 161, 240); /* Añade un color de fondo */
 }
 
 .config-form {
@@ -23,10 +24,21 @@
   height: 120px; 
   border-radius: 50%; 
   margin-bottom: 8px; 
+  border: 2px solid #fff; /* Añade un borde blanco alrededor de la imagen */
 }
 
 .select-image-button {
   margin-top: 8px; 
+  padding: 10px; /* Añade padding para un mejor aspecto */
+  background-color: #007bff; /* Color de fondo del botón */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.select-image-button:hover {
+  background-color: #0056b3; /* Cambia el color al pasar el ratón */
 }
 
 .error-message {
@@ -37,6 +49,16 @@
 
 .submit-button {
   margin-top: 16px; 
+  padding: 10px;
+  background-color: #28a745; /* Color de fondo del botón de envío */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838; /* Cambia el color al pasar el ratón */
 }
 
 .donas-link {

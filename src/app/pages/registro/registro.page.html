@@ -8,37 +8,43 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="registrar()">
-    <ion-item>
-      <ion-label position="floating">Nombre de usuario</ion-label>
-      <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
-    </ion-item>
+  <div class="form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Crear Cuenta</ion-card-title>
+      </ion-card-header>
+      <form (ngSubmit)="registrar()">
+        <ion-item>
+          <ion-label position="floating">Nombre de usuario</ion-label>
+          <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Correo electrónico</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
-    </ion-item>
+        <ion-item>
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
-    </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Confirmar contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
-    </ion-item>
+        <ion-item>
+          <ion-label position="floating">Confirmar contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
+        </ion-item>
 
-    <div *ngIf="confirmPasswordError" class="error-message">
-      Las contraseñas no coinciden.
-    </div>
+        <div *ngIf="confirmPasswordError" class="error-message">
+          Las contraseñas no coinciden.
+        </div>
 
-    <ion-button expand="full" color="success" type="submit">Registrarse</ion-button>
+        <ion-button expand="full" type="submit">Registrarse</ion-button>
 
-   <p class="login-link">
-    ¿Ya tienes una cuenta?
-    <a (click)="goToLogin()" class="link">Inicia sesión aquí</a>
-  </p>
-
-   </form>
+        <p class="login-link">
+          ¿Ya tienes una cuenta?
+          <a (click)="goToLogin()" class="link">Inicia sesión aquí</a>
+        </p>
+      </form>
+    </ion-card>
+  </div>
 </ion-content>
