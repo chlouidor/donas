@@ -91,4 +91,17 @@ export class RegistrologinService {
       throw error; // Lanza el error para manejarlo en el componente
     }
   }
+
+  // Cambia la contraseña del usuario en la base de datos
+  async cambiarContrasena(username: string, nuevaContrasena: string): Promise<void> {
+    if (!this.currentUser) throw new Error('No hay usuario logueado');
+
+    try {
+      await this.basededatos?.executeSql(`UPDATE usuarios SET password = ? WHERE id = ?`, [nuevaContrasena, this.currentUser.id]);
+      console.log('Contraseña actualizada con éxito');
+    } catch (error) {
+      console.error('Error al actualizar la contraseña:', error);
+      throw error; // Lanza el error para manejarlo en el componente
+    }
+  }
 }

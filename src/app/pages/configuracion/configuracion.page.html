@@ -35,4 +35,7 @@
     <ion-icon slot="start" name="settings-outline"></ion-icon>
     <ion-label>Lista Donas</ion-label>
   </ion-item>
-</ion-content>
+
+  <!-- Botón para cambiar contraseña -->
+  <ion-button expand="full" color="primary" (click)="cambiarContrasena()" 
+  class="change-password-button" [disabled]="!isUserLoggedIn()">Cambiar Contraseña</ion-button>

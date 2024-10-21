@@ -125,4 +125,65 @@ export class ConfiguracionPage implements OnInit {
   goToDonas() {
     this.router.navigate(['/lista-donas']);
   }
+
+  async cambiarContrasena() {
+    const alert = await this.alertController.create({
+      header: 'Cambiar Contraseña',
+      inputs: [
+        {
+          name: 'nuevaContrasena',
+          type: 'password',
+          placeholder: 'Nueva Contraseña'
+        },
+        {
+          name: 'confirmarContrasena',
+          type: 'password',
+          placeholder: 'Confirmar Contraseña'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Guardar',
+          handler: async (data) => {
+            if (data.nuevaContrasena === data.confirmarContrasena) {
+              try {
+                await this.registrologinService.cambiarContrasena(this.username!, data.nuevaContrasena);
+                const successAlert = await this.alertController.create({
+                  header: 'Éxito',
+                  message: 'Contraseña cambiada exitosamente.',
+                  buttons: ['OK']
+                });
+                await successAlert.present();
+              } catch (error) {
+                const errorAlert = await this.alertController.create({
+                  header: 'Error',
+                  message: 'No se pudo cambiar la contraseña. Inténtalo nuevamente.',
+                  buttons: ['OK']
+                });
+                await errorAlert.present();
+              }
+            } else {
+              const mismatchAlert = await this.alertController.create({
+                header: 'Error',
+                message: 'Las contraseñas no coinciden.',
+                buttons: ['OK']
+              });
+              await mismatchAlert.present();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  // Método para verificar si hay un usuario logueado
+  isUserLoggedIn(): boolean {
+    return this.registrologinService.getCurrentUser() !== null;
+  }
 }
