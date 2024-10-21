@@ -13,6 +13,7 @@ export class PerfilPage {
   email: string | undefined;
   imagenAvatar: string | undefined; // Variable para almacenar la imagen del avatar
   isLoggedIn: boolean = false; // Verifica si el usuario está logueado
+  isAuthorizedUser: boolean = false;
 
   constructor(
     private router: Router,
@@ -25,6 +26,14 @@ export class PerfilPage {
       this.email = user.email; // Asigna el correo electrónico
       this.imagenAvatar = user.imagen || ''; // Asigna la imagen del avatar si existe
       this.isLoggedIn = true; 
+    }
+  }
+
+  ngOnInit() {
+    const user = this.registrologinService.getCurrentUser();
+    // Verificar si el usuario es el permitido
+    if (user && user.username === 'christ' && user.email === 'ch.louidor@duocuc.cl') {
+      this.isAuthorizedUser = true;
     }
   }
 
@@ -53,6 +62,10 @@ export class PerfilPage {
     alert.onDidDismiss().then(() => {
       this.router.navigate(['/inicio']);
     });
+  }
+
+  goToDonas() {
+    this.router.navigate(['/lista-donas']);
   }
 
   goToLogin() {

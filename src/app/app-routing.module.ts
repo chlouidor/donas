@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -49,8 +50,8 @@ const routes: Routes = [
   },
   {
     path: 'lista-donas',
-    loadChildren: () => import('./pages/lista-donas/lista-donas.module').then( m => m.ListaDonasPageModule)
-  },
+    loadChildren: () => import('./pages/lista-donas/lista-donas.module').then(m => m.ListaDonasPageModule),
+    canActivate: [AuthGuard]},
   {
     path: 'not-found',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)

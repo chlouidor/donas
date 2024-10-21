@@ -35,8 +35,8 @@ export class ConfiguracionPage implements OnInit {
       const user = this.registrologinService.getCurrentUser();
       if (user) {
         await this.registrologinService.actualizarUsuario(this.username!, this.email!);
-
-        // Aquí aseguramos que se actualiza el avatar también
+        
+       
         if (this.imagenAvatar) {
           user.imagen = this.imagenAvatar; 
           await this.registrologinService.actualizarUsuario(this.username!, this.email!);
@@ -65,14 +65,14 @@ export class ConfiguracionPage implements OnInit {
           text: 'Cámara',
           handler: async () => {
             await this.requestCameraPermissions();
-            this.selectImage(CameraSource.Camera);
+            await this.selectImage(CameraSource.Camera);
           }
         },
         {
           text: 'Galería',
           handler: async () => {
             await this.requestCameraPermissions();
-            this.selectImage(CameraSource.Photos);
+            await this.selectImage(CameraSource.Photos);
           }
         },
         {
@@ -108,10 +108,11 @@ export class ConfiguracionPage implements OnInit {
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.Uri,
-        source: source
+        source
       });
 
-      this.imagenAvatar = image.webPath; // Muestra la imagen
+      // Muestra la imagen
+      this.imagenAvatar = image.webPath; 
 
       const user = this.registrologinService.getCurrentUser();
       if (user) {
@@ -120,9 +121,5 @@ export class ConfiguracionPage implements OnInit {
     } catch (error) {
       console.error('Error al seleccionar la imagen:', error);
     }
-  }
-
-  goToDonas() {
-    this.router.navigate(['/lista-donas']);
   }
 }
