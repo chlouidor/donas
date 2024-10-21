@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
-import { AlertController } from '@ionic/angular'; // Importar AlertController
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -16,17 +16,43 @@ export class LoginPage {
   constructor(private router: Router, private registrologinService: RegistrologinService, private alertController: AlertController) {}
 
   async login() {
-    console.log('Intentando iniciar sesión con:', this.email, this.password); // Mensaje para depuración
+    // Validaciones
+    if (this.email.trim() === '') {
+      this.showAlert('Error', 'El campo de correo electrónico no puede estar vacío.');
+      return;
+    }
+
+    if (!this.validateEmail(this.email)) {
+      this.showAlert('Error', 'Por favor, introduce un correo electrónico válido.');
+      return;
+    }
+
+    if (this.password.trim() === '') {
+      this.showAlert('Error', 'El campo de contraseña no puede estar vacío.');
+      return;
+    }
+
+    if (this.password.length < 6) {
+      this.showAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    if (!this.hasNumber(this.password)) {
+      this.showAlert('Error', 'La contraseña debe contener al menos un número.');
+      return;
+    }
+
+    console.log('Intentando iniciar sesión con:', this.email, this.password);
     const isValid = await this.registrologinService.loginUsuario(this.email, this.password);
     
     if (!isValid) {
-      this.loginError = true; // Muestra un mensaje si las credenciales son incorrectas
-      console.log('Credenciales incorrectas'); // Mensaje para depuración
+      this.loginError = true;
+      console.log('Credenciales incorrectas');
+      this.showAlert('Error', 'Credenciales incorrectas.'); // Mensaje de error
     } else {
-      this.loginError = false; // Resetea el error si las credenciales son correctas
-      console.log('Inicio de sesión exitoso'); // Mensaje para depuración
+      this.loginError = false;
+      console.log('Inicio de sesión exitoso');
       
-      // Mostrar mensaje de éxito con Alert
       const alert = await this.alertController.create({
         header: 'Éxito',
         message: 'Has iniciado sesión correctamente.',
@@ -34,11 +60,33 @@ export class LoginPage {
       });
       await alert.present();
 
-      this.router.navigate(['/inicio']); // Redirige a la página de inicio después del inicio de sesión
+      this.router.navigate(['/inicio']);
     }
   }
 
   goToRegister() {
-    this.router.navigate(['/registro']); // Redirige a la página de registro
+    this.router.navigate(['/registro']);
+  }
+
+  // Función para mostrar alertas
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  // Validar formato del correo electrónico
+  validateEmail(email: string): boolean {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
+  // Verificar si la contraseña contiene al menos un número
+  hasNumber(password: string): boolean {
+    const numberRegex = /\d/; // Expresión regular para verificar números
+    return numberRegex.test(password);
   }
 }
