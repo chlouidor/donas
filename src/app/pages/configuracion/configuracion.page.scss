@@ -1,6 +1,8 @@
 .configuracion-content {
   padding: 16px; 
-  background-color: rgb(219, 161, 240); /* Añade un color de fondo */
+  background-color: rgb(219, 161, 240); /* Color de fondo suave */
+  border-radius: 8px; /* Añadir bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
 .config-form {
@@ -24,41 +26,45 @@
   height: 120px; 
   border-radius: 50%; 
   margin-bottom: 8px; 
-  border: 2px solid #fff; /* Añade un borde blanco alrededor de la imagen */
+  border: 2px solid #fff; /* Borde blanco */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra de la imagen */
 }
 
 .select-image-button {
   margin-top: 8px; 
-  padding: 10px; /* Añade padding para un mejor aspecto */
+  padding: 10px; 
   background-color: #007bff; /* Color de fondo del botón */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* Bordes más redondeados */
   cursor: pointer;
+  transition: background-color 0.3s; /* Transición suave */
 }
 
 .select-image-button:hover {
-  background-color: #0056b3; /* Cambia el color al pasar el ratón */
+  background-color: #0056b3; 
 }
 
 .error-message {
   color: red; 
   text-align: center;
   margin-bottom: 16px;
+  font-weight: bold; /* Texto en negrita */
 }
 
 .submit-button {
   margin-top: 16px; 
   padding: 10px;
-  background-color: #28a745; /* Color de fondo del botón de envío */
+  background-color: #28a745; 
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* Bordes más redondeados */
   cursor: pointer;
+  transition: background-color 0.3s; /* Transición suave */
 }
 
 .submit-button:hover {
-  background-color: #218838; /* Cambia el color al pasar el ratón */
+  background-color: #218838; 
 }
 
 .donas-link {

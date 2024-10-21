@@ -64,15 +64,19 @@ export class ConfiguracionPage implements OnInit {
         {
           text: 'Cámara',
           handler: async () => {
-            await this.requestCameraPermissions();
-            await this.selectImage(CameraSource.Camera);
+            const permissionGranted = await this.requestCameraPermissions();
+            if (permissionGranted) {
+              await this.selectImage(CameraSource.Camera);
+            }
           }
         },
         {
           text: 'Galería',
           handler: async () => {
-            await this.requestCameraPermissions();
-            await this.selectImage(CameraSource.Photos);
+            const permissionGranted = await this.requestCameraPermissions();
+            if (permissionGranted) {
+              await this.selectImage(CameraSource.Photos);
+            }
           }
         },
         {
@@ -81,24 +85,28 @@ export class ConfiguracionPage implements OnInit {
         }
       ]
     });
-
+  
     await alert.present();
   }
-
-  async requestCameraPermissions() {
+  
+  async requestCameraPermissions(): Promise<boolean> {
     try {
       const permissionStatus = await Camera.requestPermissions();
-
-      if (permissionStatus.camera !== 'granted' || permissionStatus.photos !== 'granted') {
+  
+      if (permissionStatus.camera === 'granted' && permissionStatus.photos === 'granted') {
+        return true; // Permisos concedidos
+      } else {
         const alert = await this.alertController.create({
           header: 'Permisos denegados',
           message: 'Los permisos para la cámara y/o la galería son necesarios para esta funcionalidad.',
           buttons: ['OK']
         });
         await alert.present();
+        return false; // Permisos denegados
       }
     } catch (error) {
       console.error('Error al solicitar permisos:', error);
+      return false; // Error al solicitar permisos
     }
   }
 

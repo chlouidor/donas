@@ -9,10 +9,12 @@
 
 <ion-content [fullscreen]="true" class="configuracion-content">
   <form (ngSubmit)="actualizarDatos()" class="config-form">
-
+    
     <div class="avatar-section">
       <img *ngIf="imagenAvatar" [src]="imagenAvatar" alt="Avatar" class="avatar-image" />
-      <ion-button (click)="chooseImageSource()" class="select-image-button">Seleccionar Imagen de Avatar</ion-button>
+      <ion-button (click)="chooseImageSource()" class="select-image-button">
+        Seleccionar Imagen de Avatar
+      </ion-button>
     </div>
 
     <ion-item class="form-item">
@@ -25,19 +27,17 @@
       <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
     </ion-item>
 
-    <ion-button expand="full" color="primary" (click)="cambiarContrasena()" 
-    class="change-password-button" [disabled]="!isUserLoggedIn()">Cambiar Contraseña</ion-button>
-
-
-
-
+    <ion-button expand="full" color="medium" (click)="cambiarContrasena()" 
+      class="change-password-button" [disabled]="!isUserLoggedIn()">
+      Cambiar Contraseña
+    </ion-button>
 
     <div *ngIf="updateError" class="error-message">
       Error al actualizar la cuenta. Por favor, inténtalo nuevamente.
     </div>
 
-    <ion-button expand="full" color="success" type="submit" class="submit-button">Actualizar Cuenta</ion-button>
+    <ion-button expand="full" color="success" type="submit" class="submit-button">
+      Actualizar Cuenta
+    </ion-button>
   </form>
-
 </ion-content>
-
