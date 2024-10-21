@@ -9,6 +9,12 @@
 
 <ion-content [fullscreen]="true" class="configuracion-content">
   <form (ngSubmit)="actualizarDatos()" class="config-form">
+
+    <div class="avatar-section">
+      <img *ngIf="imagenAvatar" [src]="imagenAvatar" alt="Avatar" class="avatar-image" />
+      <ion-button (click)="chooseImageSource()" class="select-image-button">Seleccionar Imagen de Avatar</ion-button>
+    </div>
+
     <ion-item class="form-item">
       <ion-label position="floating">Nombre de usuario</ion-label>
       <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
@@ -19,10 +25,12 @@
       <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
     </ion-item>
 
-    <div class="avatar-section">
-      <img *ngIf="imagenAvatar" [src]="imagenAvatar" alt="Avatar" class="avatar-image" />
-      <ion-button (click)="chooseImageSource()" class="select-image-button">Seleccionar Imagen de Avatar</ion-button>
-    </div>
+    <ion-button expand="full" color="primary" (click)="cambiarContrasena()" 
+    class="change-password-button" [disabled]="!isUserLoggedIn()">Cambiar Contraseña</ion-button>
+
+
+
+
 
     <div *ngIf="updateError" class="error-message">
       Error al actualizar la cuenta. Por favor, inténtalo nuevamente.
@@ -33,6 +41,3 @@
 
 </ion-content>
 
-  <!-- Botón para cambiar contraseña -->
-  <ion-button expand="full" color="primary" (click)="cambiarContrasena()" 
-  class="change-password-button" [disabled]="!isUserLoggedIn()">Cambiar Contraseña</ion-button>
