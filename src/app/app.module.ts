@@ -13,8 +13,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    FormsModule, // Asegúrate de incluirlo aquí
+    FormsModule, 
     IonicModule.forRoot(),
+    
     AppRoutingModule
   ],
   providers: [

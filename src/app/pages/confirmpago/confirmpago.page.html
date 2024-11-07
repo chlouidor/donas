@@ -11,11 +11,23 @@
         <ion-card-content>
           <p><strong>Nombre del Cliente:</strong> {{ nombreCliente }}</p>
           <p><strong>Fecha de Emisión:</strong> {{ fechaEmision }}</p>
-          <p><strong>Producto:</strong> {{ Nombre }}</p>
-          <p><strong>Precio:</strong> ${{ Precio | number:'1.3-3' }}</p>
+
+          <ion-list>
+            <ion-item *ngFor="let item of carrito">
+              <ion-label>
+                <h2>{{ item.nombre }}</h2>
+                <p>Cantidad: {{ item.cantidad }}</p> <!-- Muestra la cantidad -->
+                <p>Precio por unidad: ${{ item.precio | number: '1.2-2' }}</p>
+                <p><strong>Total por producto: </strong>${{ (item.precio * item.cantidad) | number: '1.2-2' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+          <p><strong>Total de la Compra:</strong> ${{ total | number: '1.2-2' }}</p>
         </ion-card-content>
       </ion-card>
     </div>
+
     <ion-button color="dark" [routerLink]="['/inicio']">Volver a Comprar</ion-button>
   </div>
 </ion-content>

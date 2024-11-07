@@ -58,6 +58,7 @@ export class InicioPage implements OnInit {
       let donaSeleccionada = this.listaDona[index];
       let navigationExtras: NavigationExtras = {
         state: {
+          idona: donaSeleccionada.iddona,
           nom: donaSeleccionada.nombre,
           pre: donaSeleccionada.precio,
           imag: donaSeleccionada.imagen

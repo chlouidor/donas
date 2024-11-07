@@ -38,6 +38,7 @@ export class ServicebdService {
 
   listadoDonas = new BehaviorSubject<Donas[]>([]);
   listadoVentas = new BehaviorSubject<any[]>([]);
+  carritoCompra: any[] = [];
 
   private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -164,4 +165,23 @@ export class ServicebdService {
       this.presentAlert('Insertar', 'Error: ' + JSON.stringify(e));
     });
   }
+
+  agregarAlCarrito(producto: any, cantidad: number) {
+    let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+    const productoExistente = carrito.find((item: any) => item.iddona === producto.iddona);
+
+    if (productoExistente) {
+      productoExistente.cantidad += cantidad;
+    } else {
+      producto.cantidad = cantidad;
+      carrito.push(producto);
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  }
+
+  limpiarCarrito() {
+    localStorage.setItem('carrito', JSON.stringify([]));
+  }
 }
+

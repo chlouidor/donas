@@ -8,7 +8,7 @@ import { RegistrologinService } from 'src/app/services/registrologin.service'; /
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-  constructor(public router: Router, public registrologinService: RegistrologinService) {} // Hacer el servicio público
+  constructor(public router: Router, public registrologinService: RegistrologinService) {} 
 
   goToInicio() {
     this.router.navigate(['/inicio']);
@@ -17,9 +17,13 @@ export class MenuComponent implements OnInit {
   goToNosotros() {
     this.router.navigate(['/nosotros']);
   }
-  
+
   goToPerfil() {
     this.router.navigate(['/perfil']);
+  }
+
+  goToCarrito() {
+    this.router.navigate(['/carrito']); 
   }
 
   ngOnInit() {}
