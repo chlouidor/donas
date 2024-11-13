@@ -36,12 +36,14 @@ export class ListaDonasPage implements OnInit {
   marcarNoDisponible(dona: Donas) {
     this.bd.marcarNoDisponible(dona.iddona)
       .then(() => {
-        dona.disponible = 2;  
+        dona.disponible = 2;
       })
       .catch(error => {
         console.error('Error al marcar la dona como no disponible:', error);
       });
   }
+  
+  
 
   borrar(dona: Donas) {
     this.bd.borrarDona(dona.iddona)

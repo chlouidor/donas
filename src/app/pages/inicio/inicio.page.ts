@@ -51,7 +51,7 @@ export class InicioPage implements OnInit {
         color: 'warning'
       });
       toast.present();
-
+  
       this.router.navigate(['/login']); 
     } else {
       let donaSeleccionada = this.listaDona[index];
@@ -70,7 +70,7 @@ export class InicioPage implements OnInit {
       } else {
         const toast = await this.toastController.create({
           message: donaSeleccionada.stock === 0 
-            ? 'Este producto está fuera de stock.'
+            ? 'Este producto está fuera de stock.' 
             : 'Este producto no está disponible.',
           duration: 2000,
           position: 'top',
@@ -80,4 +80,5 @@ export class InicioPage implements OnInit {
       }
     }
   }
+  
 }

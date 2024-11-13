@@ -156,7 +156,7 @@ registroDonas: string =
   
 
   marcarNoDisponible(id: number) {
-    return this.basededatos.executeSql('UPDATE donas SET disponible = 0 WHERE iddona = ?', [id]).then(res => {
+    return this.basededatos.executeSql('UPDATE donas SET disponible = 2 WHERE iddona = ?', [id]).then(res => {
       this.seleccionarDonas();
     }).catch(e => {
       this.presentAlert('Marcar No Disponible', 'Error: ' + JSON.stringify(e));
