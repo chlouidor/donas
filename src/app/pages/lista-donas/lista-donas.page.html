@@ -19,6 +19,9 @@
           <h2>{{ dona.nombre }}</h2>
           <p>Precio: ${{ dona.precio | number:'1.3-3' }} CLP </p>
           <p>Descripcion: {{ dona.descripcion }}</p>
+          <p [ngClass]="{'disponible': dona.disponible === 1, 'no-disponible': dona.disponible === 2}">
+            Estado: {{ dona.disponible === 1 ? 'Disponible' : 'No Disponible' }}
+          </p>
         </ion-label>
       </ion-item>
 
@@ -26,9 +29,15 @@
         <ion-item-option color="primary" (click)="modificar(dona)">
           <ion-icon slot="icon-only" name="pencil"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="danger" (click)="eliminar(dona)">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        <ion-item-option color="danger" (click)="marcarNoDisponible(dona)">
+          <ion-icon slot="icon-only" name="close"></ion-icon> 
         </ion-item-option>
+        <ion-item-option color="success" (click)="marcarComoDisponible(dona)">
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-item-option>
+        <!-- <ion-item-option color="danger" (click)="borrar(dona)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option> -->
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

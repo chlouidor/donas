@@ -13,12 +13,11 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
     const user = this.registrologinService.getCurrentUser();
     
-    // Verificar si el usuario es el usuario específico permitido
     if (user && user.username === 'christ' && user.email === 'ch.louidor@duocuc.cl') {
-      return true; // Permitir acceso
+      return true; 
     } else {
-      this.router.navigate(['/inicio']); // Redirigir a inicio si no es permitido
-      return false; // No permitir acceso
+      this.router.navigate(['/inicio']); 
+      return false; 
     }
   }
 }

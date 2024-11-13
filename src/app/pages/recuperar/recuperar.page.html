@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Recuperar Clave</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- <ion-content>
+  <div class="form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Recupera tu Contraseña</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form (ngSubmit)="sendRecoveryEmail()">
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+          </ion-item>
+
+          <div *ngIf="emailSent" class="success-message">
+            Hemos enviado un enlace de recuperación a tu correo.
+          </div>
+
+          <div *ngIf="recoveryError" class="error-message">
+            No hemos encontrado una cuenta con este correo.
+          </div>
+
+          <ion-button expand="full" color="primary" type="submit">Enviar enlace de recuperación</ion-button>
+        </form>
+
+        <p class="back-link">
+          <a (click)="goToLogin()" class="link">Volver al inicio de sesión</a>
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content> -->

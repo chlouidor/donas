@@ -16,14 +16,14 @@
             <ion-item *ngFor="let item of carrito">
               <ion-label>
                 <h2>{{ item.nombre }}</h2>
-                <p>Cantidad: {{ item.cantidad }}</p> <!-- Muestra la cantidad -->
-                <p>Precio por unidad: ${{ item.precio | number: '1.2-2' }}</p>
-                <p><strong>Total por producto: </strong>${{ (item.precio * item.cantidad) | number: '1.2-2' }}</p>
+                <p>Cantidad: {{ item.cantidad }}</p> 
+                <p>Precio por unidad: ${{ item.precio | number: '1.3-3' }}</p>
+                <p><strong>Total por producto: </strong>${{ (item.precio * item.cantidad) | number: '1.3-3' }}</p>
               </ion-label>
             </ion-item>
           </ion-list>
 
-          <p><strong>Total de la Compra:</strong> ${{ total | number: '1.2-2' }}</p>
+          <p><strong>Total de la Compra:</strong> ${{ total | number: '1.3-3' }}</p>
         </ion-card-content>
       </ion-card>
     </div>

@@ -68,7 +68,10 @@ export class LoginPage {
     this.router.navigate(['/registro']);
   }
 
-  // Función para mostrar alertas
+  goToRecuperar(){
+    this.router.navigate(['/recuperar']);
+  }
+
   async showAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header,

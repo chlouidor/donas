@@ -24,7 +24,11 @@ export class MisComprasPage implements OnInit {
     const nombreCliente = user ? user.username : 'Cliente Desconocido';
 
     this.servicebd.fetchVentas().subscribe((ventas: any[]) => {
-      this.compras = ventas.filter(venta => venta.nombre_cliente === nombreCliente);
+      this.compras = ventas.filter(venta => 
+        venta.nombre_cliente.trim().toLowerCase() === nombreCliente.trim().toLowerCase()
+      );
+
+      this.compras.sort((a, b) => new Date(b.fecha_emision).getTime() - new Date(a.fecha_emision).getTime());
     });
   }
 }

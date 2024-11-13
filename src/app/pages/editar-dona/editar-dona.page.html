@@ -19,7 +19,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-input label="Precio" labelPlacement="floating" [(ngModel)]="dona.precio" placeholder="Precio de la dona"></ion-input>
+      <ion-input label="Precio" labelPlacement="floating" [(ngModel)]="dona.precio" [value]="dona.precio | number:'1.3-3'" placeholder="Precio de la dona"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Stock" labelPlacement="floating" [(ngModel)]="dona.stock" placeholder="Cantidad disponible"></ion-input>
     </ion-item>
 
     <ion-item>

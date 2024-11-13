@@ -16,7 +16,9 @@ export class EditarDonaPage implements OnInit {
     imagen: '',
     nombre: '',
     precio: 0,
-    descripcion: ''
+    descripcion: '',
+    stock: 0,      
+    disponible: 1   
   };
 
   constructor(
@@ -51,11 +53,13 @@ export class EditarDonaPage implements OnInit {
       this.dona.imagen, 
       this.dona.nombre, 
       this.dona.precio, 
-      this.dona.descripcion
+      this.dona.descripcion,
+      this.dona.stock  
     ).then(() => {
       this.router.navigate(['/lista-donas']);  
     }).catch(error => {
       console.error('Error al modificar la dona:', error);
     });
   }
+  
 }

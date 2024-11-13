@@ -4,4 +4,7 @@ export class Donas {
     nombre!: string;
     precio!: number;
     descripcion!: string;
-}
+    stock!: number;       
+    disponible!: number;   
+  }
+  

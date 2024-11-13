@@ -14,6 +14,7 @@ export class ConfiguracionPage implements OnInit {
   email: string | undefined;
   imagenAvatar: string | undefined;
   updateError: boolean = false;
+  isRestrictedUser: boolean = false; 
 
   constructor(
     private router: Router,
@@ -27,10 +28,19 @@ export class ConfiguracionPage implements OnInit {
       this.username = user.username;
       this.email = user.email;
       this.imagenAvatar = user.imagen || '';
+
+      if (user.username === 'christ' && user.email === 'ch.louidor@duocuc.cl') {
+        this.isRestrictedUser = true; 
+      }
     }
   }
 
   async actualizarDatos() {
+    if (this.isRestrictedUser) {
+      await this.showAlert('Error', 'No tienes permiso para cambiar el nombre o correo.');
+      return;
+    }
+
     try {
       const user = this.registrologinService.getCurrentUser();
       if (user) {

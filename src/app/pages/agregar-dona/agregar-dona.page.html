@@ -13,21 +13,34 @@
 </ion-header>
 
 <ion-content>
-    <ion-item>
-      <ion-button expand="full" (click)="selectImage()">Seleccionar Imagen</ion-button>
-      <img *ngIf="imagen" [src]="imagen" alt="Imagen de la dona" style="height: 150px; width: 150px;" />
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input [(ngModel)]="nombre" name="nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Precio</ion-label>
-      <ion-input [(ngModel)]="precio" name="precio"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
-      <ion-textarea [(ngModel)]="descripcion" name="descripcion"></ion-textarea>
-    </ion-item>
-    <ion-button color="success" (click)="insertar()">Agregar Dona</ion-button>
+  <ion-item>
+    <ion-button expand="full" (click)="selectImage()">Seleccionar Imagen</ion-button>
+    <img *ngIf="imagen" [src]="imagen" alt="Imagen de la dona" style="height: 150px; width: 150px;" />
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="nombre" name="nombre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Precio</ion-label>
+    <ion-input [(ngModel)]="precio" name="precio" type="number" [value]="precio | number:'1.3-3'"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Descripción</ion-label>
+    <ion-textarea [(ngModel)]="descripcion" name="descripcion"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Stock</ion-label>
+    <ion-input [(ngModel)]="stock" name="stock" type="number"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-button expand="full" (click)="showAvailabilityOptions()">Disponibilidad</ion-button>
+  </ion-item>
+
+  <ion-item *ngIf="disponibilidad !== null">
+    <ion-label>Disponibilidad: {{ disponibilidad === 1 ? 'Sí' : 'No' }}</ion-label>
+  </ion-item>
+
+  <ion-button color="success" (click)="insertar()">Agregar Dona</ion-button>
 </ion-content>

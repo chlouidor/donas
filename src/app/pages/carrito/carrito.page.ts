@@ -34,12 +34,20 @@ export class CarritoPage implements OnInit {
     this.calcularTotal();
   }
 
- 
   confirmarCompra() {
     const user = this.registrologinService.getCurrentUser();
     const nombreCliente = user ? user.username : 'Cliente Desconocido';
     const fechaEmision = new Date().toISOString();
-
+    this.carrito.forEach((producto) => {
+      this.servicebd.actualizarStock(producto.iddona, producto.cantidad)
+        .then(() => {
+          console.log(`Stock de la dona con ID ${producto.iddona} actualizado.`);
+        })
+        .catch((error) => {
+          console.error(`Error al actualizar el stock de la dona con ID ${producto.iddona}:`, error);
+        });
+    });
+  
     this.router.navigate(['/confirmpago'], {
       state: {
         carrito: this.carrito,
@@ -47,7 +55,11 @@ export class CarritoPage implements OnInit {
         fechaEmision,
       }
     });
-
     localStorage.setItem('carrito', JSON.stringify([]));
   }
+  
+  
+  
+
+
 }

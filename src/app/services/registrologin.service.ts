@@ -66,13 +66,12 @@ export class RegistrologinService {
   // Registra un nuevo usuario en la base de datos, con verificación de unicidad
   async registrarUsuario(username: string, email: string, password: string): Promise<void> {
     try {
-      // Verificar si el username o el email ya están en uso
-      const existeUsuario = await this.verificarUsuarioUnico(username, email);
-      if (existeUsuario) {
+      const { usernameEnUso, emailEnUso } = await this.verificarUsuarioUnico(username, email);
+      
+      if (usernameEnUso || emailEnUso) {
         throw new Error('El nombre de usuario o el correo electrónico ya están en uso.');
       }
-
-      // Si no existen duplicados, se procede a registrar el usuario
+  
       await this.basededatos?.executeSql(
         `INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`,
         [username, email, password]
@@ -80,9 +79,10 @@ export class RegistrologinService {
       console.log('Usuario registrado con éxito');
     } catch (error) {
       console.error('Error al registrar usuario:', error);
-      throw error; // Lanza el error para manejarlo en el componente
+      throw error;
     }
   }
+  
 
   // Inicia sesión verificando las credenciales del usuario
   async loginUsuario(email: string, password: string): Promise<boolean> {
@@ -163,3 +163,5 @@ export class RegistrologinService {
     }
   }
 }
+
+

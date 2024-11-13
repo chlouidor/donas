@@ -17,7 +17,9 @@ export class InicioPage implements OnInit {
       imagen: '',
       nombre: '',
       precio: '',
-      descripcion: ''
+      descripcion: '',
+      stock: '',
+      disponible: '' 
     }
   ];
 
@@ -25,7 +27,7 @@ export class InicioPage implements OnInit {
     private bd: ServicebdService,
     private router: Router,
     private registrologinService: RegistrologinService,
-    private toastController: ToastController // Inyectar ToastController
+    private toastController: ToastController 
   ) {}
 
   ngOnInit() {
@@ -39,11 +41,9 @@ export class InicioPage implements OnInit {
   }
 
   async irPagina(index: number) {
-    // Verificar si el usuario está logueado
     const user = this.registrologinService.getCurrentUser();
     
     if (!user) {
-      // Si no está logueado, mostrar un mensaje y redirigir al login
       const toast = await this.toastController.create({
         message: 'Para comprar necesitas iniciar sesión.',
         duration: 2000,
@@ -52,19 +52,32 @@ export class InicioPage implements OnInit {
       });
       toast.present();
 
-      this.router.navigate(['/login']); // Redirigir al login
+      this.router.navigate(['/login']); 
     } else {
-      // Si está logueado, proceder a la compra
       let donaSeleccionada = this.listaDona[index];
-      let navigationExtras: NavigationExtras = {
-        state: {
-          idona: donaSeleccionada.iddona,
-          nom: donaSeleccionada.nombre,
-          pre: donaSeleccionada.precio,
-          imag: donaSeleccionada.imagen
-        }
-      };
-      this.router.navigate(['/comprar'], navigationExtras);
+      
+      if (donaSeleccionada.disponible === 1 && donaSeleccionada.stock > 0) {
+        let navigationExtras: NavigationExtras = {
+          state: {
+            idona: donaSeleccionada.iddona,
+            nom: donaSeleccionada.nombre,
+            pre: donaSeleccionada.precio,
+            imag: donaSeleccionada.imagen,
+            sto: donaSeleccionada.stock,
+          }
+        };
+        this.router.navigate(['/comprar'], navigationExtras);
+      } else {
+        const toast = await this.toastController.create({
+          message: donaSeleccionada.stock === 0 
+            ? 'Este producto está fuera de stock.'
+            : 'Este producto no está disponible.',
+          duration: 2000,
+          position: 'top',
+          color: 'danger'
+        });
+        toast.present();
+      }
     }
   }
 }

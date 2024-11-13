@@ -5,3 +5,13 @@ ion-content {
 ion-list {
   margin: 10px 0; 
 }
+
+.disponible {
+  color: green;
+  font-weight: bold;
+}
+
+.no-disponible {
+  color: red;
+  font-weight: bold;
+}

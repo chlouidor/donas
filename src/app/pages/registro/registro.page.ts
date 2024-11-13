@@ -77,13 +77,13 @@ export class RegistroPage {
       // Si no existen duplicados, se procede a registrar el usuario
       await this.registrologinService.registrarUsuario(this.username, this.email, this.password);
       console.log('Registro exitoso');
-      this.router.navigate(['/login']); // Redirigir a la página de inicio de sesión después del registro
+      await this.showAlert('Éxito', 'Tu cuenta fue registrada correctamente.');
+      this.router.navigate(['/login']); 
     } catch (error) {
       console.error('Error al registrar el usuario:', error);
       this.showAlert('Error', 'Ocurrió un error al registrar el usuario.');
     }
   }
-  
 
   goToLogin() {
     this.router.navigate(['/login']);

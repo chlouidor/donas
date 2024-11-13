@@ -1,21 +1,21 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button> 
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Mis Compras</ion-title>
+    <ion-title>Compras de Usuarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding"> 
-
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-list *ngIf="compras.length > 0">
-    <ion-item *ngFor="let compra of compras" lines="full"> 
-      <ion-avatar slot="start"> 
+    <ion-item *ngFor="let compra of compras" lines="full">
+      <ion-avatar slot="start">
         <ion-icon name="cart-outline" style="font-size: 32px;"></ion-icon>
       </ion-avatar>
       <ion-label>
-        <h2><strong>{{ compra.producto }}</strong></h2> 
+        <h2><strong>{{ compra.producto }}</strong></h2>
+        <p>Comprado por: <strong>{{ compra.nombre_cliente }}</strong></p>
         <p>Total Pagado: <strong>{{ compra.precio | number:'1.3-3'}} CLP</strong></p>
         <p>Cantidad de productos: <strong>{{ compra.cantidad }}</strong></p>
         <p>Fecha de la Compra: {{ compra.fecha_emision | date }}</p>
@@ -23,9 +23,9 @@
     </ion-item>
   </ion-list>
 
-  <ion-item *ngIf="compras.length === 0" color="light"> 
-    <ion-label class="ion-text-center"> 
-      <h2>No tienes compras registradas.</h2>
+  <ion-item *ngIf="compras.length === 0" color="light">
+    <ion-label class="ion-text-center">
+      <h2>No hay compras registradas.</h2>
     </ion-label>
   </ion-item>
 </ion-content>

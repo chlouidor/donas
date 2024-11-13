@@ -52,11 +52,31 @@ h6 {
   border-radius: 0.3rem;
 }
 
-
 ion-card-subtitle {
   color: white; 
 }
 
 ion-card-content p {
   color: white; 
+}
+
+.no-stock {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+.available-quantity {
+  color: green;
+  text-align: center;
+  font-weight: bold;
+}
+
+.product-unavailable {
+  color: red;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
 }

@@ -70,6 +70,10 @@ export class PerfilPage {
     this.router.navigate(['/lista-donas']);
   }
 
+  goToHistorial(){
+    this.router.navigate(['/historial']);
+  }
+
   goToLogin() {
     this.router.navigate(['/login']);
   }
