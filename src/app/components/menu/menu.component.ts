@@ -18,6 +18,10 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/nosotros']);
   }
 
+  goToPrecios() {
+    this.router.navigate(['/precios']); 
+  }
+
   goToPerfil() {
     this.router.navigate(['/perfil']);
   }
@@ -25,6 +29,8 @@ export class MenuComponent implements OnInit {
   goToCarrito() {
     this.router.navigate(['/carrito']); 
   }
+
+
 
   ngOnInit() {}
 }

@@ -22,6 +22,10 @@ export class ConfiguracionPage implements OnInit {
     private alertController: AlertController
   ) {}
 
+  hasNumber(str: string): boolean {
+    return /\d/.test(str);
+  }
+
   ngOnInit() {
     const user = this.registrologinService.getCurrentUser();
     if (user) {
@@ -164,24 +168,49 @@ export class ConfiguracionPage implements OnInit {
         {
           text: 'Guardar',
           handler: async (data) => {
-            if (data.nuevaContrasena === data.confirmarContrasena) {
-              try {
-                await this.registrologinService.cambiarContrasena(this.username!, data.nuevaContrasena);
-                await this.showAlert('Éxito', 'Contraseña cambiada exitosamente.');
-              } catch (error) {
-                console.error('Error al cambiar la contraseña:', error);
-                await this.showAlert('Error', 'No se pudo cambiar la contraseña. Inténtalo nuevamente.');
-              }
-            } else {
+            const nuevaContrasena = data.nuevaContrasena;
+            const confirmarContrasena = data.confirmarContrasena;
+  
+            
+            if (nuevaContrasena.trim() === '') {
+              await this.showAlert('Error', 'El campo de contraseña no puede estar vacío.');
+              return;
+            }
+  
+           
+            if (nuevaContrasena.length < 6) {
+              await this.showAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
+              return;
+            }
+  
+            
+            if (!this.hasNumber(nuevaContrasena)) {
+              await this.showAlert('Error', 'La contraseña debe contener al menos un número.');
+              return;
+            }
+  
+            
+            if (nuevaContrasena !== confirmarContrasena) {
               await this.showAlert('Error', 'Las contraseñas no coinciden.');
+              return;
+            }
+  
+            
+            try {
+              await this.registrologinService.cambiarContrasena(this.username!, nuevaContrasena);
+              await this.showAlert('Éxito', 'Contraseña cambiada exitosamente.');
+            } catch (error) {
+              console.error('Error al cambiar la contraseña:', error);
+              await this.showAlert('Error', 'No se pudo cambiar la contraseña. Inténtalo nuevamente.');
             }
           }
         }
       ]
     });
-
+  
     await alert.present();
   }
+  
 
   isUserLoggedIn(): boolean {
     return this.registrologinService.getCurrentUser() !== null;

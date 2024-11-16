@@ -77,10 +77,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
   },
   {
+    path: 'precios',
+    loadChildren: () => import('./pages/precios/precios.module').then( m => m.PreciosPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'not-found', 
     pathMatch: 'full'
   },
+
+
 
 
 

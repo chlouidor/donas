@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="scrollable-content">
   <div class="form-container">
     <ion-card>
       <ion-card-header>
@@ -37,6 +37,48 @@
         <div *ngIf="confirmPasswordError" class="error-message">
           Las contraseñas no coinciden.
         </div>
+
+        <ion-item>
+          <ion-label>Pregunta de seguridad 1</ion-label>
+          <ion-select [(ngModel)]="pregunta1" name="pregunta1" required>
+            <ion-select-option value="¿Cuál es tu comida favorita?">¿Cuál es tu comida favorita?</ion-select-option>
+            <ion-select-option value="¿Cómo se llamaba tu primera mascota?">¿Cómo se llamaba tu primera mascota?</ion-select-option>
+            <ion-select-option value="¿En qué ciudad naciste?">¿En qué ciudad naciste?</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Respuesta</ion-label>
+          <ion-input [(ngModel)]="respuesta1" name="respuesta1" required (ionInput)="convertToLower($event, 'respuesta1')"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Pregunta de seguridad 2</ion-label>
+          <ion-select [(ngModel)]="pregunta2" name="pregunta2" required>
+            <ion-select-option value="¿Cuál es tu película favorita?">¿Cuál es tu película favorita?</ion-select-option>
+            <ion-select-option value="¿Cómo se llamaba tu mejor amigo(a) de la infancia?">¿Cómo se llamaba tu mejor amigo(a) de la infancia?</ion-select-option>
+            <ion-select-option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Respuesta</ion-label>
+          <ion-input [(ngModel)]="respuesta2" name="respuesta2" required (ionInput)="convertToLower($event, 'respuesta2')"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Pregunta de seguridad 3</ion-label>
+          <ion-select [(ngModel)]="pregunta3" name="pregunta3" required>
+            <ion-select-option value="¿Cuál es tu deporte favorito?">¿Cuál es tu deporte favorito?</ion-select-option>
+            <ion-select-option value="¿Cuál es tu estación del año favorita?">¿Cuál es tu estación del año favorita?</ion-select-option>
+            <ion-select-option value="¿Cuál es tu libro favorito?">¿Cuál es tu libro favorito?</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Respuesta</ion-label>
+          <ion-input [(ngModel)]="respuesta3" name="respuesta3" required (ionInput)="convertToLower($event, 'respuesta3')"></ion-input>
+        </ion-item>
 
         <ion-button expand="full" type="submit">Registrarse</ion-button>
 

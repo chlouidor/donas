@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Categorías de Chistes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content">
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title class="custom-title">Selecciona una categoría de chistes</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item class="category-item">
+          <ion-label>Categoría:</ion-label>
+          <ion-select [(ngModel)]="selectedCategory" (ionChange)="getJoke()">
+            <ion-select-option *ngFor="let category of categories" [value]="category">{{ category }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-card *ngIf="joke">
+          <ion-card-header>
+            <ion-card-title>Chiste</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ joke }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

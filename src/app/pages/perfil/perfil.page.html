@@ -16,7 +16,7 @@
     <p>{{ email }}</p> 
     
     <ion-list>
-      <ion-item button (click)="goToSettings()">
+      <ion-item *ngIf="!hideSettingsButton" button (click)="goToSettings()">
         <ion-icon slot="start" name="settings-outline"></ion-icon>
         <ion-label>Configuración</ion-label>
       </ion-item>

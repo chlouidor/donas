@@ -25,17 +25,17 @@ ion-card-title {
 }
 
 ion-item {
-  --background: transparent; /* Fondo transparente */
-  --color: white; /* Texto blanco */
+  --background: transparent; 
+  --color: white; 
 }
 
 ion-input {
-  --placeholder-color: rgba(255, 255, 255, 0.7); /* Color de placeholder */
+  --placeholder-color: rgba(255, 255, 255, 0.7); 
 }
 
 ion-button {
-  --background: #50376d; /* Botón morado oscuro */
-  --color: white; /* Texto del botón blanco */
+  --background: #50376d; 
+  --color: white; 
   margin-top: 20px;
 }
 
@@ -53,4 +53,8 @@ ion-button {
   color: white;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.space-link {
+  margin-top: 15px;  
 }
