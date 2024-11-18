@@ -45,13 +45,6 @@ export class RegistrologinService {
         )`,
         []
       );
-  
-      await this.basededatos.executeSql(
-        `INSERT OR IGNORE INTO usuarios (username, email, password, rol) 
-         VALUES (?, ?, ?, ?)`,
-        ['christ', 'ch.louidor@duocuc.cl', 'asdqwe123', 'admin']
-      );
-  
       console.log('Base de datos inicializada correctamente');
     } catch (error) {
       console.error('Error al inicializar la base de datos:', error);
