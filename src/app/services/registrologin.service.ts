@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
+import { ServicebdService } from './servicebd.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class RegistrologinService {
     rol: string; 
   } | null = null;
 
-  constructor(private sqlite: SQLite, private nativeStorage: NativeStorage) {
+  constructor(private sqlite: SQLite, private nativeStorage: NativeStorage,private carritoService: ServicebdService ) {
     this.iniciarBaseDeDatos();
   }
 
@@ -27,6 +28,8 @@ export class RegistrologinService {
       });
   
       this.basededatos = db;
+  
+      await this.basededatos.executeSql(`DROP TABLE IF EXISTS usuarios`, []);
   
       await this.basededatos.executeSql(
         `CREATE TABLE IF NOT EXISTS usuarios (
@@ -45,6 +48,13 @@ export class RegistrologinService {
         )`,
         []
       );
+  
+      await this.basededatos.executeSql(
+        `INSERT OR IGNORE INTO usuarios (username, email, password, rol) 
+         VALUES (?, ?, ?, ?)`,
+        ['christ', 'ch.louidor@duocuc.cl', 'asdqwe123', 'admin']
+      );
+  
       console.log('Base de datos inicializada correctamente');
     } catch (error) {
       console.error('Error al inicializar la base de datos:', error);
@@ -111,7 +121,6 @@ export class RegistrologinService {
 
   
   
-  
 
   
   async loginUsuario(email: string, password: string): Promise<boolean> {
@@ -120,11 +129,13 @@ export class RegistrologinService {
         `SELECT id, username, email, imagen, rol FROM usuarios WHERE email = ? AND password = ?`,
         [email, password]
       );
-  
+
       if (result?.rows.length > 0) {
         this.currentUser = result.rows.item(0);
-  
         await this.nativeStorage.setItem('currentUser', this.currentUser);
+        
+        this.carritoService.vaciarCarrito(); 
+
         return true;
       } else {
         return false;
@@ -134,6 +145,7 @@ export class RegistrologinService {
       return false;
     }
   }
+
   
 
   
@@ -145,7 +157,10 @@ export class RegistrologinService {
   async logOut() {
     this.currentUser = null;
     await this.nativeStorage.remove('currentUser');
+    this.carritoService.vaciarCarrito();
   }
+
+
 
   async restoreSession(): Promise<boolean> {
     try {

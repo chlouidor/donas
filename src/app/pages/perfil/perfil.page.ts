@@ -48,9 +48,9 @@ export class PerfilPage {
     try {
       await this.nativeStorage.remove('ultimoUsuario');
       console.log('Datos del usuario eliminados del almacenamiento nativo.');
-
+  
       this.carritoService.vaciarCarrito();
-
+  
       this.registrologinService.logOut();
       console.log('Sesión cerrada');
   

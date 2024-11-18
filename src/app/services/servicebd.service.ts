@@ -3,6 +3,7 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Donas } from './donas';
+import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,7 @@ registroDonas: string =
 
   private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController) { 
+  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController, private nativeStorage: NativeStorage) { 
     this.createBD();
   }
 
@@ -242,7 +243,11 @@ registroDonas: string =
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }
 
-
+  vaciarCarrito() {
+    this.carritoCompra = [];
+    this.nativeStorage.remove('carritoCompra');
+    console.log('Carrito vacío');
+  }
   
 }
 

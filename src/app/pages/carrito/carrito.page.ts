@@ -56,7 +56,6 @@ export class CarritoPage implements OnInit {
           console.error(`Error al actualizar el stock de la dona con ID ${producto.iddona}:`, error);
         });
     });
-  
     this.router.navigate(['/confirmpago'], {
       state: {
         carrito: this.carrito,
@@ -64,6 +63,9 @@ export class CarritoPage implements OnInit {
         fechaEmision,
       }
     });
-    localStorage.setItem('carrito', JSON.stringify([]));
+    this.carrito = [];
+    localStorage.setItem('carrito', JSON.stringify(this.carrito));
+    this.calcularTotal();
   }
+  
 }

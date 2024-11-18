@@ -8,7 +8,7 @@ export class CarritoService {
 
   constructor() {}
 
-  // Agregar producto al carrito
+
   agregarAlCarrito(producto: any, cantidad: number) {
     const productoExistente = this.carrito.find(item => item.iddona === producto.iddona);
     if (productoExistente) {
@@ -18,17 +18,16 @@ export class CarritoService {
     }
   }
 
-  // Obtener productos del carrito
+
   obtenerCarrito() {
     return [...this.carrito];
   }
 
-  // Vaciar el carrito
   vaciarCarrito() {
-    this.carrito = [];
+    localStorage.removeItem('carrito');
+    console.log('Carrito vaciado');
   }
 
-  // Calcular el total del carrito
   calcularTotal() {
     return this.carrito.reduce((total, producto) => total + (producto.precio * producto.cantidad), 0);
   }
