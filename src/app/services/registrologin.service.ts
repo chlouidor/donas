@@ -28,8 +28,6 @@ export class RegistrologinService {
   
       this.basededatos = db;
   
-      await this.basededatos.executeSql(`DROP TABLE IF EXISTS usuarios`, []);
-  
       await this.basededatos.executeSql(
         `CREATE TABLE IF NOT EXISTS usuarios (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
