@@ -23,8 +23,7 @@
         type="text" 
         [(ngModel)]="username" 
         name="username" 
-        required 
-        [disabled]="isRestrictedUser"></ion-input>
+        required></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
@@ -34,7 +33,7 @@
         [(ngModel)]="email" 
         name="email" 
         required 
-        [disabled]="isRestrictedUser"></ion-input>
+        ></ion-input>
     </ion-item>
 
     <ion-button expand="full" color="medium" (click)="cambiarContrasena()" 
@@ -46,7 +45,7 @@
       Error al actualizar la cuenta. Por favor, inténtalo nuevamente.
     </div>
 
-    <ion-button expand="full" color="success" type="submit" class="submit-button" [disabled]="isRestrictedUser">
+    <ion-button expand="full" color="success" type="submit" class="submit-button" >
       Actualizar Cuenta
     </ion-button>
   </form>

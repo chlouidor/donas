@@ -14,7 +14,6 @@ export class ConfiguracionPage implements OnInit {
   email: string | undefined;
   imagenAvatar: string | undefined;
   updateError: boolean = false;
-  isRestrictedUser: boolean = false; 
 
   constructor(
     private router: Router,
@@ -32,19 +31,10 @@ export class ConfiguracionPage implements OnInit {
       this.username = user.username;
       this.email = user.email;
       this.imagenAvatar = user.imagen || '';
-
-      if (user.username === 'christ' && user.email === 'ch.louidor@duocuc.cl') {
-        this.isRestrictedUser = true; 
-      }
     }
   }
 
   async actualizarDatos() {
-    if (this.isRestrictedUser) {
-      await this.showAlert('Error', 'No tienes permiso para cambiar el nombre o correo.');
-      return;
-    }
-
     try {
       const user = this.registrologinService.getCurrentUser();
       if (user) {
@@ -128,7 +118,7 @@ export class ConfiguracionPage implements OnInit {
   async selectImage(source: CameraSource) {
     try {
       const image = await Camera.getPhoto({
-        quality: 90,
+        quality: 100,
         allowEditing: false,
         resultType: CameraResultType.Uri,
         source
@@ -171,31 +161,26 @@ export class ConfiguracionPage implements OnInit {
             const nuevaContrasena = data.nuevaContrasena;
             const confirmarContrasena = data.confirmarContrasena;
   
-            
             if (nuevaContrasena.trim() === '') {
               await this.showAlert('Error', 'El campo de contraseña no puede estar vacío.');
               return;
             }
   
-           
             if (nuevaContrasena.length < 6) {
               await this.showAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
               return;
             }
   
-            
             if (!this.hasNumber(nuevaContrasena)) {
               await this.showAlert('Error', 'La contraseña debe contener al menos un número.');
               return;
             }
   
-            
             if (nuevaContrasena !== confirmarContrasena) {
               await this.showAlert('Error', 'Las contraseñas no coinciden.');
               return;
             }
   
-            
             try {
               await this.registrologinService.cambiarContrasena(this.username!, nuevaContrasena);
               await this.showAlert('Éxito', 'Contraseña cambiada exitosamente.');
@@ -210,7 +195,6 @@ export class ConfiguracionPage implements OnInit {
   
     await alert.present();
   }
-  
 
   isUserLoggedIn(): boolean {
     return this.registrologinService.getCurrentUser() !== null;

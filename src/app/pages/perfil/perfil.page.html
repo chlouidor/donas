@@ -24,19 +24,20 @@
         <ion-icon slot="start" name="receipt-outline"></ion-icon>
         <ion-label>Mis Compras</ion-label>
       </ion-item>
-      <ion-item *ngIf="isAuthorizedUser" button (click)="goToDonas()" class="donas-link">
+      <ion-item *ngIf="isAdmin" button (click)="goToDonas()" class="donas-link">
         <ion-icon slot="start" name="logo-ionic"></ion-icon>
         <ion-label>Lista Donas</ion-label>
       </ion-item> 
-      <ion-item *ngIf="isAuthorizedUser" button (click)="goToHistorial()" class="donas-link">
+      <ion-item *ngIf="isAdmin" button (click)="goToHistorial()" class="donas-link">
         <ion-icon slot="start" name="cart"></ion-icon>
         <ion-label>Compras de todos los Usuarios</ion-label>
-      </ion-item>      
+      </ion-item>  
       <ion-item button (click)="logOut()">
         <ion-icon slot="start" name="log-out-outline"></ion-icon>
         <ion-label>Cerrar Sesión</ion-label>
       </ion-item>
     </ion-list>
+    
   </div>
 
   <!-- Mostrar mensaje y botón de iniciar sesión si no hay sesión activa -->

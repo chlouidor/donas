@@ -7,7 +7,13 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 })
 export class RegistrologinService {
   private basededatos?: SQLiteObject;
-  private currentUser: { id: number; username: string; email: string; imagen?: string } | null = null;
+  private currentUser: { 
+    id: number; 
+    username: string; 
+    email: string; 
+    imagen?: string; 
+    rol: string; 
+  } | null = null;
 
   constructor(private sqlite: SQLite, private nativeStorage: NativeStorage) {
     this.iniciarBaseDeDatos();
@@ -19,9 +25,10 @@ export class RegistrologinService {
         name: 'usuarios.db',
         location: 'default',
       });
-
+  
       this.basededatos = db;
-
+  
+      await this.basededatos.executeSql(`DROP TABLE IF EXISTS usuarios`, []);
   
       await this.basededatos.executeSql(
         `CREATE TABLE IF NOT EXISTS usuarios (
@@ -35,15 +42,26 @@ export class RegistrologinService {
           pregunta2 TEXT,
           respuesta2 TEXT,
           pregunta3 TEXT,
-          respuesta3 TEXT
+          respuesta3 TEXT,
+          rol TEXT DEFAULT 'usuario'
         )`,
         []
       );
-      
+  
+      await this.basededatos.executeSql(
+        `INSERT OR IGNORE INTO usuarios (username, email, password, rol) 
+         VALUES (?, ?, ?, ?)`,
+        ['christ', 'ch.louidor@duocuc.cl', 'asdqwe123', 'admin']
+      );
+  
+      console.log('Base de datos inicializada correctamente');
     } catch (error) {
       console.error('Error al inicializar la base de datos:', error);
     }
   }
+  
+
+
 
   async registrarUsuario(
     username: string, 
@@ -54,31 +72,29 @@ export class RegistrologinService {
     pregunta2: string, 
     respuesta2: string, 
     pregunta3: string, 
-    respuesta3: string
+    respuesta3: string,
+    rol: string = 'usuario'            
   ): Promise<void> {
     try {
       const { usernameEnUso, emailEnUso } = await this.verificarUsuarioUnico(username, email);
-
+  
       if (usernameEnUso || emailEnUso) {
         throw new Error('El nombre de usuario o el correo electrónico ya están en uso.');
       }
-
-      console.log('Registrando usuario con los siguientes datos:', {
-        username, email, password, pregunta1, respuesta1, pregunta2, respuesta2, pregunta3, respuesta3
-      });
-
+  
       await this.basededatos?.executeSql(
-        `INSERT INTO usuarios (username, email, password, pregunta1, respuesta1, pregunta2, respuesta2, pregunta3, respuesta3) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [username, email, password, pregunta1, respuesta1, pregunta2, respuesta2, pregunta3, respuesta3]
+        `INSERT INTO usuarios (username, email, password, pregunta1, respuesta1, pregunta2, respuesta2, pregunta3, respuesta3, rol) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [username, email, password, pregunta1, respuesta1, pregunta2, respuesta2, pregunta3, respuesta3, rol]
       );
-
-      console.log('Usuario registrado con éxito');
+  
+      console.log('Usuario registrado con éxito con rol:', rol);
     } catch (error) {
       console.error('Error al registrar usuario:', error);
       throw error;
     }
   }
+  
 
   async verificarUsuarioUnico(username: string, email: string): Promise<{ usernameEnUso: boolean; emailEnUso: boolean }> {
     try {
@@ -110,14 +126,13 @@ export class RegistrologinService {
   async loginUsuario(email: string, password: string): Promise<boolean> {
     try {
       const result = await this.basededatos?.executeSql(
-        `SELECT * FROM usuarios WHERE email = ? AND password = ?`,
+        `SELECT id, username, email, imagen, rol FROM usuarios WHERE email = ? AND password = ?`,
         [email, password]
       );
-
+  
       if (result?.rows.length > 0) {
         this.currentUser = result.rows.item(0);
-
-        
+  
         await this.nativeStorage.setItem('currentUser', this.currentUser);
         return true;
       } else {
@@ -128,6 +143,7 @@ export class RegistrologinService {
       return false;
     }
   }
+  
 
   
   getCurrentUser() {
@@ -143,7 +159,7 @@ export class RegistrologinService {
   async restoreSession(): Promise<boolean> {
     try {
       const user = await this.nativeStorage.getItem('currentUser');
-      if (user) {
+      if (user && user.rol) {
         this.currentUser = user;
         return true;
       }
@@ -152,6 +168,7 @@ export class RegistrologinService {
     }
     return false;
   }
+  
 
   
   async actualizarUsuario(username: string, email: string): Promise<void> {

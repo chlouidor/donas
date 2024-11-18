@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/lista-donas"></ion-back-button> <!-- Botón de retroceso -->
+      <ion-back-button defaultHref="/lista-donas"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -22,8 +22,7 @@
     <ion-input [(ngModel)]="nombre" name="nombre"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating">Precio</ion-label>
-    <ion-input [(ngModel)]="precio" name="precio" type="number" [value]="precio | number:'1.3-3'"></ion-input>
+    <ion-input label="Precio" labelPlacement="floating" [(ngModel)]="precio" [value]="precio | number:'1.3-3'" placeholder="Precio de la dona"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="floating">Descripción</ion-label>
@@ -42,5 +41,5 @@
     <ion-label>Disponibilidad: {{ disponibilidad === 1 ? 'Sí' : 'No' }}</ion-label>
   </ion-item>
 
-  <ion-button color="success" (click)="insertar()">Agregar Dona</ion-button>
+  <ion-button color="success" expand="full" (click)="validarYAgregar()">Agregar Dona</ion-button>
 </ion-content>

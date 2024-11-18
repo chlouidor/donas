@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -50,8 +49,8 @@ const routes: Routes = [
   },
   {
     path: 'lista-donas',
-    loadChildren: () => import('./pages/lista-donas/lista-donas.module').then(m => m.ListaDonasPageModule),
-    canActivate: [AuthGuard]},
+    loadChildren: () => import('./pages/lista-donas/lista-donas.module').then(m => m.ListaDonasPageModule)
+  },
   {
     path: 'not-found',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
@@ -70,8 +69,8 @@ const routes: Routes = [
   },
   {
     path: 'historial',
-    loadChildren: () => import('./pages/historial/historial.module').then( m => m.HistorialPageModule),
-    canActivate: [AuthGuard]},
+    loadChildren: () => import('./pages/historial/historial.module').then( m => m.HistorialPageModule)
+  },
   {
     path: 'recuperar',
     loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)

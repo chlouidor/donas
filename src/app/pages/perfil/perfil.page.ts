@@ -15,7 +15,7 @@ export class PerfilPage {
   email: string | undefined;
   imagenAvatar: string | undefined;
   isLoggedIn: boolean = false;
-  isAuthorizedUser: boolean = false;
+  isAdmin: boolean = false; 
   hideSettingsButton: boolean = false;
 
   constructor(
@@ -31,17 +31,8 @@ export class PerfilPage {
       this.email = user.email;
       this.imagenAvatar = user.imagen || '';
       this.isLoggedIn = true;
-
-      if (user.username === 'christ' && user.email === 'ch.louidor@duocuc.cl') {
-        this.hideSettingsButton = true;
-      }
-    }
-  }
-
-  ngOnInit() {
-    const user = this.registrologinService.getCurrentUser();
-    if (user && user.username === 'christ' && user.email === 'ch.louidor@duocuc.cl') {
-      this.isAuthorizedUser = true;
+  
+      this.isAdmin = user.rol === 'admin'; 
     }
   }
 

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServicebdService } from 'src/app/services/servicebd.service';
-import { Donas } from 'src/app/services/donas';  
+import { Donas } from 'src/app/services/donas';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-editar-dona',
@@ -24,7 +25,8 @@ export class EditarDonaPage implements OnInit {
   constructor(
     private router: Router, 
     private activedrouter: ActivatedRoute, 
-    private bd: ServicebdService
+    private bd: ServicebdService,
+    private alertCtrl: AlertController 
   ) {
     this.activedrouter.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation()?.extras.state) {
@@ -35,7 +37,6 @@ export class EditarDonaPage implements OnInit {
 
   ngOnInit() {}
 
-
   async selectImage() {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -45,6 +46,20 @@ export class EditarDonaPage implements OnInit {
     });
 
     this.dona.imagen = image.webPath;  
+  }
+
+  async validarYModificar() {
+    if (!this.dona.imagen || !this.dona.nombre || !this.dona.precio || !this.dona.descripcion || !this.dona.stock) {
+      const alert = await this.alertCtrl.create({
+        header: 'Campos Vacíos',
+        message: 'Todos los campos son obligatorios.',
+        buttons: ['Aceptar']
+      });
+      await alert.present();
+      return;
+    }
+
+    this.modificar();
   }
 
   modificar() {
@@ -61,5 +76,4 @@ export class EditarDonaPage implements OnInit {
       console.error('Error al modificar la dona:', error);
     });
   }
-  
 }

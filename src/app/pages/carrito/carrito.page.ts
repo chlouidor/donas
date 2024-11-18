@@ -34,6 +34,15 @@ export class CarritoPage implements OnInit {
     this.calcularTotal();
   }
 
+
+  decrementarCantidad(index: number) {
+    if (this.carrito[index].cantidad > 1) {
+      this.carrito[index].cantidad--;
+      localStorage.setItem('carrito', JSON.stringify(this.carrito));
+      this.calcularTotal();
+    }
+  }
+
   confirmarCompra() {
     const user = this.registrologinService.getCurrentUser();
     const nombreCliente = user ? user.username : 'Cliente Desconocido';
@@ -57,9 +66,4 @@ export class CarritoPage implements OnInit {
     });
     localStorage.setItem('carrito', JSON.stringify([]));
   }
-  
-  
-  
-
-
 }
