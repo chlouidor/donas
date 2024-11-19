@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
 import { AlertController } from '@ionic/angular';
-import { CarritoService } from 'src/app/services/carrito.service'; // Importa el servicio de carrito
+import { CarritoService } from 'src/app/services/carrito.service'; 
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 
 @Component({
