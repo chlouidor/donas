@@ -29,7 +29,6 @@ export class RegistrologinService {
   
       this.basededatos = db;
   
-      await this.basededatos.executeSql(`DROP TABLE IF EXISTS usuarios`, []);
   
       await this.basededatos.executeSql(
         `CREATE TABLE IF NOT EXISTS usuarios (
@@ -47,12 +46,6 @@ export class RegistrologinService {
           rol TEXT DEFAULT 'usuario'
         )`,
         []
-      );
-  
-      await this.basededatos.executeSql(
-        `INSERT OR IGNORE INTO usuarios (username, email, password, rol) 
-         VALUES (?, ?, ?, ?)`,
-        ['christ', 'ch.louidor@duocuc.cl', 'asdqwe123', 'admin']
       );
   
       console.log('Base de datos inicializada correctamente');

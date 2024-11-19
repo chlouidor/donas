@@ -56,8 +56,40 @@ ion-content {
   
 }
 
-ion-button {
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: bold;
+button {
+  background-color: #000000; 
+  color: white; 
+  padding: 10px 20px; 
+  font-size: 18px; 
+  font-weight: bold; 
+  border: none; 
+  border-radius: 25px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; 
+  margin: 0 auto; 
+  width: auto; 
 }
+
+button:hover {
+  background-color: #2e2b2d;
+  transform: scale(1.05); 
+}
+
+ion-icon {
+  margin-right: 10px; 
+  font-size: 24px; 
+}
+
+button:focus {
+  outline: none;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

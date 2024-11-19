@@ -9,6 +9,7 @@ import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { provideHttpClient } from '@angular/common/http';
     NativeStorage,
     SQLite,
     provideHttpClient(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    InAppBrowser
   ],
   bootstrap: [AppComponent],
 })

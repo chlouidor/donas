@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-nosotros',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NosotrosPage implements OnInit {
 
-  constructor() { }
+  constructor(private inAppBrowser: InAppBrowser) { }
 
   ngOnInit() {
   }
 
+  openInstagram() {
+    const browser = this.inAppBrowser.create('https://www.instagram.com/idkcloudd_/', '_system');
+  }
 }
