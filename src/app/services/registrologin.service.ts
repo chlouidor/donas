@@ -19,40 +19,43 @@ export class RegistrologinService {
   constructor(private sqlite: SQLite, private nativeStorage: NativeStorage,private carritoService: ServicebdService ) {
     this.iniciarBaseDeDatos();
   }
+async iniciarBaseDeDatos(): Promise<SQLiteObject> {
+  try {
+    const db = await this.sqlite.create({
+      name: 'usuarios.db',
+      location: 'default',
+    });
 
-  async iniciarBaseDeDatos() {
-    try {
-      const db = await this.sqlite.create({
-        name: 'usuarios.db',
-        location: 'default',
-      });
-  
-      this.basededatos = db;
-  
-  
-      await this.basededatos.executeSql(
-        `CREATE TABLE IF NOT EXISTS usuarios (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          username TEXT,
-          email TEXT UNIQUE,
-          password TEXT,
-          imagen TEXT,
-          pregunta1 TEXT,
-          respuesta1 TEXT,
-          pregunta2 TEXT,
-          respuesta2 TEXT,
-          pregunta3 TEXT,
-          respuesta3 TEXT,
-          rol TEXT DEFAULT 'usuario'
-        )`,
-        []
-      );
-  
-      console.log('Base de datos inicializada correctamente');
-    } catch (error) {
-      console.error('Error al inicializar la base de datos:', error);
-    }
+    this.basededatos = db;
+
+    // Verifica si la tabla ya existe antes de intentar crearla
+    const result = await this.basededatos.executeSql(
+      `CREATE TABLE IF NOT EXISTS usuarios (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        email TEXT UNIQUE,
+        password TEXT,
+        imagen TEXT,
+        pregunta1 TEXT,
+        respuesta1 TEXT,
+        pregunta2 TEXT,
+        respuesta2 TEXT,
+        pregunta3 TEXT,
+        respuesta3 TEXT,
+        rol TEXT DEFAULT 'usuario'
+      )`,
+      []
+    );
+
+    console.log('Base de datos inicializada correctamente');
+    return db;
+  } catch (error) {
+    console.error('Error al inicializar la base de datos:', error);
+    throw error; 
   }
+}
+
+  
   
 
 

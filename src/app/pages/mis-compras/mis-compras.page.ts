@@ -8,27 +8,31 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
   styleUrls: ['./mis-compras.page.scss'],
 })
 export class MisComprasPage implements OnInit {
-  compras: any[] = []; 
-
+  compras: any[] = [];
+  
   constructor(
     private registrologinService: RegistrologinService,
-    private servicebd: ServicebdService
+    private servicebdService: ServicebdService
   ) {}
 
   ngOnInit() {
-    this.cargarCompras(); 
+    const user = this.registrologinService.getCurrentUser();
+    this.cargarCompras(user);
   }
 
-  cargarCompras() {
-    const user = this.registrologinService.getCurrentUser();
-    const nombreCliente = user ? user.username : 'Cliente Desconocido';
-
-    this.servicebd.fetchVentas().subscribe((ventas: any[]) => {
-      this.compras = ventas.filter(venta => 
-        venta.nombre_cliente.trim().toLowerCase() === nombreCliente.trim().toLowerCase()
-      );
-
-      this.compras.sort((a, b) => new Date(b.fecha_emision).getTime() - new Date(a.fecha_emision).getTime());
-    });
+  cargarCompras(user: any) {
+    this.servicebdService.fetchVentas().subscribe(
+      (ventas: any[]) => {
+        // Filtrar y ordenar las compras según el usuario
+        this.compras = ventas
+          .filter(venta => venta.nombre_cliente === user.username)
+          .sort((a, b) => new Date(b.fecha_emision).getTime() - new Date(a.fecha_emision).getTime());
+      },
+      error => {
+        console.error('Error al cargar las compras', error);
+        this.compras = []; // En caso de error, se asigna un array vacío
+      }
+    );
   }
 }
+

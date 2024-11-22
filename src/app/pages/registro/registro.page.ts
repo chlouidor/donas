@@ -33,76 +33,73 @@ export class RegistroPage {
     const value = event.target.value.toLowerCase();
     this[fieldName] = value; 
   }
-
   async registrar() {
-    // Validaciones
+    // Validaciones de campos
     if (this.username.trim() === '') {
       this.showAlert('Error', 'El campo de nombre de usuario no puede estar vacío.');
       return;
     }
-
+  
     if (this.email.trim() === '') {
       this.showAlert('Error', 'El campo de correo electrónico no puede estar vacío.');
       return;
     }
-
+  
     // Validación de email
     if (!this.validateEmail(this.email)) {
       this.showAlert('Error', 'Por favor, introduce un correo electrónico válido.');
       return;
     }
-
+  
     if (this.password.trim() === '') {
       this.showAlert('Error', 'El campo de contraseña no puede estar vacío.');
       return;
     }
-
+  
     if (this.password.length < 6) {
       this.showAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
       return;
     }
-
+  
     if (!this.hasNumber(this.password)) {
       this.showAlert('Error', 'La contraseña debe contener al menos un número.');
       return;
     }
-
+  
     this.confirmPasswordError = this.password !== this.confirmPassword;
     if (this.confirmPasswordError) {
       this.showAlert('Error', 'Las contraseñas no coinciden.');
       return;
     }
-
+  
+    // Verificar usuario único antes de las preguntas de seguridad
+    const { usernameEnUso, emailEnUso } = await this.registrologinService.verificarUsuarioUnico(this.username, this.email);
+    if (usernameEnUso) {
+      this.showAlert('Error', 'El nombre de usuario ya está en uso.');
+      return;
+    } else if (emailEnUso) {
+      this.showAlert('Error', 'El correo electrónico ya está en uso.');
+      return;
+    }
+  
+    // Validación de preguntas de seguridad
     if (!this.pregunta1 || !this.respuesta1.trim()) {
       this.showAlert('Error', 'La pregunta de seguridad 1 y su respuesta no pueden estar vacías.');
       return;
     }
-
+  
     if (!this.pregunta2 || !this.respuesta2.trim()) {
       this.showAlert('Error', 'La pregunta de seguridad 2 y su respuesta no pueden estar vacías.');
       return;
     }
-
+  
     if (!this.pregunta3 || !this.respuesta3.trim()) {
       this.showAlert('Error', 'La pregunta de seguridad 3 y su respuesta no pueden estar vacías.');
       return;
     }
-
+  
     try {
-      const { usernameEnUso, emailEnUso } = await this.registrologinService.verificarUsuarioUnico(this.username, this.email);
-    
-      if (usernameEnUso && emailEnUso) {
-        this.showAlert('Error', 'El nombre de usuario y el correo electrónico ya están en uso.');
-        return;
-      } else if (usernameEnUso) {
-        this.showAlert('Error', 'El nombre de usuario ya está en uso.');
-        return;
-      } else if (emailEnUso) {
-        this.showAlert('Error', 'El correo electrónico ya está en uso.');
-        return;
-      }
-    
-      // Registrar el usuario pasando todos los parámetros al servicio
+      // Registrar usuario si todas las validaciones son correctas
       await this.registrologinService.registrarUsuario(
         this.username,
         this.email,
@@ -114,12 +111,12 @@ export class RegistroPage {
         this.pregunta3,
         this.respuesta3
       );
-    
+  
       this.showAlert('Éxito', 'Tu cuenta fue registrada correctamente.');
       this.router.navigate(['/login']);
     } catch (error: unknown) {
       console.error('Error al registrar el usuario:', error);
-    
+  
       if (error instanceof Error) {
         this.showAlert('Error', `Ocurrió un error al registrar el usuario: ${error.message}`);
       } else if (typeof error === 'string') {
@@ -129,9 +126,9 @@ export class RegistroPage {
       } else {
         this.showAlert('Error', 'Ocurrió un error desconocido al registrar el usuario.');
       }
-    }    
+    }
   }
-
+  
   goToLogin() {
     this.router.navigate(['/login']);
   }

@@ -139,8 +139,11 @@ registroDonas: string =
         }
       }
       this.listadoVentas.next(items);
+    }).catch(e => {
+      console.error('Error al seleccionar ventas:', e);
     });
   }
+  
   
 
   insertarDona(imagen: string, nombre: string, precio: number, descripcion: string, stock: number, disponible: number) {

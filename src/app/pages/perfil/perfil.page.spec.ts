@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
 import { AlertController } from '@ionic/angular';
 import { CarritoService } from 'src/app/services/carrito.service';
+import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 import { of } from 'rxjs';
 
 describe('PerfilPage', () => {
@@ -13,20 +14,22 @@ describe('PerfilPage', () => {
   let registrologinServiceSpy: jasmine.SpyObj<RegistrologinService>;
   let carritoServiceSpy: jasmine.SpyObj<CarritoService>;
   let alertControllerSpy: jasmine.SpyObj<AlertController>;
+  let nativeStorageSpy: jasmine.SpyObj<NativeStorage>;
 
   const mockUser = {
-    id: 1, // Asegúrate de incluir este campo 'id' con un valor numérico
+    id: 1,
     username: 'christ',
     email: 'ch.louidor@duocuc.cl',
-    imagen: 'avatar.png'
+    imagen: 'avatar.png',
+    rol: 'admin', // Incluido para verificar si es administrador
   };
-  
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     registrologinServiceSpy = jasmine.createSpyObj('RegistrologinService', ['getCurrentUser', 'logOut']);
     carritoServiceSpy = jasmine.createSpyObj('CarritoService', ['vaciarCarrito']);
     alertControllerSpy = jasmine.createSpyObj('AlertController', ['create']);
+    nativeStorageSpy = jasmine.createSpyObj('NativeStorage', ['remove']);
 
     registrologinServiceSpy.getCurrentUser.and.returnValue(mockUser);
     alertControllerSpy.create.and.returnValue(Promise.resolve({
@@ -41,7 +44,8 @@ describe('PerfilPage', () => {
         { provide: RegistrologinService, useValue: registrologinServiceSpy },
         { provide: CarritoService, useValue: carritoServiceSpy },
         { provide: AlertController, useValue: alertControllerSpy },
-      ]
+        { provide: NativeStorage, useValue: nativeStorageSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PerfilPage);
@@ -60,9 +64,8 @@ describe('PerfilPage', () => {
     expect(component.isLoggedIn).toBeTrue();
   });
 
-  it('should set isAuthorizedUser to true for authorized user', () => {
-    component.ngOnInit();
-    expect(component.isAuthorizedUser).toBeTrue();
+  it('should set isAdmin to true for authorized user', () => {
+    expect(component.isAdmin).toBeTrue();
   });
 
   it('should navigate to configuracion page on goToSettings', () => {
@@ -80,13 +83,20 @@ describe('PerfilPage', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/lista-donas']);
   });
 
+  it('should navigate to historial page on goToHistorial', () => {
+    component.goToHistorial();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/historial']);
+  });
+
   it('should navigate to login page on goToLogin', () => {
     component.goToLogin();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
   });
 
-  it('should log out and clear carrito on logOut', async () => {
+  it('should log out, clear carrito, remove user data, and show alert on logOut', async () => {
     await component.logOut();
+
+    expect(nativeStorageSpy.remove).toHaveBeenCalledWith('ultimoUsuario');
     expect(carritoServiceSpy.vaciarCarrito).toHaveBeenCalled();
     expect(registrologinServiceSpy.logOut).toHaveBeenCalled();
     expect(alertControllerSpy.create).toHaveBeenCalled();
