@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegistrologinService } from 'src/app/services/registrologin.service';
-import { ServicebdService } from 'src/app/services/servicebd.service'; 
+import { ServicebdService } from 'src/app/services/servicebd.service';
 
 @Component({
   selector: 'app-confirmpago',
@@ -9,10 +9,10 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
   styleUrls: ['./confirmpago.page.scss'],
 })
 export class ConfirmpagoPage implements OnInit {
-  carrito: any[] = []; 
-  total: number = 0; 
-  nombreCliente: string = ''; 
-  fechaEmision: string = ''; 
+  carrito: any[] = [];
+  total: number = 0;
+  nombreCliente: string = 'Cliente Desconocido';  // Valor predeterminado
+  fechaEmision: string = '';
 
   constructor(
     private router: Router,
@@ -20,10 +20,11 @@ export class ConfirmpagoPage implements OnInit {
     private registrologinService: RegistrologinService,
     private servicebd: ServicebdService
   ) {
-    this.activaterouter.queryParams.subscribe(param => { 
+    this.activaterouter.queryParams.subscribe(param => {
       const state = this.router.getCurrentNavigation()?.extras.state;
-    
+
       if (state) {
+        // Si se pasa el estado, usamos los valores del estado
         this.carrito = state['carrito'] || [];
         this.nombreCliente = state['nombreCliente'] || 'Cliente Desconocido';
 
@@ -31,13 +32,17 @@ export class ConfirmpagoPage implements OnInit {
         this.fechaEmision = state['fechaEmision'] || this.formatDate(today);
 
         this.carrito.forEach(item => {
-          item.cantidad = item.cantidad || 1; 
+          item.cantidad = item.cantidad || 1;
         });
-    
+
         this.calcularTotal();
         this.insertarVenta();
       } else {
-        console.warn('No se recibieron datos del estado');
+        // Usamos valores predeterminados si no se pasa el estado
+        this.carrito = [];
+        this.nombreCliente = 'Cliente Desconocido';
+        const today = new Date();
+        this.fechaEmision = this.formatDate(today);
       }
     });
   }
@@ -54,7 +59,7 @@ export class ConfirmpagoPage implements OnInit {
         this.nombreCliente,
         this.fechaEmision,
         producto.nombre,
-        producto.cantidad,  
+        producto.cantidad,
         producto.precio * producto.cantidad
       ).then(() => {
         console.log("Venta registrada correctamente.");
@@ -66,8 +71,8 @@ export class ConfirmpagoPage implements OnInit {
 
   formatDate(date: Date): string {
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
-    const day = date.getDate().toString().padStart(2, '0'); 
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
     return `${day}-${month}-${year}`;
   }
 }

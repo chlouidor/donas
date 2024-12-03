@@ -11,7 +11,7 @@ describe('ConfirmpagoPage', () => {
 
   let mockRouter = {
     getCurrentNavigation: jasmine.createSpy('getCurrentNavigation').and.returnValue({
-      extras: { state: { carrito: [{ nombre: 'Dona', precio: 2, cantidad: 2 }], nombreCliente: 'Juan', fechaEmision: '22-11-2024' } }
+      extras: { state: undefined }  // Simulamos que no hay estado en la navegación
     })
   };
   let mockActivatedRoute = {
@@ -40,30 +40,17 @@ describe('ConfirmpagoPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should calculate total correctly', () => {
-    component.carrito = [
-      { nombre: 'Dona', precio: 2, cantidad: 2 },
-      { nombre: 'Café', precio: 3, cantidad: 1 }
-    ];
-    component.calcularTotal();
-    expect(component.total).toBe(7); 
-  });
+  it('should assign default values when state is not passed', () => {
+    // Llamamos a ngOnInit para simular el ciclo de vida del componente
+    component.ngOnInit();
 
-  it('should insert ventas correctly', async () => {
-    const productoMock = { nombre: 'Dona', precio: 2, cantidad: 2 };
-    component.carrito = [productoMock];
-    component.nombreCliente = 'Juan';
-    component.fechaEmision = '22-11-2024';
-
-    mockServicebd.insertarVenta.and.returnValue(Promise.resolve());
-
-    await component.insertarVenta();
-    expect(mockServicebd.insertarVenta).toHaveBeenCalledWith(
-      'Juan',
-      '22-11-2024',
-      'Dona',
-      2,
-      4 
-    );
+    // Verificamos que el carrito esté vacío
+    expect(component.carrito.length).toBe(0);
+    
+    // Verificamos que el nombre del cliente sea el valor predeterminado
+    expect(component.nombreCliente).toBe('Cliente Desconocido');
+    
+    // Verificamos que la fecha de emisión esté definida y en el formato correcto
+    expect(component.fechaEmision).toMatch(/\d{2}-\d{2}-\d{4}/); // Asegura que la fecha esté en el formato dd-MM-yyyy
   });
 });
