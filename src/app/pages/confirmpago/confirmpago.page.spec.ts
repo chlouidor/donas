@@ -40,7 +40,7 @@ describe('ConfirmpagoPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should assign default values when state is not passed', () => {
+  it('debería asignar valores predeterminados cuando no se pase estado', () => {
     // Llamamos a ngOnInit para simular el ciclo de vida del componente
     component.ngOnInit();
 

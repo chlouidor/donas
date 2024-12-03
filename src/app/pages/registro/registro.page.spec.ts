@@ -47,7 +47,7 @@ describe('RegistroPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show error if username is empty', async () => {
+  it('debería mostrar un error si el nombre de usuario está vacío', async () => {
     component.username = '';
     await component.registrar();
     expect(mockAlertController.create).toHaveBeenCalledWith(jasmine.objectContaining({
@@ -56,7 +56,7 @@ describe('RegistroPage', () => {
     }));
   });
 
-  it('should show error if email is invalid', async () => {
+  it('debería mostrar un error si el correo electrónico es inválido', async () => {
     component.username = 'testuser';
     component.email = 'invalidemail';
     await component.registrar();
@@ -66,7 +66,7 @@ describe('RegistroPage', () => {
     }));
   });
 
-  it('should show error if password and confirmPassword do not match', async () => {
+  it('debería mostrar un error si las contraseñas no coinciden', async () => {
     component.username = 'testuser';
     component.email = 'test@example.com';
     component.password = 'Password1';
@@ -78,7 +78,7 @@ describe('RegistroPage', () => {
     }));
   });
 
-  it('should show error if username is already in use', async () => {
+  it('debería mostrar un error si el nombre de usuario ya está en uso', async () => {
     component.username = 'Maxwell';
     component.email = 'test@example.com';
     component.password = 'Password1';

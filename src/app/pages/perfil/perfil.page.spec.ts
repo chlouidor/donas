@@ -53,47 +53,47 @@ describe('PerfilPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
-  });
+});
 
-  it('should set user data if a user is logged in', () => {
+it('debería establecer los datos del usuario si un usuario está conectado', () => {
     expect(component.username).toEqual(mockUser.username);
     expect(component.email).toEqual(mockUser.email);
     expect(component.imagenAvatar).toEqual(mockUser.imagen);
     expect(component.isLoggedIn).toBeTrue();
-  });
+});
 
-  it('should set isAdmin to true for authorized user', () => {
+it('debería establecer isAdmin a true para un usuario autorizado', () => {
     expect(component.isAdmin).toBeTrue();
-  });
+});
 
-  it('should navigate to configuracion page on goToSettings', () => {
+it('debería navegar a la página de configuraciones en goToSettings', () => {
     component.goToSettings();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/configuracion']);
-  });
+});
 
-  it('should navigate to mis-compras page on goToCompras', () => {
+it('debería navegar a la página mis-compras en goToCompras', () => {
     component.goToCompras();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/mis-compras']);
-  });
+});
 
-  it('should navigate to lista-donas page on goToDonas', () => {
+it('debería navegar a la página lista-donas en goToDonas', () => {
     component.goToDonas();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/lista-donas']);
-  });
+});
 
-  it('should navigate to historial page on goToHistorial', () => {
+it('debería navegar a la página historial en goToHistorial', () => {
     component.goToHistorial();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/historial']);
-  });
+});
 
-  it('should navigate to login page on goToLogin', () => {
+it('debería navegar a la página login en goToLogin', () => {
     component.goToLogin();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
-  });
+});
 
-  it('should log out, clear carrito, remove user data, and show alert on logOut', async () => {
+it('debería cerrar sesión, vaciar el carrito, eliminar los datos del usuario y mostrar una alerta en logOut', async () => {
     await component.logOut();
 
     expect(nativeStorageSpy.remove).toHaveBeenCalledWith('ultimoUsuario');
@@ -101,5 +101,5 @@ describe('PerfilPage', () => {
     expect(registrologinServiceSpy.logOut).toHaveBeenCalled();
     expect(alertControllerSpy.create).toHaveBeenCalled();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/inicio']);
-  });
+});
 });

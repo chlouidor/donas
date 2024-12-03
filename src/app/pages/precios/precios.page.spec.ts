@@ -24,7 +24,7 @@ describe('PreciosPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch a joke when getJoke is called', () => {
+  it('debería obtener un chiste cuando se llama a getJoke', () => {
     const mockJoke = { value: 'Chuck Norris can divide by zero.' };
 
     component.selectedCategory = 'animal'; // Asignar una categoría seleccionada
@@ -44,9 +44,9 @@ describe('PreciosPage', () => {
 
     // Verificar que no haya solicitudes pendientes
     httpMock.verify();
-  });
+});
 
-  it('should handle error when fetching joke fails', () => {
+it('debería manejar el error cuando la solicitud de chiste falle', () => {
     component.selectedCategory = 'animal';
     component.getJoke(); // Llamar al método que realiza la solicitud HTTP
 
@@ -64,5 +64,6 @@ describe('PreciosPage', () => {
     // Pero no afectará el flujo de la prueba.
     expect(component.joke).toBe('');
     httpMock.verify();
-  });
+});
+
 });

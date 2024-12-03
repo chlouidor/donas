@@ -48,86 +48,72 @@ describe('ConfiguracionPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize with user data', () => {
+  it('debería inicializarse con los datos del usuario', () => {
     expect(component.username).toBe('testuser');
     expect(component.email).toBe('testuser@example.com');
     expect(component.imagenAvatar).toBe('avatar.jpg');
-  });
+});
 
-
-
-  it('should call actualizarDatos and show success alert', async () => {
-    // Simular la respuesta de verificarUsuarioUnico
+it('debería llamar a actualizarDatos y mostrar una alerta de éxito', async () => {
     registrologinServiceSpy.verificarUsuarioUnico.and.returnValue(firstValueFrom(of({ usernameEnUso: false, emailEnUso: false })));
 
-    // Crear el objeto de la alerta simulada
     const alertMock = {
-      present: jasmine.createSpy('present'),
-      addEventListener: jasmine.createSpy('addEventListener'),
-      removeEventListener: jasmine.createSpy('removeEventListener'),
-      animated: true,
-      backdropDismiss: true
+        present: jasmine.createSpy('present'),
+        addEventListener: jasmine.createSpy('addEventListener'),
+        removeEventListener: jasmine.createSpy('removeEventListener'),
+        animated: true,
+        backdropDismiss: true
     } as unknown as HTMLIonAlertElement;
-  
+
     alertControllerSpy.create.and.returnValue(Promise.resolve(alertMock));
-  
-    // Llamar a actualizarDatos
+
     await component.actualizarDatos();
-  
-    // Verificar que se haya llamado a la alerta con el mensaje de éxito
+
     expect(alertControllerSpy.create).toHaveBeenCalledWith({
-      header: 'Éxito',
-      message: 'Tus datos han sido actualizados correctamente.',
-      buttons: ['OK']
+        header: 'Éxito',
+        message: 'Tus datos han sido actualizados correctamente.',
+        buttons: ['OK']
     });
     expect(alertMock.present).toHaveBeenCalled();
-  });
-  
+});
 
-
-  it('should handle error when updating user data', async () => {
-    // Simular la respuesta del servicio de actualización como un error
+it('debería manejar errores al actualizar los datos del usuario', async () => {
     const errorResponse = { message: 'Error al actualizar los datos' };
     registrologinServiceSpy.actualizarUsuario.and.returnValue(Promise.reject(errorResponse));
-  
-    // Crear el objeto de la alerta simulada
-    const alertMock = {
-      present: jasmine.createSpy('present'),
-      addEventListener: jasmine.createSpy('addEventListener'),
-      removeEventListener: jasmine.createSpy('removeEventListener'),
-      animated: true,
-      backdropDismiss: true
-    } as unknown as HTMLIonAlertElement;
-  
-    alertControllerSpy.create.and.returnValue(Promise.resolve(alertMock));
-  
-    // Llamar a actualizarDatos, que ahora debería manejar el error
-    await component.actualizarDatos();
-  
-    // Verificar que se haya mostrado la alerta con el mensaje de error
-    expect(alertControllerSpy.create).toHaveBeenCalledWith({
-      header: 'Error',
-      message: 'No se pudieron actualizar los datos. Inténtalo de nuevo.',
-      buttons: ['OK']
-    });
-  
-    expect(alertMock.present).toHaveBeenCalled();
-  });
-  
-  
 
-  it('should call chooseImageSource and select camera', async () => {
     const alertMock = {
-      present: jasmine.createSpy('present'),
-      onDidDismiss: jasmine.createSpy('onDidDismiss').and.returnValue(Promise.resolve({ data: { role: 'camera' } }))
+        present: jasmine.createSpy('present'),
+        addEventListener: jasmine.createSpy('addEventListener'),
+        removeEventListener: jasmine.createSpy('removeEventListener'),
+        animated: true,
+        backdropDismiss: true
     } as unknown as HTMLIonAlertElement;
-  
+
     alertControllerSpy.create.and.returnValue(Promise.resolve(alertMock));
-  
+
+    await component.actualizarDatos();
+
+    expect(alertControllerSpy.create).toHaveBeenCalledWith({
+        header: 'Error',
+        message: 'No se pudieron actualizar los datos. Inténtalo de nuevo.',
+        buttons: ['OK']
+    });
+
+    expect(alertMock.present).toHaveBeenCalled();
+});
+
+it('debería llamar a chooseImageSource y seleccionar cámara', async () => {
+    const alertMock = {
+        present: jasmine.createSpy('present'),
+        onDidDismiss: jasmine.createSpy('onDidDismiss').and.returnValue(Promise.resolve({ data: { role: 'camera' } }))
+    } as unknown as HTMLIonAlertElement;
+
+    alertControllerSpy.create.and.returnValue(Promise.resolve(alertMock));
+
     await component.chooseImageSource();
-  
-    // Verificar que la alerta se presenta
+
     expect(alertControllerSpy.create).toHaveBeenCalled();
-  });
+});
+
   
 });

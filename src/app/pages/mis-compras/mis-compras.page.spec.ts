@@ -42,7 +42,7 @@ describe('MisComprasPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load and filter purchases based on current user', () => {
+  it('debería cargar y filtrar compras basadas en el usuario actual', () => {
     const mockUser = {
       id: 1,
       username: 'TestUser',
@@ -62,13 +62,13 @@ describe('MisComprasPage', () => {
     component.ngOnInit(); 
     fixture.detectChanges(); 
 
-    
+    // Verifica que las compras del usuario actual se filtren correctamente
     expect(component.compras.length).toBe(2); 
-    expect(component.compras[0].producto).toBe('Dona 3'); 
-    expect(component.compras[1].producto).toBe('Dona 1');
+    expect(component.compras[0].producto).toBe('Dona 3'); // Compra más reciente del usuario
+    expect(component.compras[1].producto).toBe('Dona 1'); // Segunda compra del usuario
   });
 
-  it('should handle no purchases for the current user', () => {
+it('debería manejar el caso en el que el usuario actual no tiene compras', () => {
     const mockUser = {
       id: 1,
       username: 'TestUser',
@@ -86,7 +86,8 @@ describe('MisComprasPage', () => {
     component.ngOnInit(); 
     fixture.detectChanges(); 
 
-    
+    // Verifica que si el usuario no tiene compras, el array `compras` se mantenga vacío
     expect(component.compras.length).toBe(0); 
   });
+
 });

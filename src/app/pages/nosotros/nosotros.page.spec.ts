@@ -28,14 +28,14 @@ describe('NosotrosPage', () => {
     expect(component).toBeTruthy(); // Verificar que el componente se crea correctamente
   });
 
-  it('should open Instagram when openInstagram is called', () => {
+  it('debería abrir Instagram cuando openInstagram es llamado', () => {
     component.openInstagram(); // Llamar al método openInstagram
 
     // Verificar que se haya llamado al método create de InAppBrowser con la URL y el target esperados
     expect(inAppBrowserSpy.create).toHaveBeenCalledWith('https://www.instagram.com/idkcloudd_/', '_system');
-  });
+});
 
-  it('should not call InAppBrowser create if no URL is provided', () => {
+it('no debería llamar a create de InAppBrowser si no se proporciona una URL', () => {
     // Simular un caso donde no se llame al método (por ejemplo, si openInstagram verifica algo antes)
     spyOn(component, 'openInstagram').and.callFake(() => {});
 
@@ -43,5 +43,6 @@ describe('NosotrosPage', () => {
 
     // Verificar que no se llamó a create
     expect(inAppBrowserSpy.create).not.toHaveBeenCalled();
-  });
+});
+
 });

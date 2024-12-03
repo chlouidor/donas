@@ -1,7 +1,7 @@
 import { Registroventa } from './registroventa';
 
 describe('Registroventa', () => {
-  it('should create an instance', () => {
+  it('should create', () => {
     expect(new Registroventa()).toBeTruthy();
   });
 });

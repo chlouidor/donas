@@ -32,8 +32,8 @@ describe('AgregarDonaPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should validate and show alert when fields are incomplete', async () => {
-    component.nombre = ''; // Campo vacío para forzar error
+  it('debería validar y mostrar una alerta cuando los campos están incompletos', async () => {
+    component.nombre = '';
     mockAlertController.create.and.returnValue(Promise.resolve({
       present: jasmine.createSpy('present')
     } as any));
@@ -47,7 +47,7 @@ describe('AgregarDonaPage', () => {
     });
   });
 
-  it('should call insertarDona and navigate when fields are complete', async () => {
+it('debería llamar a insertarDona y navegar cuando los campos están completos', async () => {
     component.nombre = 'Dona de Chocolate';
     component.precio = 1.5;
     component.descripcion = 'Dona con chocolate';
@@ -72,21 +72,20 @@ describe('AgregarDonaPage', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/lista-donas']);
   });
 
-  it('should set disponibilidad to 1 when "Sí" is selected in alert', async () => {
-    // Simula la alerta
+it('debería establecer disponibilidad en 1 cuando se selecciona "Sí" en la alerta', async () => {
     const mockAlert = {
       present: jasmine.createSpy('present'),
       buttons: [
         {
           text: 'Sí',
           handler: () => {
-            component.disponibilidad = 1; // Actualiza disponibilidad
+            component.disponibilidad = 1;
           },
         },
         {
           text: 'No',
           handler: () => {
-            component.disponibilidad = 0; // Otra opción (si fuera necesario)
+            component.disponibilidad = 0;
           },
         },
       ],
@@ -94,21 +93,18 @@ describe('AgregarDonaPage', () => {
   
     mockAlertController.create.and.returnValue(Promise.resolve(mockAlert));
   
-    // Llama al método que muestra la alerta
     await component.showAvailabilityOptions();
   
-    // Verifica que se haya llamado a `create` con la configuración esperada
     expect(mockAlertController.create).toHaveBeenCalledWith({
       header: 'Disponibilidad',
       message: '¿Está disponible el producto?',
-      buttons: jasmine.any(Array), // Verifica que los botones existan
+      buttons: jasmine.any(Array),
     });
   
-    // Simula la selección del botón "Sí"
     mockAlert.buttons[0].handler();
   
-    // Verifica que la propiedad `disponibilidad` se haya actualizado correctamente
     expect(component.disponibilidad).toBe(1);
   });
+
   
 });

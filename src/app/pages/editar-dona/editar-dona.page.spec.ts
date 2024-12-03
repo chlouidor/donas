@@ -55,29 +55,29 @@ describe('EditarDonaPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load dona data from router state', () => {
+  it('debería cargar los datos de la dona desde el estado del router', () => {
     expect(component.dona.iddona).toBe(1);
     expect(component.dona.nombre).toBe('Dona');
     expect(component.dona.precio).toBe(100);
-  });
+});
 
-  it('should call modify dona and navigate on success', async () => {
+it('debería llamar a modificarDona y navegar al éxito', async () => {
     await component.modificar();
     expect(servicebd.modificarDona).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/lista-donas']);
-  });
+});
 
-  it('should show alert if fields are empty in validarYModificar', async () => {
+it('debería mostrar una alerta si los campos están vacíos en validarYModificar', async () => {
     component.dona = { iddona: 1, imagen: '', nombre: '', precio: 0, descripcion: '', stock: 0, disponible: 1 };
     await component.validarYModificar();
     expect(alertCtrl.create).toHaveBeenCalledWith({
-      header: 'Campos Vacíos',
-      message: 'Todos los campos son obligatorios.',
-      buttons: ['Aceptar']
+        header: 'Campos Vacíos',
+        message: 'Todos los campos son obligatorios.',
+        buttons: ['Aceptar']
     });
     const alert = await alertCtrl.create();
     expect(alert.present).toHaveBeenCalled();
-  });
+});
 
   
   

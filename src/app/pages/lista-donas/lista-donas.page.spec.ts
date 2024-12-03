@@ -69,38 +69,36 @@ describe('ListaDonasPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to agregar-dona page when agregar is called', () => {
+  it('debería navegar a la página agregar-dona al llamar a agregar', () => {
     component.agregar();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/agregar-dona']);
-  });
+});
 
-  it('should navigate to editar-dona page with navigation extras when modificar is called', () => {
+it('debería navegar a la página editar-dona con extras al llamar a modificar', () => {
     const dona: Donas = {
-      iddona: 1,
-      imagen: 'imagen1',
-      nombre: 'Dona Chocolate',
-      precio: 1.5,
-      descripcion: 'Dona de chocolate',
-      stock: 100,
-      disponible: 1,
+        iddona: 1,
+        imagen: 'imagen1',
+        nombre: 'Dona Chocolate',
+        precio: 1.5,
+        descripcion: 'Dona de chocolate',
+        stock: 100,
+        disponible: 1,
     };
-    const navigationExtras = {
-      state: { dona: dona },
-    };
+    const navigationExtras = { state: { dona: dona } };
 
     component.modificar(dona);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/editar-dona'], navigationExtras);
-  });
+});
 
-  it('should remove dona from listaDonas when eliminar is called', async () => {
+it('debería eliminar una dona de listaDonas al llamar a borrar', async () => {
     const dona: Donas = {
-      iddona: 1,
-      imagen: 'imagen1',
-      nombre: 'Dona Chocolate',
-      precio: 1.5,
-      descripcion: 'Dona de chocolate',
-      stock: 100,
-      disponible: 1,
+        iddona: 1,
+        imagen: 'imagen1',
+        nombre: 'Dona Chocolate',
+        precio: 1.5,
+        descripcion: 'Dona de chocolate',
+        stock: 100,
+        disponible: 1,
     };
     component.listaDonas = [dona];
     servicebdServiceSpy.borrarDona.and.returnValue(Promise.resolve());
@@ -110,17 +108,17 @@ describe('ListaDonasPage', () => {
 
     expect(servicebdServiceSpy.borrarDona).toHaveBeenCalledWith(dona.iddona);
     expect(component.listaDonas).toEqual([]);
-  });
+});
 
-  it('should handle borrar errors gracefully', async () => {
+it('debería manejar errores al borrar de forma adecuada', async () => {
     const dona: Donas = {
-      iddona: 1,
-      imagen: 'imagen1',
-      nombre: 'Dona Chocolate',
-      precio: 1.5,
-      descripcion: 'Dona de chocolate',
-      stock: 100,
-      disponible: 1,
+        iddona: 1,
+        imagen: 'imagen1',
+        nombre: 'Dona Chocolate',
+        precio: 1.5,
+        descripcion: 'Dona de chocolate',
+        stock: 100,
+        disponible: 1,
     };
     component.listaDonas = [dona];
     servicebdServiceSpy.borrarDona.and.returnValue(Promise.reject('Error al eliminar'));
@@ -129,18 +127,18 @@ describe('ListaDonasPage', () => {
     fixture.detectChanges();
 
     expect(servicebdServiceSpy.borrarDona).toHaveBeenCalledWith(dona.iddona);
-    expect(component.listaDonas).toContain(dona); // Asegurar que no se elimine en caso de error
-  });
+    expect(component.listaDonas).toContain(dona); // Verificar que no se elimine en caso de error
+});
 
-  it('should update dona availability when marcarComoDisponible is called', async () => {
+it('debería actualizar la disponibilidad de una dona al llamar a marcarComoDisponible', async () => {
     const dona: Donas = {
-      iddona: 1,
-      imagen: 'imagen1',
-      nombre: 'Dona Chocolate',
-      precio: 1.5,
-      descripcion: 'Dona de chocolate',
-      stock: 100,
-      disponible: 1,
+        iddona: 1,
+        imagen: 'imagen1',
+        nombre: 'Dona Chocolate',
+        precio: 1.5,
+        descripcion: 'Dona de chocolate',
+        stock: 100,
+        disponible: 1,
     };
     servicebdServiceSpy.marcarComoDisponible.and.returnValue(Promise.resolve());
 
@@ -149,17 +147,17 @@ describe('ListaDonasPage', () => {
 
     expect(servicebdServiceSpy.marcarComoDisponible).toHaveBeenCalledWith(dona.iddona, 2);
     expect(dona.disponible).toBe(2);
-  });
+});
 
-  it('should handle marcarComoDisponible errors gracefully', async () => {
+it('debería manejar errores al llamar a marcarComoDisponible de forma adecuada', async () => {
     const dona: Donas = {
-      iddona: 1,
-      imagen: 'imagen1',
-      nombre: 'Dona Chocolate',
-      precio: 1.5,
-      descripcion: 'Dona de chocolate',
-      stock: 100,
-      disponible: 1,
+        iddona: 1,
+        imagen: 'imagen1',
+        nombre: 'Dona Chocolate',
+        precio: 1.5,
+        descripcion: 'Dona de chocolate',
+        stock: 100,
+        disponible: 1,
     };
     servicebdServiceSpy.marcarComoDisponible.and.returnValue(Promise.reject('Error al actualizar'));
 
@@ -167,6 +165,6 @@ describe('ListaDonasPage', () => {
     fixture.detectChanges();
 
     expect(servicebdServiceSpy.marcarComoDisponible).toHaveBeenCalledWith(dona.iddona, 2);
-    expect(dona.disponible).toBe(1); // Asegurar que no cambia en caso de error
+    expect(dona.disponible).toBe(1); 
   });
 });

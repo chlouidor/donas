@@ -54,66 +54,66 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show error if email is empty', async () => {
+  it('debería mostrar un error si el correo está vacío', async () => {
     component.email = '';
     await component.login();
     expect(mockAlertController.create).toHaveBeenCalledWith(jasmine.objectContaining({
-      header: 'Error',
-      message: 'El campo de correo electrónico no puede estar vacío.'
+        header: 'Error',
+        message: 'El campo de correo electrónico no puede estar vacío.'
     }));
-  });
+});
 
-  it('should show error if email format is invalid', async () => {
+it('debería mostrar un error si el formato del correo es inválido', async () => {
     component.email = 'invalidemail';
     component.password = 'Password1';
     await component.login();
     expect(mockAlertController.create).toHaveBeenCalledWith(jasmine.objectContaining({
-      header: 'Error',
-      message: 'Por favor, introduce un correo electrónico válido.'
+        header: 'Error',
+        message: 'Por favor, introduce un correo electrónico válido.'
     }));
-  });
+});
 
-  it('should show error if password is empty', async () => {
+it('debería mostrar un error si la contraseña está vacía', async () => {
     component.email = 'test@example.com';
     component.password = '';
     await component.login();
     expect(mockAlertController.create).toHaveBeenCalledWith(jasmine.objectContaining({
-      header: 'Error',
-      message: 'El campo de contraseña no puede estar vacío.'
+        header: 'Error',
+        message: 'El campo de contraseña no puede estar vacío.'
     }));
-  });
+});
 
-  it('should show error if password length is less than 6 characters', async () => {
+it('debería mostrar un error si la contraseña tiene menos de 6 caracteres', async () => {
     component.email = 'test@example.com';
     component.password = 'Pass1';
     await component.login();
     expect(mockAlertController.create).toHaveBeenCalledWith(jasmine.objectContaining({
-      header: 'Error',
-      message: 'La contraseña debe tener al menos 6 caracteres.'
+        header: 'Error',
+        message: 'La contraseña debe tener al menos 6 caracteres.'
     }));
-  });
+});
 
-  it('should show error if password does not contain a number', async () => {
+it('debería mostrar un error si la contraseña no contiene un número', async () => {
     component.email = 'test@example.com';
     component.password = 'Password';
     await component.login();
     expect(mockAlertController.create).toHaveBeenCalledWith(jasmine.objectContaining({
-      header: 'Error',
-      message: 'La contraseña debe contener al menos un número.'
+        header: 'Error',
+        message: 'La contraseña debe contener al menos un número.'
     }));
-  });
+});
 
-  it('should show error alert on invalid credentials', async () => {
+it('debería mostrar un error si las credenciales son inválidas', async () => {
     component.email = 'test@example.com';
     component.password = 'Password1';
-    
     mockRegistrologinService.loginUsuario.and.returnValue(Promise.resolve(false));
 
     await component.login();
     expect(mockAlertController.create).toHaveBeenCalledWith(jasmine.objectContaining({
-      header: 'Error',
-      message: 'Credenciales incorrectas.'
+        header: 'Error',
+        message: 'Credenciales incorrectas.'
     }));
-  });
+});
+
 
 });

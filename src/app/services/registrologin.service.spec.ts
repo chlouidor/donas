@@ -48,7 +48,7 @@ describe('RegistrologinService', () => {
     service = TestBed.inject(RegistrologinService);
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(service).toBeTruthy();
   });
 

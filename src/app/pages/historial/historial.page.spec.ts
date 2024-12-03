@@ -28,29 +28,30 @@ describe('HistorialPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call cargarCompras on initialization', () => {
+  it('debería llamar a cargarCompras al inicializar', () => {
     spyOn(component, 'cargarCompras');
     component.ngOnInit();
     expect(component.cargarCompras).toHaveBeenCalled();
-  });
+});
 
-  it('should fetch ventas and sort them by fecha_emision', () => {
-    const mockVentas = [
-      { fecha_emision: '2024-11-01T10:00:00Z' },
-      { fecha_emision: '2024-11-02T15:00:00Z' },
-      { fecha_emision: '2024-11-01T08:00:00Z' }
+it('debería obtener ventas y ordenarlas por fecha_emision', () => {
+    const ventasSimuladas = [
+        { fecha_emision: '2024-11-01T10:00:00Z' },
+        { fecha_emision: '2024-11-02T15:00:00Z' },
+        { fecha_emision: '2024-11-01T08:00:00Z' }
     ];
-    servicebdSpy.fetchVentas.and.returnValue(of(mockVentas));
+    servicebdSpy.fetchVentas.and.returnValue(of(ventasSimuladas));
 
     component.cargarCompras();
     expect(component.compras.length).toBe(3);
     expect(component.compras[0].fecha_emision).toBe('2024-11-02T15:00:00Z');
     expect(component.compras[2].fecha_emision).toBe('2024-11-01T08:00:00Z');
-  });
+});
 
-  it('should handle empty ventas response', () => {
+it('debería manejar una respuesta vacía de ventas', () => {
     servicebdSpy.fetchVentas.and.returnValue(of([]));
     component.cargarCompras();
     expect(component.compras.length).toBe(0);
-  });
+});
+
 });

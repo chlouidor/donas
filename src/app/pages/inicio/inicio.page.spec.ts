@@ -51,46 +51,46 @@ describe('InicioPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load donas on init', () => {
+  it('debería cargar las donas al inicializar', () => {
     component.ngOnInit();
     expect(bdServiceSpy.fetchDonas).toHaveBeenCalled();
     expect(component.listaDona.length).toBeGreaterThan(0);
-  });
+});
 
-  it('should navigate to login if no user is logged in', async () => {
-    registrologinServiceSpy.getCurrentUser.and.returnValue(null); // Simula que no hay usuario conectado
+it('debería navegar a login si no hay un usuario conectado', async () => {
+    registrologinServiceSpy.getCurrentUser.and.returnValue(null);
     const toastMock = { present: jasmine.createSpy('present') };
     toastControllerSpy.create.and.returnValue(Promise.resolve(toastMock as any));
 
-    await component.irPagina(0); // Llama a la función con un índice de producto
+    await component.irPagina(0);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
     expect(toastMock.present).toHaveBeenCalled();
-  });
+});
 
-
-  it('should present an out of stock toast if product is unavailable', async () => {
-    component.listaDona[0].stock = 0; // Simula que el producto está fuera de stock
+it('debería mostrar un toast si el producto está fuera de stock', async () => {
+    component.listaDona[0].stock = 0;
     const toastMock = { 
-      present: jasmine.createSpy('present'),
-      message: 'Este producto está fuera de stock.' // Añadimos la propiedad `message` al mock
+        present: jasmine.createSpy('present'),
+        message: 'Este producto está fuera de stock.'
     };
     toastControllerSpy.create.and.returnValue(Promise.resolve(toastMock as any));
-  
+
     await component.irPagina(0);
     expect(toastMock.present).toHaveBeenCalled();
     expect(toastMock.message).toContain('fuera de stock');
-  });
+});
 
-  it('should present a toast if product is unavailable', async () => {
-    component.listaDona[0].disponible = 0; // Simula que el producto no está disponible
+it('debería mostrar un toast si el producto no está disponible', async () => {
+    component.listaDona[0].disponible = 0;
     const toastMock = { 
-      present: jasmine.createSpy('present'),
-      message: 'Este producto no está disponible.' // Agregamos la propiedad `message` al mock
+        present: jasmine.createSpy('present'),
+        message: 'Este producto no está disponible.'
     };
     toastControllerSpy.create.and.returnValue(Promise.resolve(toastMock as any));
-  
+
     await component.irPagina(0);
     expect(toastMock.present).toHaveBeenCalled();
     expect(toastMock.message).toContain('no está disponible');
-  });
+});
+
 });

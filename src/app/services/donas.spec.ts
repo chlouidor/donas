@@ -1,7 +1,7 @@
 import { Donas } from './donas';
 
 describe('Donas', () => {
-  it('should create an instance', () => {
+  it('should create ', () => {
     expect(new Donas()).toBeTruthy();
   });
 });
